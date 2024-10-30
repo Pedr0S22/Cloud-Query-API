@@ -29,7 +29,9 @@ $ deactivate
 
  
 from flask import Flask, jsonify, request
-import logging, psycopg2, time
+import logging
+import psycopg2
+import time
 
 app = Flask(__name__) 
 
@@ -218,9 +220,10 @@ def update_departments():
 ##########################################################
 
 def db_connection():
+    # NOTE: change the host to "db" if you are running as a Docker container
     db = psycopg2.connect(user = "aulaspl",
                             password = "aulaspl",
-                            host = "db",
+                            host = "localhost", #"db",
                             port = "5432",
                             database = "dbfichas")
     return db
@@ -254,8 +257,8 @@ if __name__ == "__main__":
 
 
     
-
-    app.run(host="0.0.0.0", debug=True, threaded=True)
+    # NOTE: change to 5000 or remove the port parameter if you are running as a Docker container
+    app.run(host="0.0.0.0", port=8080, debug=True, threaded=True)
 
 
 
