@@ -18,9 +18,10 @@
 
 '''
 How to run?
-$ python3 -m venv django_env
-$ source django_env/bin/activate
+$ python3 -m venv proj_sgd_env
+$ source proj_sgd_env/bin/activate
 $ pip3 install flask
+$ pip3 install jwt
 $ pip3 install psycopg2-binary
 $ python3 demo-api.py
 --> Ctrl+C to stop
