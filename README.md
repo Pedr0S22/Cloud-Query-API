@@ -18,11 +18,12 @@ _The contents of this repository do not replace the proper reading of the assign
 
 ## Requirements
 
-To execute this project it is required to have installed:
+The requirements described here are needed if you want to run using Docker. If not, you can follow the instructions described [**`here`**](python).
+
+To execute this project using Docker, it is required to have installed:
 
 - `docker`
 - `docker-compose`
-
 
 
 ## Demo [Python](python) REST API 
