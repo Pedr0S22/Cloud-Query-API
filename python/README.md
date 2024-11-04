@@ -17,6 +17,8 @@ $ deactivate # to stop the virtualenv
 The install commands are only needed when creating the virtualenv.
 The following times, you just need to activate it, and run the `demo-api-sgd.py`.
 
+* Web browser access: http://localhost:8080 (initial application page. For the remaining endpoints, use [Postman](../postman)).
+
 
 ## Issues with the computer architecture
 
