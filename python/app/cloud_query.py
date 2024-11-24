@@ -125,24 +125,23 @@ def get_department(ndep):
 ##   curl -X POST http://localhost:8080/departments/ -H "Content-Type: application/json" -d '{"localidade": "Polo II", "ndep": 69, "nome": "Seguranca"}'
 ##
 
-
-@app.route("/departments/", methods=['POST'])
-def add_departments():
-    logger.info("###              DEMO: POST /departments              ###");   
+@app.route("/users/", methods=['POST'])
+def add_users():
+    logger.info("###              DEMO: POST /users              ###");   
     payload = request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.info("---- new department  ----")
+    logger.info("---- new user  ----")
     logger.debug(f'payload: {payload}')
 
     # parameterized queries, good for security and performance
     statement = """
-                  INSERT INTO dep (ndep, nome, local) 
+                  INSERT INTO user_ (username, email, password) 
                           VALUES ( %s,   %s ,   %s )"""
 
-    values = (payload["ndep"], payload["localidade"], payload["nome"])
+    values = (payload["username"], payload["email"], payload["password"])
 
     try:
         cur.execute(statement, values)
@@ -155,7 +154,101 @@ def add_departments():
         if conn is not None:
             conn.close()
 
+    # statement = """"
+    #               INSERT INTO passenger (user__id_user) 
+    #                       VALUES ( cur.execute(statement, values) )"""
+
+    # values = (payload["username"])
+    # try:
+    #     cur.execute(statement, values)
+    #     cur.execute("commit")
+    #     result = 'Inserted!'
+    # except (Exception, psycopg2.DatabaseError) as error:
+    #     logger.error(error)
+    #     result = 'Failed!'
+    # finally:
+    #     if conn is not None:
+    #         conn.close()
     return jsonify(result)
+
+
+def execute_query(query):
+    conn = db_connection()
+    cur = conn.cursor()
+
+    cur.execute(query)
+    # cur.execute("SELECT id_user, username, email, password FROM user_ where username like :username", {"search": "%" + username + "%"})
+    rows = cur.fetchall()
+
+    row = rows[0]
+
+    logger.debug("---- selected user  ----")
+    logger.debug(row)
+
+    result = []
+    content ={'id': row[0],'username': row[1], 'email': row[2], 'password': row[3]}
+    # for x in rows:
+    #     result.append()
+
+    conn.close ()
+
+@app.route("/users/<username>", methods=['GET'])
+def get_user(username):
+    logger.info("###              DEMO: GET /users/<username>              ###");   
+
+    logger.debug(f'ndep: {username}')
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT id_user, username, email, password FROM user_ where username = %s", (username,) )
+    # cur.execute("SELECT id_user, username, email, password FROM user_ where username like :username", {"search": "%" + username + "%"})
+    rows = cur.fetchall()
+
+    row = rows[0]
+
+    logger.debug("---- selected user  ----")
+    logger.debug(row)
+
+    result = []
+    content ={'id': row[0],'username': row[1], 'email': row[2], 'password': row[3]}
+    # for x in rows:
+    #     result.append()
+
+    conn.close ()
+    return jsonify(content)
+
+
+# @app.route("/departments/", methods=['POST'])
+# def add_departments():
+#     logger.info("###              DEMO: POST /departments              ###");   
+#     payload = request.get_json()
+
+#     conn = db_connection()
+#     cur = conn.cursor()
+
+#     logger.info("---- new department  ----")
+#     logger.debug(f'payload: {payload}')
+
+#     # parameterized queries, good for security and performance
+#     statement = """
+#                   INSERT INTO dep (ndep, nome, local) 
+#                           VALUES ( %s,   %s ,   %s )"""
+
+#     values = (payload["ndep"], payload["localidade"], payload["nome"])
+
+#     try:
+#         cur.execute(statement, values)
+#         cur.execute("commit")
+#         result = 'Inserted!'
+#     except (Exception, psycopg2.DatabaseError) as error:
+#         logger.error(error)
+#         result = 'Failed!'
+#     finally:
+#         if conn is not None:
+#             conn.close()
+
+#     return jsonify(result)
 
 
 
@@ -222,11 +315,11 @@ def update_departments():
 
 def db_connection():
     # NOTE: change the host to "db" if you are running as a Docker container
-    db = psycopg2.connect(user = "aulaspl",
-                            password = "aulaspl",
+    db = psycopg2.connect(user = "SGD_project",
+                            password = "5432",
                             host = "localhost", #"db",
-                            port = "5432",
-                            database = "dbfichas")
+                            port = "5433",
+                            database = "cloud_query")
     return db
 
 

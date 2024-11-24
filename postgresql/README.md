@@ -20,7 +20,7 @@ It could be useful to have it running in separate for the Java example, where it
 - **User**: SGD_project
 - **Password**: 5432
 - **Database name**: cloud_query
-- **Host**: localhost:5432
+- **Host**: localhost:5433
 
 ## Setup and Run
 

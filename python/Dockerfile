@@ -8,7 +8,7 @@
 
 from python:3.13.0-alpine3.20
 
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+RUN command apk update && apk add postgresql-dev gcc python3-dev musl-dev
 
 RUN pip install --no-cache-dir --upgrade pip
 
@@ -28,4 +28,4 @@ run mkdir -p logs
 
 EXPOSE 5000
 
-CMD ["python", "demo-api-sgd.py"]
+CMD ["python", "cloud_query.py"]
