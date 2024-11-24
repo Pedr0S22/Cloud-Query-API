@@ -10,7 +10,7 @@ FROM library/postgres
 
 
 ENV POSTGRES_USER aulaspl
-ENV POSTGRES_PASSWORD aulaspl
+ENV POSTGRES_PASSWORD 2024
 ENV POSTGRES_DB dbfichas
 
 COPY SGD2024_data.sql /docker-entrypoint-initdb.d/
