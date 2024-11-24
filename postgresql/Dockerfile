@@ -9,10 +9,10 @@
 FROM library/postgres
 
 
-ENV POSTGRES_USER aulaspl
-ENV POSTGRES_PASSWORD 2024
-ENV POSTGRES_DB dbfichas
+ENV POSTGRES_USER SGD_project
+ENV POSTGRES_PASSWORD 5432
+ENV POSTGRES_DB cloud_query
 
-COPY SGD2024_data.sql /docker-entrypoint-initdb.d/
+COPY Tabelas&Inserção.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 5432

@@ -17,9 +17,9 @@ It could be useful to have it running in separate for the Java example, where it
 
 ## Database Connection
 
-- **User**: aulaspl
-- **Password**: aulaspl
-- **Database name**: dbfichas
+- **User**: SGD_project
+- **Password**: 5432
+- **Database name**: cloud_query
 - **Host**: localhost:5432
 
 ## Setup and Run
