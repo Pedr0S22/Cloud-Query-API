@@ -64,6 +64,48 @@ def verify_token():
     except jwt.InvalidTokenError:
         return jsonify({"message": "Token inválido!"}), 401
 
+def verify_admin():
+    payload = verify_token()
+    if isinstance(payload, tuple):
+        return payload
+    conn = db_connection()
+    cur = conn.cursor()
+    id_admin = payload['id']
+    cur.execute("SELECT * FROM admin_ WHERE  user__id_user= %s", (id_admin,))
+    row = cur.fetchone()
+
+    if row:
+        return payload
+    else:
+        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+def verify_crew():
+    payload = verify_token()
+    if isinstance(payload, tuple):
+        return payload
+    conn = db_connection()
+    cur = conn.cursor()
+    id_admin = payload['id']
+    cur.execute("SELECT * FROM crew_members WHERE  user__id_user= %s", (id_admin,))
+    row = cur.fetchone()
+
+    if row:
+        return payload
+    else:
+        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+def verify_passenger():
+    payload = verify_token()
+    if isinstance(payload, tuple):
+        return payload
+    conn = db_connection()
+    cur = conn.cursor()
+    id_admin = payload['id']
+    cur.execute("SELECT * FROM passenger WHERE  user__id_user= %s", (id_admin,))
+    row = cur.fetchone()
+
+    if row:
+        return payload
+    else:
+        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
 @app.route('/cloud-query/')
 def hello(): 
     return """
@@ -76,9 +118,6 @@ def hello():
     Ramyad<br/>
     """
 
-#Registo do user
-
-@app.route('/cloud-query/user', methods=['POST'])
 def add_users():
     logger.info("###              DEMO: POST /users              ###");
     payload = request.get_json()
@@ -88,8 +127,6 @@ def add_users():
 
     logger.info("---- new user  ----")
     logger.debug(f'payload: {payload}')
-
-    # parameterized queries, good for security and performance
     statement = """
                   INSERT INTO user_ (username, email, password) 
                           VALUES ( %s,   %s ,   %s )"""
@@ -109,7 +146,97 @@ def add_users():
             conn.close()
     return jsonify(result)
 
-#Login user
+@app.route('/cloud-query/admin', methods=['POST'])
+def add_admin():
+    logger.info("###              DEMO: POST /admin              ###");
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    add_users()
+    payload = request.get_json()
+    logger.info("---- new admin  ----")
+    logger.debug(f'payload: {payload}')
+
+    cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
+
+    row = rows[0]
+    statement = """
+                  INSERT INTO admin_ (user__id_user) 
+                          VALUES ( %s )"""
+    values = (row[0],)
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'Inserted!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Failed!'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+#Adicionar crew_members
+'''{
+    "username": "mario.geraldes.admin",
+    "email": "mario.geraldes.admin@admin.pt",
+    "password": "123adminmario",
+    "role": "pilot",
+    "crew_id": 1
+}'''#Exemplo de JSON
+@app.route('/cloud-query/crew_member', methods=['POST'])
+def add_crew_member():
+    logger.info("###              DEMO: POST /crew_member              ###");
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    add_users()
+    payload = request.get_json()
+    logger.info("---- new crew_member  ----")
+    logger.debug(f'payload: {payload}')
+
+    cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
+    row = cur.fetchone()
+    if len(row) == 0:
+        return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
+    cur.execute("SELECT crew_id FROM crew where crew_id = %s", (payload['crew_id'],))
+    crew_row = cur.fetchone()
+    if crew_row:
+        statement_1 = """
+                          INSERT INTO crew_members (user__id_user) 
+                                  VALUES ( %s )"""
+        values_1 = (row[0],)
+        if payload['role'] == 'pilot':
+            statement_2 = """
+            INSERT INTO pilot (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
+            values_2 = (row[0], row[1])  # Vou ter de mudar a cena da crew
+        elif payload['role'] == 'flight_attendante':
+            statement_2 = """INSERT INTO flight_attendante (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
+            values_2 = (row[0], row[1])  # Vou ter de mudar a cena da crew
+
+        try:
+            cur.execute(statement_1, values_1)
+            cur.execute(statement_2, values_2)
+            cur.execute("commit")
+            result = 'Inserted!'
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            result = 'Failed!'
+        finally:
+            if conn is not None:
+                conn.close()
+        return jsonify(result)
+    else:
+        return jsonify({'status': 401, 'errors': 'Crew id does not exist!'}), 401
+
 @app.route('/cloud-query/user', methods=['PUT'])
 def login():
     logger.info("###              DEMO: PUT /users              ###")
@@ -222,26 +349,6 @@ def get_department(ndep):
 ##
 
 
-def execute_query(query):
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute(query)
-    # cur.execute("SELECT id_user, username, email, password FROM user_ where username like :username", {"search": "%" + username + "%"})
-    rows = cur.fetchall()
-
-    row = rows[0]
-
-    logger.debug("---- selected user  ----")
-    logger.debug(row)
-
-    result = []
-    content ={'id': row[0],'username': row[1], 'email': row[2], 'password': row[3]}
-    # for x in rows:
-    #     result.append()
-
-    conn.close ()
-
 @app.route("/users/<username>", methods=['GET'])
 def get_user(username):
     logger.info("###              DEMO: GET /users/<username>              ###");   
@@ -268,50 +375,6 @@ def get_user(username):
     conn.close ()
     return jsonify(content)
 
-
-@app.route("/departments/", methods=['POST'])
-# def add_departments():
-#     logger.info("###              DEMO: POST /departments              ###");
-#     payload = request.get_json()
-
-#     conn = db_connection()
-#     cur = conn.cursor()
-
-#     logger.info("---- new department  ----")
-#     logger.debug(f'payload: {payload}')
-
-#     # parameterized queries, good for security and performance
-#     statement = """
-#                   INSERT INTO dep (ndep, nome, local) 
-#                           VALUES ( %s,   %s ,   %s )"""
-
-#     values = (payload["ndep"], payload["localidade"], payload["nome"])
-
-#     try:
-#         cur.execute(statement, values)
-#         cur.execute("commit")
-#         result = 'Inserted!'
-#     except (Exception, psycopg2.DatabaseError) as error:
-#         logger.error(error)
-#         result = 'Failed!'
-#     finally:
-#         if conn is not None:
-#             conn.close()
-
-#     return jsonify(result)
-
-
-
-
-##
-##      Demo PUT
-##
-## Update a department based on the a JSON payload
-##
-## To use it, you need to use postman or curl: 
-##
-##   curl -X PUT http://localhost:8080/departments/ -H "Content-Type: application/json" -d '{"ndep": 69, "localidade": "Porto"}'
-##
 
 @app.route("/departments/", methods=['PUT'])
 def update_departments():
