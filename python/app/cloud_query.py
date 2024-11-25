@@ -27,30 +27,126 @@ $ python3 cloud_query.py
 --> Ctrl+C to stop
 $ deactivate
 '''
-
- 
-from flask import Flask, jsonify, request 
+import bcrypt
+import jwt
+from flask import Flask, jsonify, request
 import logging
 import psycopg2
 import time
 
 app = Flask(__name__) 
+password_token="cloud_query123"
 
+def generate_token(user_id):
+    payload = {
+        'id': user_id,
+        'exp': time.time() + 3600 #1 hora de acesso por este token
+    }
+    token=jwt.encode(payload, password_token,algorithm='HS256') #HS256 (HMAC-SHA256) is a commonly used symmetric algorithm. It means the same secret key is used for both signing and verifying the token.
+    return token
+def verify_token():
+    token= request.headers.get('Authorization') #Temos de explicar isto
+    if not token:
+        return jsonify({'error':'Token is missing'}), 401
+    try:
+        if token.startswith("Bearer "):
+            token = token[7:]
 
-@app.route('/') 
+        payload = jwt.decode(token, password_token, algorithms=["HS256"])
+
+        if payload["exp"] < time.time():
+            return jsonify({"message": "Token expirado!"}), 401
+
+        return payload
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"message": "Token expirado!"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"message": "Token inválido!"}), 401
+
+@app.route('/cloud-query/')
 def hello(): 
     return """
 
-    Hello World!  <br/>
+    Cloud Query!  <br/>
     <br/>
-    Check the sources for instructions on how to use the endpoints!<br/>
-    <br/>
+    Trabalho realizado por:<br/>
+    Francisca<br/>
+    Pedro <br/>
+    Ramyad<br/>
     """
 
+#Registo do user
+
+@app.route('/cloud-query/user', methods=['POST'])
+def add_users():
+    logger.info("###              DEMO: POST /users              ###");
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("---- new user  ----")
+    logger.debug(f'payload: {payload}')
+
+    # parameterized queries, good for security and performance
+    statement = """
+                  INSERT INTO user_ (username, email, password) 
+                          VALUES ( %s,   %s ,   %s )"""
+    has_password=bcrypt.hashpw(payload['password'].encode('utf-8'), bcrypt.gensalt())
+    values = (payload['username'], payload['email'], has_password.decode('utf-8'))
+
+
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'Inserted!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Failed!'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
+
+#Login user
+@app.route('/cloud-query/user', methods=['PUT'])
+def login():
+    logger.info("###              DEMO: PUT /users              ###")
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    payload = request.get_json()
+    username = payload.get('username')
+    password = payload.get('password')
+
+    cur.execute("SELECT * FROM user_ where username = %s", (username,))
+    rows = cur.fetchall()
+
+    if len(rows) == 0:
+        return jsonify({'status':401,'errors': 'Username or password incorrect!'})
+
+    row = rows[0]
+
+    try:
+        if bcrypt.checkpw(password.encode('utf-8'), row[3].encode('utf-8')):
+            token = generate_token(row[0])
+            return jsonify({'status': 200, 'result': token.decode('utf-8')}), 200
+        else:
+            return jsonify({'status': 401, 'errors': 'Username or password incorrect!'}), 401
+    except ValueError:
+        return jsonify({'status': 500, 'errors': 'Hash de senha inválido no banco de dados!'}), 500
 
 
 
-##
+
+
+
+
+
+
+
 ##      Demo GET
 ##
 ## Obtain all departments, in JSON format
@@ -60,9 +156,9 @@ def hello():
 ##   http://localhost:8080/departments/
 ##
 
-@app.route("/departments/", methods=['GET'], strict_slashes=True)
+@app.route("/cloud-query/departments/", methods=['GET'], strict_slashes=True)
 def get_all_departments():
-    logger.info("###              DEMO: GET /departments              ###");   
+    logger.info("###              DEMO: GET /departments              ###");
 
     conn = db_connection()
     cur = conn.cursor()
@@ -125,52 +221,6 @@ def get_department(ndep):
 ##   curl -X POST http://localhost:8080/departments/ -H "Content-Type: application/json" -d '{"localidade": "Polo II", "ndep": 69, "nome": "Seguranca"}'
 ##
 
-@app.route("/users/", methods=['POST'])
-def add_users():
-    logger.info("###              DEMO: POST /users              ###");   
-    payload = request.get_json()
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    logger.info("---- new user  ----")
-    logger.debug(f'payload: {payload}')
-
-    # parameterized queries, good for security and performance
-    statement = """
-                  INSERT INTO user_ (username, email, password) 
-                          VALUES ( %s,   %s ,   %s )"""
-
-    values = (payload["username"], payload["email"], payload["password"])
-
-    try:
-        cur.execute(statement, values)
-        cur.execute("commit")
-        result = 'Inserted!'
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        result = 'Failed!'
-    finally:
-        if conn is not None:
-            conn.close()
-
-    # statement = """"
-    #               INSERT INTO passenger (user__id_user) 
-    #                       VALUES ( cur.execute(statement, values) )"""
-
-    # values = (payload["username"])
-    # try:
-    #     cur.execute(statement, values)
-    #     cur.execute("commit")
-    #     result = 'Inserted!'
-    # except (Exception, psycopg2.DatabaseError) as error:
-    #     logger.error(error)
-    #     result = 'Failed!'
-    # finally:
-    #     if conn is not None:
-    #         conn.close()
-    return jsonify(result)
-
 
 def execute_query(query):
     conn = db_connection()
@@ -219,9 +269,9 @@ def get_user(username):
     return jsonify(content)
 
 
-# @app.route("/departments/", methods=['POST'])
+@app.route("/departments/", methods=['POST'])
 # def add_departments():
-#     logger.info("###              DEMO: POST /departments              ###");   
+#     logger.info("###              DEMO: POST /departments              ###");
 #     payload = request.get_json()
 
 #     conn = db_connection()
@@ -347,7 +397,7 @@ if __name__ == "__main__":
 
 
     logger.info("\n---------------------------------------------------------------\n" + 
-                  "API v1.0 online: http://localhost:8080/departments/\n\n")
+                  "API v1.0 online: http://localhost:8080/cloud-query/\n\n")
 
 
     
