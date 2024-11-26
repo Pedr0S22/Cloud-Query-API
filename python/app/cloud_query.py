@@ -146,6 +146,38 @@ def add_users():
             conn.close()
     return jsonify(result)
 
+@app.route('/cloud-query/passenger', methods=['POST'])
+def add_admin():
+    logger.info("###              DEMO: POST /passenger              ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+    add_users()
+    payload = request.get_json()
+    logger.info("---- new passenger  ----")
+    logger.debug(f'payload: {payload}')
+
+    cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
+
+    row = rows[0]
+    statement = """
+                  INSERT INTO passenger (user__id_user) 
+                          VALUES ( %s )"""
+    values = (row[0],)
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+        result = 'Inserted!'
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        result = 'Failed!'
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify(result)
 @app.route('/cloud-query/admin', methods=['POST'])
 def add_admin():
     logger.info("###              DEMO: POST /admin              ###");
