@@ -147,7 +147,7 @@ def add_users():
     return jsonify(result)
 
 @app.route('/cloud-query/passenger', methods=['POST'])
-def add_admin():
+def add_passenger():
     logger.info("###              DEMO: POST /passenger              ###");
 
     conn = db_connection()
