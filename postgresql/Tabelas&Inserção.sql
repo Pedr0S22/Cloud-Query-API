@@ -43,7 +43,7 @@ CREATE TABLE airport_ (
 CREATE TABLE crew (
 	crew_id			 BIGSERIAL,
 	admin__user__id_user	 BIGINT NOT NULL,
-	crew_members_user__id_user BIGINT NOT NULL,
+	crew_members_user__id_user BIGINT,
 	PRIMARY KEY(crew_id)
 );
 

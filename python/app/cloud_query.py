@@ -49,8 +49,8 @@ def verify_token():
     if not token:
         return jsonify({'error':'Token is missing'}), 401
     try:
-        if token.startswith("Bearer "): #Tenho de trocar isto para JWT token ver chatgpt
-            token = token[7:]
+        #if token.startswith("Bearer "):
+            #token = token[7:]
 
         payload = jwt.decode(token, password_token, algorithms=["HS256"])
 
@@ -78,34 +78,36 @@ def verify_admin():
         return payload
     else:
         return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+
 def verify_crew():
     payload = verify_token()
     if isinstance(payload, tuple):
         return payload
     conn = db_connection()
     cur = conn.cursor()
-    id_admin = payload['id']
-    cur.execute("SELECT * FROM crew_members WHERE  user__id_user= %s", (id_admin,))
+    id = payload['id']
+    cur.execute("SELECT * FROM crew_members WHERE  user__id_user= %s", (id,))
     row = cur.fetchone()
 
     if row:
         return payload
     else:
         return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+
 def verify_passenger():
     payload = verify_token()
     if isinstance(payload, tuple):
         return payload
     conn = db_connection()
     cur = conn.cursor()
-    id_admin = payload['id']
-    cur.execute("SELECT * FROM passenger WHERE  user__id_user= %s", (id_admin,))
+    id = payload['id']
+    cur.execute("SELECT * FROM passenger WHERE  user__id_user= %s", (id,))
     row = cur.fetchone()
 
     if row:
         return payload
     else:
-        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+        return jsonify({"message": f"Acesso restrito a passageiro!"}), 403
 @app.route('/cloud-query/')
 def hello(): 
     return """
@@ -148,7 +150,7 @@ def add_users():
 
 @app.route('/cloud-query/passenger', methods=['POST'])
 def add_passenger():
-    logger.info("###              DEMO: POST /passenger              ###");
+    logger.info("###              DEMO: POST /passenger              ###")
 
     conn = db_connection()
     cur = conn.cursor()
@@ -170,14 +172,13 @@ def add_passenger():
     try:
         cur.execute(statement, values)
         cur.execute("commit")
-        result = 'Inserted!'
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        result = 'Failed!'
     finally:
         if conn is not None:
             conn.close()
-    return jsonify(result)
+    return jsonify({'status': 200, 'result':row[0] })
+
 @app.route('/cloud-query/admin', methods=['POST'])
 def add_admin():
     logger.info("###              DEMO: POST /admin              ###");
@@ -205,15 +206,12 @@ def add_admin():
     try:
         cur.execute(statement, values)
         cur.execute("commit")
-        result = 'Inserted!'
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        result = 'Failed!'
     finally:
         if conn is not None:
             conn.close()
-    return jsonify(result)
-#Adicionar crew_members
+    return jsonify({'status': 200, 'result':row[0] })
 '''{
     "username": "mario.geraldes.admin",
     "email": "mario.geraldes.admin@admin.pt",
@@ -249,23 +247,21 @@ def add_crew_member():
         if payload['role'] == 'pilot':
             statement_2 = """
             INSERT INTO pilot (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
-            values_2 = (row[0], row[1])  # Vou ter de mudar a cena da crew
+            values_2 = (row[0], crew_row[0])
         elif payload['role'] == 'flight_attendante':
             statement_2 = """INSERT INTO flight_attendante (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
-            values_2 = (row[0], row[1])  # Vou ter de mudar a cena da crew
+            values_2 = (payload['crew_id'], crew_row[0])
 
         try:
             cur.execute(statement_1, values_1)
             cur.execute(statement_2, values_2)
             cur.execute("commit")
-            result = 'Inserted!'
         except (Exception, psycopg2.DatabaseError) as error:
             logger.error(error)
-            result = 'Failed!'
         finally:
             if conn is not None:
                 conn.close()
-        return jsonify(result)
+        return jsonify({'status': 200, 'result': row[0]})
     else:
         return jsonify({'status': 401, 'errors': 'Crew id does not exist!'}), 401
 
@@ -297,18 +293,101 @@ def login():
     except ValueError:
         return jsonify({'status': 500, 'errors': 'Hash de senha inválido no banco de dados!'}), 500
 
+@app.route('/cloud-query/crew', methods=['POST'])
+def add_crew():
+    logger.info("###              DEMO: POST /crew              ###")
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    logger.info("---- new crew  ----")
+    logger.debug(f'payload: {payload}')
+    statement = """
+                              INSERT INTO crew (crew_members_user__id_user) 
+                                      VALUES ( %s )"""
+    values = (payload['id'],)
+    try:
+        cur.execute(statement, values)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify({'status': 200, 'result':'Inserido com sucesso!' })
+
+@app.route('/cloud-query/crew', methods=['GET'])
+def get_crews():
+    logger.info("###              DEMO: GET /crewa             ###")
+
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM crew")
+    rows = cur.fetchall()
+
+    payload = []
+    logger.debug("---- departments  ----")
+    for row in rows:
+        logger.debug(row)
+        content = {'crew_id': int(row[0]), 'administrador_creater': row[1], 'crew_chief': row[2]}
+        payload.append(content) # appending to the payload to be returned
+
+    conn.close()
+    return jsonify(payload)
+
+@app.route('/cloud-query/airport', methods=['POST'])
+def add_airport():
+    logger.info("###              DEMO: POST /airport              ###")
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    airport_json = request.get_json()
+    logger.info("---- new airport  ----")
+    logger.debug(f'payload: {payload}')
+    statement = """
+                                  INSERT INTO airport_ (admin__user__id_user, city,name, country) 
+                                          VALUES ( %s,%s,%s,%s)"""
+    values = (payload['id'],airport_json['name'],airport_json['country'],airport_json['city'])
+    statement2="""
+    SELECT (airport_code) FROM airport WHERE admin__user__id_user = %s AND city = %s AND name = %s
+    """
+    values2 = (payload['id'],airport_json['name'],airport_json['country'])
+    try:
+        cur.execute(statement, values)
+        cur.execute(statement2, values2)
+        rows = cur.fetchone()
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify({'status': 200, 'result':rows[0]})
+
+@app.route('/cloud-query/schedule', methods=['POST'])
+
 
 ##########################################################
 ## DATABASE ACCESS
 ##########################################################
 
 def db_connection():
-    # NOTE: change the host to "db" if you are running as a Docker container
+# NOTE: change the host to "db" if you are running as a Docker container
     db = psycopg2.connect(user = "SGD_project",
-                            password = "5432",
-                            host = "localhost", #"db",
-                            port = "5433",
-                            database = "cloud_query")
+                        password = "5432",
+                        host = "localhost", #"db",
+                        port = "5433",
+                        database = "cloud_query")
     return db
 
 
@@ -317,17 +396,17 @@ def db_connection():
 ##########################################################
 if __name__ == "__main__":
 
-    # Set up the logging
+# Set up the logging
     logging.basicConfig(filename="logs/log_file.log")
     logger = logging.getLogger('logger')
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
 
-    # create formatter
+# create formatter
     formatter = logging.Formatter('%(asctime)s [%(levelname)s]:  %(message)s',
-                              '%H:%M:%S')
-                              # "%Y-%m-%d %H:%M:%S") # not using DATE to simplify
+                          '%H:%M:%S')
+                          # "%Y-%m-%d %H:%M:%S") # not using DATE to simplify
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
@@ -335,12 +414,12 @@ if __name__ == "__main__":
     time.sleep(1) # just to let the DB start before this print :-)
 
 
-    logger.info("\n---------------------------------------------------------------\n" + 
-                  "API v1.0 online: http://localhost:8080/cloud-query/\n\n")
+    logger.info("\n---------------------------------------------------------------\n" +
+              "API v1.0 online: http://localhost:8080/cloud-query/\n\n")
 
 
-    
-    # NOTE: change to 5000 or remove the port parameter if you are running as a Docker container
+
+# NOTE: change to 5000 or remove the port parameter if you are running as a Docker container
     app.run(host="0.0.0.0", port=8080, debug=True, threaded=True)
 
 
