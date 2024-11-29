@@ -78,7 +78,7 @@ CREATE TABLE ticket_ (
 	vat			 VARCHAR(512),
 	payment_booking_payment_id BIGINT,
 	seat_schedule__schedule_id BIGINT NOT NULL,
-	PRIMARY KEY(payment_booking_payment_id)
+	PRIMARY KEY(payment_booking_payment_id,vat)
 );
 
 CREATE TABLE payment_booking (
@@ -95,7 +95,7 @@ CREATE TABLE payment_method (
 	method			 VARCHAR(512) NOT NULL,
 	percent			 INTEGER NOT NULL,
 	payment_booking_payment_id BIGINT,
-	PRIMARY KEY(payment_booking_payment_id)
+	PRIMARY KEY(payment_booking_payment_id,method)
 );
 
 CREATE TABLE seat (

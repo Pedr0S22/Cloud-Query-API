@@ -49,7 +49,7 @@ def verify_token():
     if not token:
         return jsonify({'error':'Token is missing'}), 401
     try:
-        if token.startswith("Bearer "):
+        if token.startswith("Bearer "): #Tenho de trocar isto para JWT token ver chatgpt
             token = token[7:]
 
         payload = jwt.decode(token, password_token, algorithms=["HS256"])
@@ -129,7 +129,7 @@ def add_users():
     logger.debug(f'payload: {payload}')
     statement = """
                   INSERT INTO user_ (username, email, password) 
-                          VALUES ( %s,   %s ,   %s )"""
+                         VALUES ( %s,   %s ,   %s )"""
     has_password=bcrypt.hashpw(payload['password'].encode('utf-8'), bcrypt.gensalt())
     values = (payload['username'], payload['email'], has_password.decode('utf-8'))
 
@@ -296,162 +296,6 @@ def login():
             return jsonify({'status': 401, 'errors': 'Username or password incorrect!'}), 401
     except ValueError:
         return jsonify({'status': 500, 'errors': 'Hash de senha inválido no banco de dados!'}), 500
-
-
-
-
-
-
-
-
-
-
-##      Demo GET
-##
-## Obtain all departments, in JSON format
-##
-## To use it, access: 
-## 
-##   http://localhost:8080/departments/
-##
-
-@app.route("/cloud-query/departments/", methods=['GET'], strict_slashes=True)
-def get_all_departments():
-    logger.info("###              DEMO: GET /departments              ###");
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT ndep, nome, local FROM dep")
-    rows = cur.fetchall()
-
-    payload = []
-    logger.debug("---- departments  ----")
-    for row in rows:
-        logger.debug(row)
-        content = {'ndep': int(row[0]), 'nome': row[1], 'localidade': row[2]}
-        payload.append(content) # appending to the payload to be returned
-
-    conn.close()
-    return jsonify(payload)
-
-
-
-##
-##      Demo GET
-##
-## Obtain department with ndep <ndep>
-##
-## To use it, access: 
-## 
-##   http://localhost:8080/departments/10
-##
-
-@app.route("/departments/<ndep>", methods=['GET'])
-def get_department(ndep):
-    logger.info("###              DEMO: GET /departments/<ndep>              ###");   
-
-    logger.debug(f'ndep: {ndep}')
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT ndep, nome, local FROM dep where ndep = %s", (ndep,) )
-    rows = cur.fetchall()
-
-    row = rows[0]
-
-    logger.debug("---- selected department  ----")
-    logger.debug(row)
-    content = {'ndep': int(row[0]), 'nome': row[1], 'localidade': row[2]}
-
-    conn.close ()
-    return jsonify(content)
-
-
-
-##
-##      Demo POST
-##
-## Add a new department in a JSON payload
-##
-## To use it, you need to use postman or curl: 
-##
-##   curl -X POST http://localhost:8080/departments/ -H "Content-Type: application/json" -d '{"localidade": "Polo II", "ndep": 69, "nome": "Seguranca"}'
-##
-
-
-@app.route("/users/<username>", methods=['GET'])
-def get_user(username):
-    logger.info("###              DEMO: GET /users/<username>              ###");   
-
-    logger.debug(f'ndep: {username}')
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT id_user, username, email, password FROM user_ where username = %s", (username,) )
-    # cur.execute("SELECT id_user, username, email, password FROM user_ where username like :username", {"search": "%" + username + "%"})
-    rows = cur.fetchall()
-
-    row = rows[0]
-
-    logger.debug("---- selected user  ----")
-    logger.debug(row)
-
-    result = []
-    content ={'id': row[0],'username': row[1], 'email': row[2], 'password': row[3]}
-    # for x in rows:
-    #     result.append()
-
-    conn.close ()
-    return jsonify(content)
-
-
-@app.route("/departments/", methods=['PUT'])
-def update_departments():
-    logger.info("###              DEMO: PUT /departments              ###");   
-    content = request.get_json()
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-
-    #if content["ndep"] is None or content["nome"] is None :
-    #    return 'ndep and nome are required to update'
-
-    if "ndep" not in content or "localidade" not in content:
-        return 'ndep and localidade are required to update'
-
-
-    logger.info("---- update department  ----")
-    logger.info(f'content: {content}')
-
-    # parameterized queries, good for security and performance
-    statement ="""
-                UPDATE dep 
-                  SET local = %s
-                WHERE ndep = %s"""
-
-
-    values = (content["localidade"], content["ndep"])
-
-    try:
-        res = cur.execute(statement, values)
-        result = f'Updated: {cur.rowcount}'
-        cur.execute("commit")
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        result = 'Failed!'
-    finally:
-        if conn is not None:
-            conn.close()
-    return jsonify(result)
-
-
-
-
-
 
 
 ##########################################################
