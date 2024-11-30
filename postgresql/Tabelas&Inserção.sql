@@ -47,7 +47,7 @@ CREATE TABLE crew (
 	PRIMARY KEY(crew_id)
 );
 
-CREATE TABLE passenger (
+CREATE TABLE passanger (
 	user__id_user BIGINT,
 	PRIMARY KEY(user__id_user)
 );
@@ -58,50 +58,56 @@ CREATE TABLE flight_ (
 	arrival_time		 TIMESTAMP NOT NULL,
 	existing_seats	 BIGINT NOT NULL,
 	admin__user__id_user	 BIGINT NOT NULL,
-	airport__airport_code	 BIGINT NOT NULL,
-	airport__airport_code1 BIGINT NOT NULL,
+	airport_dep	 BIGINT NOT NULL,
+	airport_arr BIGINT NOT NULL,
 	PRIMARY KEY(flight_code)
 );
 
 CREATE TABLE schedule_ (
-	schedule_id		 BIGSERIAL,
 	flight_date		 DATE NOT NULL,
-	price_ticket	 DOUBLE PRECISION NOT NULL,
 	admin__user__id_user BIGINT NOT NULL,
-	crew_crew_id	 BIGINT NOT NULL,
-	flight__flight_code	 BIGINT NOT NULL,
-	PRIMARY KEY(schedule_id)
+	PRIMARY KEY(flight_date)
 );
 
 CREATE TABLE ticket_ (
 	name			 VARCHAR(512) NOT NULL,
 	vat			 VARCHAR(512),
-	payment_booking_payment_id BIGINT,
-	seat_schedule__schedule_id BIGINT NOT NULL,
-	PRIMARY KEY(payment_booking_payment_id,vat)
+	booking_booking_id	 BIGINT,
+	seat_schedule__flight_date DATE NOT NULL,
+	seat_flight__flight_code	 BIGINT NOT NULL,
+	PRIMARY KEY(booking_booking_id)
 );
 
-CREATE TABLE payment_booking (
-	payment_id		 BIGSERIAL,
-	amount			 FLOAT(8) NOT NULL,
-	payment_date		 TIMESTAMP NOT NULL,
-	booking_booking_id	 BIGSERIAL NOT NULL,
-	booking_ticket_quantity INTEGER NOT NULL,
-	schedule__schedule_id	 BIGINT NOT NULL,
+CREATE TABLE booking (
+	booking_id		 BIGSERIAL,
+	ticket_quantity	 INTEGER NOT NULL,
+	ticket_amout_to_pay	 FLOAT(8) NOT NULL,
+	ticket_amout_payed	 FLOAT(8) NOT NULL DEFAULT 0,
+	flight__flight_code	 BIGINT NOT NULL,
+	schedule__flight_date DATE NOT NULL,
+	PRIMARY KEY(booking_id)
+);
+
+CREATE TABLE payment (
+	payment_id	 BIGSERIAL,
+	amount_payed	 FLOAT(8) NOT NULL,
+	payment_date	 TIMESTAMP NOT NULL,
+	booking_booking_id BIGINT NOT NULL,
 	PRIMARY KEY(payment_id)
 );
 
 CREATE TABLE payment_method (
-	method			 VARCHAR(512) NOT NULL,
-	percent			 INTEGER NOT NULL,
-	payment_booking_payment_id BIGINT,
-	PRIMARY KEY(payment_booking_payment_id,method)
+	method		 VARCHAR(512) NOT NULL,
+	payment_payment_id BIGINT,
+	PRIMARY KEY(payment_payment_id)
 );
 
 CREATE TABLE seat (
 	available		 BOOL NOT NULL,
-	schedule__schedule_id BIGINT,
-	PRIMARY KEY(schedule__schedule_id)
+	seat_number		 BIGINT NOT NULL,
+	schedule__flight_date DATE,
+	flight__flight_code	 BIGINT,
+	PRIMARY KEY(schedule__flight_date,flight__flight_code)
 );
 
 CREATE TABLE crew_members (
@@ -121,63 +127,48 @@ CREATE TABLE pilot (
 	PRIMARY KEY(crew_members_user__id_user)
 );
 
-CREATE TABLE passenger_payment_booking (
-	passenger_user__id_user	 BIGINT,
-	payment_booking_payment_id BIGINT,
-	PRIMARY KEY(passenger_user__id_user,payment_booking_payment_id)
+CREATE TABLE passanger_booking (
+	passanger_user__id_user BIGINT,
+	booking_booking_id	 BIGINT,
+	PRIMARY KEY(passanger_user__id_user,booking_booking_id)
+);
+
+CREATE TABLE flight__schedule_ (
+	flight__flight_code	 BIGINT,
+	schedule__flight_date DATE,
+	crew_crew_id		 BIGINT NOT NULL,
+	PRIMARY KEY(flight__flight_code,schedule__flight_date)
 );
 
 ALTER TABLE user_ ADD UNIQUE (username, email);
+ALTER TABLE user_ ADD CONSTRAINT Role CHECK (role in ("Adminstrador", "Passanger","Crew"));
 ALTER TABLE admin_ ADD CONSTRAINT admin__fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
 ALTER TABLE airport_ ADD CONSTRAINT airport__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
 ALTER TABLE crew ADD CONSTRAINT crew_fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
 ALTER TABLE crew ADD CONSTRAINT crew_fk2 FOREIGN KEY (crew_members_user__id_user) REFERENCES crew_members(user__id_user);
-ALTER TABLE passenger ADD CONSTRAINT passenger_fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
-ALTER TABLE flight_ ADD CONSTRAINT flight__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
-ALTER TABLE flight_ ADD CONSTRAINT flight__fk2 FOREIGN KEY (airport__airport_code) REFERENCES airport_(airport_code);
-ALTER TABLE flight_ ADD CONSTRAINT flight__fk3 FOREIGN KEY (airport__airport_code1) REFERENCES airport_(airport_code);
+ALTER TABLE passanger ADD CONSTRAINT passanger_fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
+ALTER TABLE flight__schedule_ ADD CONSTRAINT flight__schedule_fk1 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
+ALTER TABLE flight_ ADD CONSTRAINT flight__fk2 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
+ALTER TABLE flight_ ADD CONSTRAINT flight__fk3 FOREIGN KEY (airport_dep) REFERENCES airport_(airport_code);
+ALTER TABLE flight_ ADD CONSTRAINT flight__fk4 FOREIGN KEY (airport_arr) REFERENCES airport_(airport_code);
 ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
-ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk2 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
-ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk3 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
-ALTER TABLE ticket_ ADD UNIQUE (seat_schedule__schedule_id);
-ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk1 FOREIGN KEY (payment_booking_payment_id) REFERENCES payment_booking(payment_id);
-ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk2 FOREIGN KEY (seat_schedule__schedule_id) REFERENCES seat(schedule__schedule_id);
+ALTER TABLE ticket_ ADD UNIQUE (seat_schedule__flight_date, seat_flight__flight_code);
+ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk1 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
+ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk2 FOREIGN KEY (seat_schedule__flight_date, seat_flight__flight_code) REFERENCES seat(schedule__flight_date, flight__flight_code);
 ALTER TABLE ticket_ ADD CONSTRAINT constraint_0 CHECK (CHECK (LENGTH(vat) = 9));
-ALTER TABLE payment_booking ADD UNIQUE (booking_booking_id);
-ALTER TABLE payment_booking ADD CONSTRAINT payment_booking_fk1 FOREIGN KEY (schedule__schedule_id) REFERENCES schedule_(schedule_id);
-ALTER TABLE payment_method ADD CONSTRAINT payment_method_fk1 FOREIGN KEY (payment_booking_payment_id) REFERENCES payment_booking(payment_id);
+ALTER TABLE booking ADD CONSTRAINT booking_fk1 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
+ALTER TABLE booking ADD CONSTRAINT booking_fk2 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);
+ALTER TABLE payment ADD CONSTRAINT payment_fk1 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
+ALTER TABLE payment_method ADD CONSTRAINT payment_method_fk1 FOREIGN KEY (payment_payment_id) REFERENCES payment(payment_id);
 ALTER TABLE payment_method ADD CONSTRAINT constraint_0 CHECK (method in ("MBWay","Credit Card","Multibanco reference"));
-ALTER TABLE seat ADD CONSTRAINT seat_fk1 FOREIGN KEY (schedule__schedule_id) REFERENCES schedule_(schedule_id);
+ALTER TABLE seat ADD CONSTRAINT seat_fk1 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);
+ALTER TABLE seat ADD CONSTRAINT seat_fk2 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
 ALTER TABLE crew_members ADD CONSTRAINT crew_members_fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
 ALTER TABLE flight_attendante ADD CONSTRAINT flight_attendante_fk1 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
 ALTER TABLE flight_attendante ADD CONSTRAINT flight_attendante_fk2 FOREIGN KEY (crew_members_user__id_user) REFERENCES crew_members(user__id_user);
 ALTER TABLE pilot ADD CONSTRAINT pilot_fk1 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
 ALTER TABLE pilot ADD CONSTRAINT pilot_fk2 FOREIGN KEY (crew_members_user__id_user) REFERENCES crew_members(user__id_user);
-ALTER TABLE passenger_payment_booking ADD CONSTRAINT passenger_payment_booking_fk1 FOREIGN KEY (passenger_user__id_user) REFERENCES passenger(user__id_user);
-ALTER TABLE passenger_payment_booking ADD CONSTRAINT passenger_payment_booking_fk2 FOREIGN KEY (payment_booking_payment_id) REFERENCES payment_booking(payment_id);
-
-
-/* 
-   Fazer copy-paste deste ficheiro
-   para o SQL Editor do PgAdmin e executar (F5).
-*/
-
-/* Insere os departamentos
- */
--- INSERT INTO dep VALUES (10, 'Contabilidade', 'Condeixa');
--- INSERT INTO dep VALUES (20, 'Investigacao',  'Mealhada');
--- INSERT INTO dep VALUES (30, 'Vendas',        'Coimbra');
--- INSERT INTO dep VALUES (40, 'Planeamento',   'Montemor');
-
-
-
-/* Insere os empregrados
- * Note-se  que  como  existe a  restricao  de  o  numero
- * do encarregado ser uma chave estrangeira (que por acaso
- * aponta  para a  chave primaria  da  mesma  tabela)  os 
- * empregados  teem  que  ser  inseridos na  ordem certa.
- * Primeiro o presidente (que nao tem superiores)  depois
- * os empregados cujo encarregado e' o presidente e assim
- * sucessivamente.
- * 
- */
+ALTER TABLE passanger_booking ADD CONSTRAINT passanger_booking_fk1 FOREIGN KEY (passanger_user__id_user) REFERENCES passanger(user__id_user);
+ALTER TABLE passanger_booking ADD CONSTRAINT passanger_booking_fk2 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
+ALTER TABLE flight__schedule_ ADD CONSTRAINT flight__schedule__fk1 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
+ALTER TABLE flight__schedule_ ADD CONSTRAINT flight__schedule__fk2 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);

@@ -49,8 +49,8 @@ def verify_token():
     if not token:
         return jsonify({'error':'Token is missing'}), 401
     try:
-        #if token.startswith("Bearer "):
-            #token = token[7:]
+        if token.startswith("Bearer "):
+            token = token[7:]
 
         payload = jwt.decode(token, password_token, algorithms=["HS256"])
 
@@ -305,7 +305,7 @@ def add_crew():
     logger.info("---- new crew  ----")
     logger.debug(f'payload: {payload}')
     statement = """
-                              INSERT INTO crew (crew_members_user__id_user) 
+                              INSERT INTO crew (admin__user__id_user) 
                                       VALUES ( %s )"""
     values = (payload['id'],)
     try:
@@ -320,7 +320,7 @@ def add_crew():
 
 @app.route('/cloud-query/crew', methods=['GET'])
 def get_crews():
-    logger.info("###              DEMO: GET /crewa             ###")
+    logger.info("###              DEMO: GET /crew             ###")
 
     payload = verify_admin()
     if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
@@ -374,7 +374,36 @@ def add_airport():
             conn.close()
     return jsonify({'status': 200, 'result':rows[0]})
 
-@app.route('/cloud-query/schedule', methods=['POST'])
+@app.route('/cloud-query/flight', methods=['POST'])
+def add_flight():
+    logger.info("###              DEMO: POST /flight             ###")
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+    conn = db_connection()
+    cur = conn.cursor()
+    flight_json = request.get_json()
+    logger.info("---- new airport  ----")
+    logger.debug(f'payload: {payload}')
+    statement = """
+                                      INSERT INTO flight_ (admin__user__id_user, departu) 
+                                              VALUES ( %s,%s,%s,%s)"""
+    values = ()
+    statement2 = """
+        SELECT (airport_code) FROM airport WHERE admin__user__id_user = %s AND city = %s AND name = %s
+        """
+    values2 = ()
+    try:
+        cur.execute(statement, values)
+        cur.execute(statement2, values2)
+        rows = cur.fetchone()
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify({'status': 200, 'result': rows[0]})
 
 
 ##########################################################
