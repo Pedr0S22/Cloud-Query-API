@@ -73,6 +73,7 @@ CREATE TABLE ticket_ (
 	name			 VARCHAR(512) NOT NULL,
 	vat			 VARCHAR(512),
 	booking_booking_id	 BIGINT,
+	seat_number		VARCHAR(512) NOT NULL,
 	seat_schedule__flight_date DATE NOT NULL,
 	seat_flight__flight_code	 BIGINT NOT NULL,
 	PRIMARY KEY(booking_booking_id)
@@ -104,14 +105,15 @@ CREATE TABLE payment_method (
 
 CREATE TABLE seat (
 	available		 BOOL NOT NULL,
-	seat_number		 BIGINT NOT NULL,
+	seat_number		 VARCHAR(512) NOT NULL,
 	schedule__flight_date DATE,
 	flight__flight_code	 BIGINT,
-	PRIMARY KEY(schedule__flight_date,flight__flight_code)
+	PRIMARY KEY(schedule__flight_date,flight__flight_code,seat_number)
 );
 
 CREATE TABLE crew_members (
-	user__id_user BIGINT,
+	admin__user__id_user BIGINT NOT NULL,
+	user__id_user	 BIGINT,
 	PRIMARY KEY(user__id_user)
 );
 
@@ -141,7 +143,6 @@ CREATE TABLE flight__schedule_ (
 );
 
 ALTER TABLE user_ ADD UNIQUE (username, email);
-ALTER TABLE user_ ADD CONSTRAINT Role CHECK (role in ("Adminstrador", "Passanger","Crew"));
 ALTER TABLE admin_ ADD CONSTRAINT admin__fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
 ALTER TABLE airport_ ADD CONSTRAINT airport__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
 ALTER TABLE crew ADD CONSTRAINT crew_fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
@@ -154,16 +155,17 @@ ALTER TABLE flight_ ADD CONSTRAINT flight__fk4 FOREIGN KEY (airport_arr) REFEREN
 ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
 ALTER TABLE ticket_ ADD UNIQUE (seat_schedule__flight_date, seat_flight__flight_code);
 ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk1 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
-ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk2 FOREIGN KEY (seat_schedule__flight_date, seat_flight__flight_code) REFERENCES seat(schedule__flight_date, flight__flight_code);
-ALTER TABLE ticket_ ADD CONSTRAINT constraint_0 CHECK (CHECK (LENGTH(vat) = 9));
+ALTER TABLE ticket_ ADD CONSTRAINT constraint_0 CHECK (LENGTH(vat) = 9);
+ALTER TABLE ticket_ ADD CONSTRAINT ticket_fk2 FOREIGN KEY (seat_number,seat_schedule__flight_date,seat_flight__flight_code) REFERENCES seat(seat_number, schedule__flight_date, flight__flight_code);
 ALTER TABLE booking ADD CONSTRAINT booking_fk1 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
 ALTER TABLE booking ADD CONSTRAINT booking_fk2 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);
 ALTER TABLE payment ADD CONSTRAINT payment_fk1 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
 ALTER TABLE payment_method ADD CONSTRAINT payment_method_fk1 FOREIGN KEY (payment_payment_id) REFERENCES payment(payment_id);
-ALTER TABLE payment_method ADD CONSTRAINT constraint_0 CHECK (method in ("MBWay","Credit Card","Multibanco reference"));
+ALTER TABLE payment_method ADD CONSTRAINT constraint_0 CHECK (method in ('MBWay','Credit Card','Multibanco reference'));
 ALTER TABLE seat ADD CONSTRAINT seat_fk1 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);
 ALTER TABLE seat ADD CONSTRAINT seat_fk2 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
-ALTER TABLE crew_members ADD CONSTRAINT crew_members_fk1 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
+ALTER TABLE crew_members ADD CONSTRAINT crew_members_fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
+ALTER TABLE crew_members ADD CONSTRAINT crew_members_fk2 FOREIGN KEY (user__id_user) REFERENCES user_(id_user);
 ALTER TABLE flight_attendante ADD CONSTRAINT flight_attendante_fk1 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
 ALTER TABLE flight_attendante ADD CONSTRAINT flight_attendante_fk2 FOREIGN KEY (crew_members_user__id_user) REFERENCES crew_members(user__id_user);
 ALTER TABLE pilot ADD CONSTRAINT pilot_fk1 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);

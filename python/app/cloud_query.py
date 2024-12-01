@@ -154,7 +154,7 @@ def add_passenger():
 
     conn = db_connection()
     cur = conn.cursor()
-    add_users()
+    #add_users()
     payload = request.get_json()
     logger.info("---- new passenger  ----")
     logger.debug(f'payload: {payload}')
@@ -166,7 +166,7 @@ def add_passenger():
 
     row = rows[0]
     statement = """
-                  INSERT INTO passenger (user__id_user) 
+                  INSERT INTO passanger (user__id_user) 
                           VALUES ( %s )"""
     values = (row[0],)
     try:
@@ -218,13 +218,13 @@ def add_admin():
     "password": "123adminmario",
     "role": "pilot",
     "crew_id": 1
-}'''#Exemplo de JSON
+}'''
 @app.route('/cloud-query/crew_member', methods=['POST'])
 def add_crew_member():
     logger.info("###              DEMO: POST /crew_member              ###");
-    payload = verify_admin()
-    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
-        return payload
+    payload_admin = verify_admin()
+    if isinstance(payload_admin, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload_admin
 
     conn = db_connection()
     cur = conn.cursor()
@@ -241,13 +241,13 @@ def add_crew_member():
     crew_row = cur.fetchone()
     if crew_row:
         statement_1 = """
-                          INSERT INTO crew_members (user__id_user) 
-                                  VALUES ( %s )"""
-        values_1 = (row[0],)
+                          INSERT INTO crew_members (user__id_user,admin__user__id_user) 
+                                  VALUES ( %s , %s)"""
+        values_1 = (row[0],payload_admin['id'])
         if payload['role'] == 'pilot':
             statement_2 = """
             INSERT INTO pilot (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
-            values_2 = (row[0], crew_row[0])
+            values_2 = (crew_row[0], row[0])
         elif payload['role'] == 'flight_attendante':
             statement_2 = """INSERT INTO flight_attendante (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
             values_2 = (payload['crew_id'], crew_row[0])
