@@ -508,6 +508,207 @@ def add_schedule():
 
 
 
+@app.route('/cloud-query/all_routes', methods=['GET'])
+def get_all_routes():
+    logger.info("###              DEMO: GET /all_routes            ###")
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    sta="""
+
+SELECT 
+    f.airport_dep AS origin_airport,
+    f.airport_arr AS destination_airport,
+    f.flight_code,
+    s.flight_date AS schedule
+    
+FROM 
+    flight_ f
+JOIN 
+    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+JOIN 
+    schedule_ s ON fs.schedule__flight_date = s.flight_date
+ORDER BY
+    f.flight_code;
+
+
+"""
+    cur.execute(sta)
+    rows = cur.fetchall()
+
+    grouped_results = {}
+    for row in rows:
+        key = (row[0], row[1], row[2])
+        if key not in grouped_results:
+            grouped_results[key] = {"schedules": []}
+        grouped_results[key]["schedules"].append(row[3].strftime("%d/%m/%Y"))
+
+    # Convert to desired format
+    formatted_results = []
+    for key, value in grouped_results.items():
+        formatted_results.append({
+            "origin_airport": key[0],
+            "destination_airport": key[1],
+            "flight_code": key[2],
+            "schedules": value["schedules"],
+        })
+
+    return jsonify({'status': 200, 'result': formatted_results})
+
+
+@app.route('/cloud-query/all_routes/origin', methods=['GET'])
+def get_all_routes_origin():
+    logger.info("###              DEMO: GET /all_routes            ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    sta = """
+SELECT 
+    f.airport_dep AS origin_airport,
+    f.airport_arr AS destination_airport,
+    f.flight_code,
+    s.flight_date AS schedule
+FROM 
+    flight_ f
+JOIN 
+    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+JOIN 
+    schedule_ s ON fs.schedule__flight_date = s.flight_date
+WHERE 
+    f.airport_dep = %s
+ORDER BY
+    f.flight_code;
+
+"""
+
+    cur.execute(sta, (payload['origin_airport'],))
+    rows = cur.fetchall()
+
+    grouped_results = {}
+    for row in rows:
+        key = (row[0], row[1], row[2])
+        if key not in grouped_results:
+            grouped_results[key] = {"schedules": []}
+        grouped_results[key]["schedules"].append(row[3].strftime("%d/%m/%Y"))
+
+    # Convert to desired format
+    formatted_results = []
+    for key, value in grouped_results.items():
+        formatted_results.append({
+            "origin_airport": key[0],
+            "destination_airport": key[1],
+            "flight_code": key[2],
+            "schedules": value["schedules"],
+        })
+
+    return jsonify({'status': 200, 'result': formatted_results})
+
+@app.route('/cloud-query/all_routes/destination', methods=['GET'])
+def get_all_routes_destination():
+    logger.info("###              DEMO: GET /all_routes            ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    sta = """
+SELECT 
+    f.airport_dep AS origin_airport,
+    f.airport_arr AS destination_airport,
+    f.flight_code,
+    s.flight_date AS schedule
+FROM 
+    flight_ f
+JOIN 
+    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+JOIN 
+    schedule_ s ON fs.schedule__flight_date = s.flight_date
+WHERE 
+    f.airport_arr = %s
+ORDER BY
+    f.flight_code;
+
+"""
+
+    cur.execute(sta, (payload['destination_airport'],))
+    rows = cur.fetchall()
+
+    grouped_results = {}
+    for row in rows:
+        key = (row[0], row[1], row[2])
+        if key not in grouped_results:
+            grouped_results[key] = {"schedules": []}
+        grouped_results[key]["schedules"].append(row[3].strftime("%d/%m/%Y"))
+
+    # Convert to desired format
+    formatted_results = []
+    for key, value in grouped_results.items():
+        formatted_results.append({
+            "origin_airport": key[0],
+            "destination_airport": key[1],
+            "flight_code": key[2],
+            "schedules": value["schedules"],
+        })
+
+    return jsonify({'status': 200, 'result': formatted_results})
+
+@app.route('/cloud-query/all_routes/origin&destination', methods=['GET'])
+def get_all_routes_origin_destination():
+    logger.info("###              DEMO: GET /all_routes            ###")
+    payload = request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    sta ="""
+SELECT 
+    f.airport_dep AS origin_airport,
+    f.airport_arr AS destination_airport,
+    f.flight_code,
+    s.flight_date AS schedule
+FROM 
+    flight_ f
+JOIN 
+    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+JOIN 
+    schedule_ s ON fs.schedule__flight_date = s.flight_date
+WHERE 
+    f.airport_dep = %s
+    AND
+    f.airport_arr = %
+ORDER BY
+    f.flight_code;
+
+"""
+
+    cur.execute(sta, (payload['origin_airport'],['destination_airport']))
+    rows = cur.fetchall()
+
+    grouped_results = {}
+    for row in rows:
+        key = (row[0], row[1], row[2])
+        if key not in grouped_results:
+            grouped_results[key] = {"schedules": []}
+        grouped_results[key]["schedules"].append(row[3].strftime("%d/%m/%Y"))
+
+    # Convert to desired format
+    formatted_results = []
+    for key, value in grouped_results.items():
+        formatted_results.append({
+            "origin_airport": key[0],
+            "destination_airport": key[1],
+            "flight_code": key[2],
+            "schedules": value["schedules"],
+        })
+
+    return jsonify({'status': 200, 'result': formatted_results})
+
+
+
+
 
 ##########################################################
 ## DATABASE ACCESS
