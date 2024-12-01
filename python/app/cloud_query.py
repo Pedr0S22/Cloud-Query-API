@@ -33,6 +33,7 @@ from flask import Flask, jsonify, request
 import logging
 import psycopg2
 import time
+from _datetime import datetime
 
 app = Flask(__name__) 
 password_token="cloud_query123"
@@ -108,6 +109,43 @@ def verify_passenger():
         return payload
     else:
         return jsonify({"message": f"Acesso restrito a passageiro!"}), 403
+
+def seat_generator(num_seats):
+
+    # Seat creation considerations:
+    # letters are COLUMS and numbers are ROWS
+    # Display of a plane:
+    """
+    [1A,1B,3C,4D,5E
+     2A,2B,3C,4D,5E
+          ...
+     nA,nB,nC,nD,nE]
+    """
+    # For simplification, we consider that every plane has 5 colums
+    # and not every row is completed.
+
+    num_colums = 5
+    num_rows = num_seats//num_colums
+    # Number of seats without a complete row
+    num_seat_inc = num_seats%num_colums
+
+    seats = []
+    Alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','W','X','Y','Z']
+
+    for i in range(num_rows):
+        for lseat1 in range(num_colums):
+            letter = Alphabet[lseat1]
+            seats.append(str(i+1)+letter)
+
+    if num_seat_inc != 0:
+        number = i + 2
+        itr = 0
+        while itr < num_seat_inc:
+            letter = Alphabet[itr]
+            seats.append(str(number)+letter)
+            itr += 1
+
+    return seats
 @app.route('/cloud-query/')
 def hello(): 
     return """
@@ -154,7 +192,7 @@ def add_passenger():
 
     conn = db_connection()
     cur = conn.cursor()
-    #add_users()
+    add_users()
     payload = request.get_json()
     logger.info("---- new passenger  ----")
     logger.debug(f'payload: {payload}')
@@ -357,22 +395,22 @@ def add_airport():
     statement = """
                                   INSERT INTO airport_ (admin__user__id_user, city,name, country) 
                                           VALUES ( %s,%s,%s,%s)"""
-    values = (payload['id'],airport_json['name'],airport_json['country'],airport_json['city'])
+    values = (payload['id'],airport_json['city'],airport_json['name'],airport_json['country'])
     statement2="""
-    SELECT (airport_code) FROM airport WHERE admin__user__id_user = %s AND city = %s AND name = %s
+    SELECT (airport_code) FROM airport_ WHERE  (city = %s AND name = %s AND country= %s )
     """
-    values2 = (payload['id'],airport_json['name'],airport_json['country'])
+    values2 = (airport_json['city'],airport_json['name'],airport_json['country'])
     try:
         cur.execute(statement, values)
         cur.execute(statement2, values2)
-        rows = cur.fetchone()
+        row = cur.fetchone()
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
     finally:
         if conn is not None:
             conn.close()
-    return jsonify({'status': 200, 'result':rows[0]})
+    return jsonify({'status': 200, 'result': row[0]})
 
 @app.route('/cloud-query/flight', methods=['POST'])
 def add_flight():
@@ -383,16 +421,17 @@ def add_flight():
     conn = db_connection()
     cur = conn.cursor()
     flight_json = request.get_json()
-    logger.info("---- new airport  ----")
+    logger.info("---- new flight  ----")
     logger.debug(f'payload: {payload}')
     statement = """
-                                      INSERT INTO flight_ (admin__user__id_user, departu) 
-                                              VALUES ( %s,%s,%s,%s)"""
-    values = ()
+                                      INSERT INTO flight_(departure_time,arrival_time,existing_seats,admin__user__id_user,airport_dep,airport_arr) 
+                                      VALUES (%s, %s, %s, %s, %s, %s )
+                                      """
+    values = (datetime.strptime(flight_json['departure_time'],"%H:%M").time(),datetime.strptime(flight_json['arrival_time'],"%H:%M").time(),flight_json['existing_seats'],payload['id'],flight_json['airport_dep'],flight_json['airport_arr'])
     statement2 = """
-        SELECT (airport_code) FROM airport WHERE admin__user__id_user = %s AND city = %s AND name = %s
+        SELECT (flight_code) FROM flight_ WHERE departure_time=%s AND arrival_time=%s AND existing_seats=%s AND airport_dep=%s AND airport_arr=%s
         """
-    values2 = ()
+    values2 = (datetime.strptime(flight_json['departure_time'],"%H:%M").time(),datetime.strptime(flight_json['arrival_time'],"%H:%M").time(),flight_json['existing_seats'],flight_json['airport_dep'],flight_json['airport_arr'])
     try:
         cur.execute(statement, values)
         cur.execute(statement2, values2)
@@ -404,6 +443,70 @@ def add_flight():
         if conn is not None:
             conn.close()
     return jsonify({'status': 200, 'result': rows[0]})
+
+@app.route('/cloud-query/schedule', methods=['POST'])
+def add_schedule():
+    logger.info("###              DEMO: POST /schedule             ###")
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    sch_json = request.get_json()
+    logger.info("---- new schedule  ----")
+    logger.debug(f'payload: {payload}')
+
+    sta= '''
+    SELECT flight_date 
+    FROM schedule_
+    WHERE flight_date= %s
+    '''
+
+    values = (datetime.strptime(sch_json['date'],"%Y-%m-%d"),)
+    cur.execute(sta, values)
+    if cur.rowcount == 0:
+        sta='''
+        INSERT INTO schedule_ (flight_date)
+        VALUES (%s)
+        '''
+        data=datetime.strptime(sch_json['date'], "%Y-%m-%d").date()
+        values = (data,)
+        cur.execute(sta, values)
+
+    sta='''
+    INSERT INTO  flight__schedule_(flight__flight_code, schedule__flight_date, crew_crew_id, ticket_price, admin__user__id_user) 
+            VALUES (%s, %s, %s, %s, %s)
+    '''
+    val=(sch_json['flight_code'],datetime.strptime(sch_json['date'], "%Y-%m-%d"),sch_json['crew_id'],sch_json['ticket_price'],payload['id'])
+
+    query_seats='''
+    SELECT existing_seats 
+    FROM flight_
+    WHERE flight_code= %s
+    '''
+
+    sta2='''
+        INSERT INTO seat(available, seat_number, schedule__flight_date, flight__flight_code) 
+        VALUES (%s,%s,%s,%s) 
+    '''
+
+    try:
+        cur.execute(sta, val)
+        cur.execute(query_seats,( sch_json['flight_code'],))
+        seat_n = cur.fetchone()[0]
+        for i in seat_generator(seat_n):
+            val2=(bool(True),i,data,sch_json['flight_code'])
+            cur.execute(sta2, val2)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify({'status': 200, 'result':'Inserido com sucesso!'})
+
+
 
 
 ##########################################################
@@ -424,7 +527,6 @@ def db_connection():
 ## MAIN
 ##########################################################
 if __name__ == "__main__":
-
 # Set up the logging
     logging.basicConfig(filename="logs/log_file.log")
     logger = logging.getLogger('logger')
