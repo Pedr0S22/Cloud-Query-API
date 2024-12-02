@@ -3074,3 +3074,81 @@ API v1.0 online: http://localhost:8080/cloud-query/
 
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [02/Dec/2024 10:54:59] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [02/Dec/2024 10:55:36] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [02/Dec/2024 10:57:21] "GET /cloud-query/seats HTTP/1.1" 200 -

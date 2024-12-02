@@ -708,7 +708,32 @@ ORDER BY
 
 
 
+@app.route('/cloud-query/seats', methods=['GET'])
+def check_seats():
+    logger.info("###              DEMO: GET /check_seats           ###")
+    payload = request.get_json()
 
+    conn = db_connection()
+    cur = conn.cursor()
+
+    sta ="""
+SELECT 
+    seat_number
+FROM 
+    seat
+WHERE 
+    flight__flight_code = %s
+    AND schedule__flight_date = %s
+    AND available = TRUE;
+
+"""
+    val=(payload['flight_code'],payload['date'])
+    cur.execute(sta, val)
+
+    rows = cur.fetchall()
+    seat_numbers = [row[0] for row in rows]
+
+    return jsonify({'status': 200, 'result': seat_numbers})
 
 ##########################################################
 ## DATABASE ACCESS
