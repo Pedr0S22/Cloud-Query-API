@@ -102,7 +102,7 @@ def verify_passenger():
     conn = db_connection()
     cur = conn.cursor()
     id = payload['id']
-    cur.execute("SELECT * FROM passenger WHERE  user__id_user= %s", (id,))
+    cur.execute("SELECT * FROM passanger WHERE  user__id_user= %s", (id,))
     row = cur.fetchone()
 
     if row:
@@ -734,6 +734,551 @@ WHERE
     seat_numbers = [row[0] for row in rows]
 
     return jsonify({'status': 200, 'result': seat_numbers})
+
+
+@app.route('/cloud-query/book_flight', methods=['POST'])
+def add_book_flight():
+    logger.info("###              DEMO: POST /book_flight             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    # Só os passageiros podem fazer fazer reservas/pagamentos
+    payload = verify_passenger()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    booking_payload = request.get_json()
+    logger.info("---- make your booking  ----")
+    logger.debug(f'payload: {payload}')
+
+    # Verificação do input
+
+    ##############################################################################################################
+    # VERIFICAR ROTAS! FAZER QUERY 6 - """ SE A ROTA ENTRE FLIGHT_CODE E SCHEDULE_DATE EXISTE, ENTÃO PROSEGUIR"""#
+    ##############################################################################################################
+
+    if booking_payload["ticket_quantity"] != len(booking_payload["seat_id"]):
+        aux = f"Something is wrong with your request. the number of ticket_quantity, {booking_payload['ticket_quantity']} don't match the number of seats {len(booking_payload['seat_id'])}."
+        return jsonify({'status': 400, 'errors': aux}), 400
+
+    # Verificação da disponibilidade de assentos
+    statement1 = """
+        SELECT COUNT(*) AS available_seats
+        FROM seat
+        WHERE
+        flight__flight_code = %s
+        AND schedule__flight_date = %s
+        AND seat_number = ANY(%s)
+        AND available = TRUE;"""
+
+    values1 = (booking_payload['flight_code'],
+               booking_payload['date'],
+               booking_payload['seat_id'])
+
+    cur.execute(statement1, values1)
+    rows = cur.fetchone()
+
+    if rows[0] != booking_payload['ticket_quantity']:
+        aux = f"Something is wrong with your request. Not enough available seats for booking."
+        return jsonify({'status': 400, 'errors': aux}), 400
+
+    # Atualizar a disponibilidade dos assentos do booking
+    statement2 = """
+            UPDATE seat
+            SET available = FALSE
+            WHERE
+                flight__flight_code = %s
+                AND schedule__flight_date = %s
+                AND seat_number = ANY(%s)
+                AND available = TRUE;"""
+    values2 = (booking_payload["flight_code"],
+               booking_payload["date"],
+               booking_payload["seat_id"])
+
+    try:
+        cur.execute(statement2, values2)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (update into seat)!'}), 500
+
+    # Inserção dos dados do booking na tabela
+    statement3 = """
+            INSERT INTO booking (
+                ticket_quantity, 
+                ticket_amout_to_pay,
+                ticket_amout_payed,
+                flight__flight_code, 
+                schedule__flight_date,
+                passanger_user__id_user
+            ) VALUES (
+                %s, 
+                %s * (SELECT ticket_price FROM flight__schedule_ WHERE flight__flight_code = %s AND schedule__flight_date = %s) ,
+                0,
+                %s, 
+                %s,
+                %s
+            );"""
+    values3 = (booking_payload["ticket_quantity"],
+               booking_payload["ticket_quantity"],
+               booking_payload["flight_code"],
+               booking_payload["date"],
+               booking_payload["flight_code"],
+               booking_payload["date"],
+               payload['id'])
+
+    try:
+        cur.execute(statement3, values3)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into booking)!'}), 500
+
+
+    # Verificar e devolver o booking_id gerado.
+    statement5 = """
+                SELECT booking_id 
+                FROM booking 
+                WHERE flight__flight_code = %s 
+                AND schedule__flight_date = %s
+                AND ticket_quantity = %s
+                AND passanger_user__id_user= %s
+                ORDER BY booking_id DESC
+                LIMIT 1
+"""
+    values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload["ticket_quantity"],payload['id'])
+
+    cur.execute(statement5, values5)
+    rows = cur.fetchall()
+
+    if len(rows) != 1:
+        aux = f"Something is wrong with your request."
+        return jsonify({'status': 500, 'errors': aux}), 500
+
+    conn.close()
+    return jsonify(
+        {'status': 200, 'results': f"You created successfully your booking. Proceed to payment for booking {rows[0]}."})
+
+
+# QUERY EXTRA - VERIFICADA
+@app.route('/cloud-query/tickets', methods=['POST'])
+def add_tickets():
+    logger.info("###              DEMO: POST /tickets             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    # Só os passageiros podem fazer pedir tickets!
+    payload = verify_passenger()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    tickets_payload = request.get_json()
+    logger.info("---- make your tickets  ----")
+    logger.debug(f'payload: {payload}')
+
+    # Verificação se os bilhetes foram criados
+    statement0 = """
+            SELECT 1
+            FROM tickets_
+            WHERE booking_booking_id = %s;
+            """
+    values0 = (tickets_payload['booking_id'],)
+
+    cur.execute(statement0, values0)
+    rows = cur.fetchall()
+
+    if rows[0] == 1:
+        aux = f"Something is wrong with your request. You already created the tickets."
+        return jsonify({'status': 400, 'errors': aux}), 400
+
+    # Verificação dos dados do request
+    statement1 = """
+            SELECT 1
+            FROM booking
+            WHERE booking_id = %s
+            AND ticket_amout_to_pay = ticket_amout_payed;"""
+
+    values1 = (tickets_payload['booking_id'],)
+
+    cur.execute(statement1, values1)
+    rows = cur.fetchall()
+
+    # verificar se a verificação anterior é válida:
+    if rows[0] != 1:
+        aux = f"Something is wrong with your request. You didn't complete the booking {tickets_payload['booking_id']} payment"
+        return jsonify({'status': 400, 'errors': aux}), 400
+
+    # Criação dos bilhetes
+    # NOTA: A SUBQUERY PARA IR BUSCAR O FLIGHT_CODE E FLIGHT_DATE PODE SER TRAZIDO DA TABELA BOOKING PQ É O MESMO VOO E HORARIO!
+    statement2 = """
+            INSERT INTO ticket_(
+                name,
+                vat,
+                booking_booking_id,
+                seat_schedule__flight_date,
+                seat_flight__flight_code
+            ) VALUES(
+                %s,
+                %s,
+                %s,
+                (
+                    SELECT seat_schedule__flight_date
+                    FROM booking 
+                    WHERE booking_id = %s;
+                ),
+                (
+                    SELECT seat_flight__flight_code
+                    FROM booking
+                    WHERE booking_id = %s;
+                )
+            );"""
+    values2 = (tickets_payload["name"],
+               tickets_payload["vat"],
+               tickets_payload["booking_id"],
+               tickets_payload["booking_id"],
+               tickets_payload["booking_id"],)
+
+    try:
+        cur.execute(statement2, values2)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment)!'}), 500
+
+    conn.close()
+    return jsonify({'status': 200, 'results': "You created successfully your tickets."})
+
+
+# QUERY 9 - VERIFICADA
+@app.route('/cloud-query/top_destinations/<n>', methods=['GET'])
+def top_destinations(n):
+    logger.info("###              DEMO: GET /top_destinations             ###");
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.info("----  Report with the top N destinations ----")
+    logger.debug(f'N top destinatons: {n}')
+
+
+    # Verification of valid input
+    try:
+        n = int(n)
+        if n <= 0:
+            return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" should be greater than 1.'}), 400
+    except ValueError:
+        return jsonify(
+            {'status': 400, 'errors': 'The value for "top_n_flights" should be an integer value greater than 1.'}), 400
+    except Exception as e:
+        return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" is not valid!'}), 400
+
+    current_date = datetime.today()
+
+    statement = """
+        SELECT
+            f.airport_arr AS destination_airport,
+            COUNT(f.flight_code) AS number_flights
+        FROM
+            flight_ f
+        JOIN
+            airport_ a ON f.airport_arr = a.airport_code
+        WHERE
+            DATE(f.arrival_time) >= %s - INTERVAL '12 months'
+        GROUP BY
+            f.airport_arr
+        ORDER BY
+        number_flights DESC; """
+
+    values = (current_date,)
+
+    cur.execute(statement, values)
+    rows = cur.fetchall()
+    # top N destinations. If n>len(rows), rows don't suffer any changes
+
+    if len(rows) == 0:
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
+
+    rows = rows[:n]
+
+    results = []
+
+    logger.info("---- Check financial data for the last year  ----")
+    for row in rows:
+        logger.debug(row)
+        content = {"destination_airport": row[0], "number_flights": row[1]}
+        results.append(content)
+    conn.close()
+    return jsonify({'status': 200, 'results': results})
+
+
+# QUERY 10 - VERIFICADA
+@app.route('/cloud-query/top_routes', methods=['GET'])
+def top_routes():
+    logger.info("###              DEMO: GET /top_routes             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    payload = request.get_json()
+    logger.info("----  Monthly report with the top N routes with more passengers  ----")
+    logger.debug(f'payload: {payload}')
+
+    n = payload["top_n_flights"]
+
+    # Verification of valid input
+    try:
+        n = int(n)
+        if n <= 0:
+            return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" should be greater than 1.'}), 400
+    except ValueError:
+        return jsonify(
+            {'status': 400, 'errors': 'The value for "top_n_flights" should be an integer value greater than 1.'}), 400
+    except Exception as e:
+        return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" is not valid!'}), 400
+
+    current_date = datetime.today().date()
+
+    statement = """
+        SELECT
+            TO_CHAR(b.schedule__flight_date, 'YYYY-MM') AS month_year,     
+            f.flight_code AS flight_id,                           
+            SUM(b.ticket_quantity) AS total_passengers            
+        FROM
+            booking AS b
+        JOIN 
+            flight_ AS f ON b.flight__flight_code = f.flight_code
+        WHERE 
+            b.schedule__flight_date >= %s - INTERVAL '12 months'
+            AND b.ticket_amout_payed = 0
+        GROUP BY 
+            TO_CHAR(b.schedule__flight_date, 'YYYY-MM'),
+            f.flight_code
+        ORDER BY 
+            month_year DESC,
+            total_passengers DESC; """
+
+    values = (current_date)
+
+    cur.execute(statement, values)
+    rows = cur.fetchall()
+
+    if len(rows) == 0:
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
+
+    results_aux = {}
+
+    # Get data for each month (month is repeated here)
+    for row in rows:
+        month = row[0]
+        flight_id = row[1]
+        total_passengers = row[2]
+
+        if month not in results_aux:
+            results_aux[month] = []
+
+        results_aux[month].append({"flight_id": flight_id, "total_passengers": total_passengers})
+
+    # Results to response the top N flights per month
+    results = []
+    for month, flights in results_aux.items():
+        top_n_flights = flights[:n]
+        results.append({"month": month, "topN": top_n_flights})
+
+    return jsonify({'status': 200, 'results': results})
+
+#QUERY PARA SABER A QUANTIA NECESSARIA A PAGAR- INFORMAÇÃO SOBRE O BOOKING POR PASSAGEIRO
+@app.route('/cloud-query/info_booking', methods=['GET'])
+def info_booking():
+    logger.info("###              DEMO: GET /info_booking             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    # Só os passageiros podem fazer pagamentos/reservas!
+    payload = verify_passenger()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    sta='''
+    SELECT booking_id,ticket_quantity,ticket_amout_to_pay,flight__flight_code,schedule__flight_date FROM booking
+WHERE passanger_user__id_user=%s
+    '''
+    val=payload['id']
+
+    cur.execute(sta, (val,))
+    rows=cur.fetchall()
+    results=[]
+    for row in rows:
+        row = list(row)
+        content={'booking_id': row[0],'ticket_quantity':row[1],'ticket_amout_to_pay':row[2],'flight__flight_code': row[3],'schedule__flight_date':row[4] }
+        results.append(content)
+    conn.close()
+    return jsonify({'status': 200, 'results': results})
+
+# QUERY 11 - VERIFICADA
+@app.route('/cloud-query/make_payment', methods=['POST'])
+def add_payment():
+    logger.info("###              DEMO: POST /make_payment             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    # Só os passageiros podem fazer pagamentos/reservas!
+    payload = verify_passenger()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    payment_payload = request.get_json()
+    logger.info("---- make new payment  ----")
+    logger.debug(f'payload: {payload}')
+
+    # Verificação dos dados do request
+    statement1 = """
+            SELECT 1
+            FROM booking AS b
+            WHERE b.booking_id = %s
+            AND b.ticket_amout_payed >= %s"""
+
+    values1 = (payment_payload['booking_id'], payment_payload['payment_amount'])
+
+    cur.execute(statement1, values1)
+    rows = cur.fetchall()
+
+    # verificar se a verificação anterior é válida e se metodo de pagamentp existe:
+    if rows[0] != 1 and (payment_payload['method'] in ("Credit Card", "MBWay", "Multibanco reference")):
+        aux = f"Something is wrong with your request. Check the values booking_id, method and if the amount you want to pay is valid (less or equal)"
+        return jsonify({'status': 500, 'errors': aux}), 500
+
+    # Inserção do pagamento na tabela payment
+    statement2 = """
+            INSERT INTO payment (amount_payed, payment_date, booking_booking_id)
+            VALUES (%s,%s,%s)"""
+
+    # Data com o formato yyyy-mm-dd
+    current_date = datetime.today().strftime('%Y-%m-%d')
+    values2 = (payment_payload['payment_amount'], current_date, payment_payload['booking_id'])
+
+    try:
+        cur.execute(statement2, values2)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment)!'}), 500
+
+    # Inserção do método de pagamento na tabela payment_method
+
+    statement_aux = """
+            SELECT payment_id
+            FROM payment
+            WHERE booking_booking_id = %s
+            ORDER BY payment_date DESC
+            LIMIT 1
+                    """
+    values_aux = (payment_payload['booking_id'],)
+
+    cur.execute(statement_aux, values_aux)
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+    payment_id = rows[0]
+
+    statement3 = """
+            INSERT INTO payment_method (method, payment_payment_id)
+            VALUES (%s,%s)
+                """
+    values3 = (payment_payload["method"], payment_id)
+    try:
+        cur.execute(statement3, values3)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify(
+            {'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment_method)!'}), 500
+
+    # Atualização a tabela do booking com o valor que ficou pago
+
+    statement4 = """
+            UPDATE booking
+            SET ticket_amout_payed = ticket_amout_payed + %s
+            WHERE booking_id = %s"""
+    values4 = (payment_payload["payment_amount"], payment_payload["booking_id"])
+    try:
+        cur.execute(statement4, values4)
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+
+    # Recolha dos dados para a resposta final ao user
+
+    statement5 = """
+            SELECT 
+                ticket_amout_payed,
+                ticket_amout_to_pay - ticket_amout_payed AS remaining_amount
+            FROM booking
+            WHERE booking_id = %s"""
+
+    values5 = payment_payload["booking_id"]
+
+    cur.execute(statement5, values5)
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+
+    results = f"You paid {rows[0]}€ for your booking {payment_payload['booking_id']}. "
+    if rows[1] == 0:
+        results += "The payment is completed."
+    else:
+        results += f"It remains {rows[1]}€ to complete booking payment."
+
+    conn.close()
+    return jsonify({'status': 200, 'results': results})
+
+
+# QUERY 12 - VERIFICADA
+@app.route('/cloud-query/financial_data', methods=['GET'])
+def financial_data():
+    logger.info("###              DEMO: GET /financial_data             ###");
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    statement = """
+        SELECT 
+            f.flight_code,
+            b.schedule__flight_date AS flight_date,
+            SUM(CASE WHEN pm.method = 'Credit Card' THEN p.amount_payed ELSE 0 END),
+            SUM(CASE WHEN pm.method = 'Multibanco reference' THEN p.amount_payed ELSE 0 END),
+            SUM(CASE WHEN pm.method = 'MBWay' THEN p.amount_payed ELSE 0 END),
+            SUM(p.amount_payed) AS total
+        FROM payment p
+        JOIN booking b ON p.booking_booking_id = b.booking_id
+        JOIN flight_ f ON b.flight__flight_code = f.flight_code
+        JOIN payment_method pm ON p.payment_payment_id = pm.payment_payment_id
+        WHERE p.payment_date >= CURRENT_DATE - INTERVAL '12 months'
+        GROUP BY f.flight_code, b.schedule__flight_date
+        ORDER BY b.schedule__flight_date DESC, f.flight_code; """
+
+    cur.execute(statement)
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+
+    results = []
+
+    logger.info("---- Check financial data for the last year  ----")
+    for row in rows:
+        logger.debug(row)
+        content = {"flight_code": int(row[0]),
+                   "flight_date": row[1],
+                   "Credit Card": float(row[2]),
+                   "Multibanco reference": float(row[3]),
+                   "MBWay": float(row[4]),
+                   "total": float(row[5])}
+        results.append(content)  # appending month report
+    conn.close()
+    return jsonify({'status': 200, 'results': results})
 
 ##########################################################
 ## DATABASE ACCESS
