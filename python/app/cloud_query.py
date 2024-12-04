@@ -124,8 +124,8 @@ def seat_generator(num_seats):
     # For simplification, we consider that every plane has 5 colums
     # and not every row is completed.
 
-    num_colums = 5
-    num_rows = num_seats//num_colums
+    num_colums = 6
+    num_rows = num_seats// num_colums
     # Number of seats without a complete row
     num_seat_inc = num_seats%num_colums
 
@@ -344,17 +344,19 @@ def add_crew():
     logger.debug(f'payload: {payload}')
     statement = """
                               INSERT INTO crew (admin__user__id_user) 
-                                      VALUES ( %s )"""
+                                      VALUES ( %s )
+                                      RETURNING crew_id"""
     values = (payload['id'],)
     try:
         cur.execute(statement, values)
+        row=cur.fetchone()
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
     finally:
         if conn is not None:
             conn.close()
-    return jsonify({'status': 200, 'result':'Inserido com sucesso!' })
+    return jsonify({'status': 200, 'result':f'Inserido com sucesso! Com id {row[0]}' })
 
 @app.route('/cloud-query/crew', methods=['GET'])
 def get_crews():
@@ -394,15 +396,11 @@ def add_airport():
     logger.debug(f'payload: {payload}')
     statement = """
                                   INSERT INTO airport_ (admin__user__id_user, city,name, country) 
-                                          VALUES ( %s,%s,%s,%s)"""
+                                          VALUES ( %s,%s,%s,%s)
+                                          RETURNING airport_code"""
     values = (payload['id'],airport_json['city'],airport_json['name'],airport_json['country'])
-    statement2="""
-    SELECT (airport_code) FROM airport_ WHERE  (city = %s AND name = %s AND country= %s )
-    """
-    values2 = (airport_json['city'],airport_json['name'],airport_json['country'])
     try:
         cur.execute(statement, values)
-        cur.execute(statement2, values2)
         row = cur.fetchone()
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
@@ -415,6 +413,7 @@ def add_airport():
 @app.route('/cloud-query/flight', methods=['POST'])
 def add_flight():
     logger.info("###              DEMO: POST /flight             ###")
+    rows=None
     payload = verify_admin()
     if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
         return payload
@@ -423,26 +422,22 @@ def add_flight():
     flight_json = request.get_json()
     logger.info("---- new flight  ----")
     logger.debug(f'payload: {payload}')
-    statement = """
-                                      INSERT INTO flight_(departure_time,arrival_time,existing_seats,admin__user__id_user,airport_dep,airport_arr) 
+    statement = """INSERT INTO flight_(departure_time,arrival_time,existing_seats,admin__user__id_user,airport_dep,airport_arr) 
                                       VALUES (%s, %s, %s, %s, %s, %s )
+                                    RETURNING flight_code
                                       """
     values = (datetime.strptime(flight_json['departure_time'],"%H:%M").time(),datetime.strptime(flight_json['arrival_time'],"%H:%M").time(),flight_json['existing_seats'],payload['id'],flight_json['airport_dep'],flight_json['airport_arr'])
-    statement2 = """
-        SELECT (flight_code) FROM flight_ WHERE departure_time=%s AND arrival_time=%s AND existing_seats=%s AND airport_dep=%s AND airport_arr=%s
-        """
-    values2 = (datetime.strptime(flight_json['departure_time'],"%H:%M").time(),datetime.strptime(flight_json['arrival_time'],"%H:%M").time(),flight_json['existing_seats'],flight_json['airport_dep'],flight_json['airport_arr'])
+
     try:
         cur.execute(statement, values)
-        cur.execute(statement2, values2)
-        rows = cur.fetchone()
+        row = cur.fetchone()
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
     finally:
         if conn is not None:
             conn.close()
-    return jsonify({'status': 200, 'result': rows[0]})
+    return jsonify({'status': 200, 'result':row[0]})
 
 @app.route('/cloud-query/schedule', methods=['POST'])
 def add_schedule():
@@ -1101,7 +1096,7 @@ def info_booking():
         return payload
 
     sta='''
-    SELECT booking_id,ticket_quantity,ticket_amout_to_pay,flight__flight_code,schedule__flight_date FROM booking
+    SELECT booking_id,ticket_quantity,ticket_amout_to_pay-ticket_amout_payed,flight__flight_code,schedule__flight_date FROM booking
 WHERE passanger_user__id_user=%s
     '''
     val=payload['id']
@@ -1135,25 +1130,26 @@ def add_payment():
 
     # Verificação dos dados do request
     statement1 = """
-            SELECT 1
+            SELECT COUNT(*)
             FROM booking AS b
             WHERE b.booking_id = %s
-            AND b.ticket_amout_payed >= %s"""
+            AND  b.ticket_amout_to_pay-b.ticket_amout_payed >= %s"""
 
     values1 = (payment_payload['booking_id'], payment_payload['payment_amount'])
 
     cur.execute(statement1, values1)
-    rows = cur.fetchall()
+    rows = cur.fetchone()
 
     # verificar se a verificação anterior é válida e se metodo de pagamentp existe:
-    if rows[0] != 1 and (payment_payload['method'] in ("Credit Card", "MBWay", "Multibanco reference")):
+    if rows[0] != 1 and (payment_payload['method'] in ('Credit Card', 'MBWay', 'Debit Card')):
         aux = f"Something is wrong with your request. Check the values booking_id, method and if the amount you want to pay is valid (less or equal)"
         return jsonify({'status': 500, 'errors': aux}), 500
 
     # Inserção do pagamento na tabela payment
     statement2 = """
             INSERT INTO payment (amount_payed, payment_date, booking_booking_id)
-            VALUES (%s,%s,%s)"""
+            VALUES (%s,%s,%s)
+            RETURNING payment_id;"""
 
     # Data com o formato yyyy-mm-dd
     current_date = datetime.today().strftime('%Y-%m-%d')
@@ -1161,33 +1157,32 @@ def add_payment():
 
     try:
         cur.execute(statement2, values2)
+        payment_id=cur.fetchone()[0]
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment)!'}), 500
 
-    # Inserção do método de pagamento na tabela payment_method
 
-    statement_aux = """
-            SELECT payment_id
-            FROM payment
-            WHERE booking_booking_id = %s
-            ORDER BY payment_date DESC
-            LIMIT 1
-                    """
-    values_aux = (payment_payload['booking_id'],)
+    if payment_payload['method'] == "Credit Card":
 
-    cur.execute(statement_aux, values_aux)
-    rows = cur.fetchall()
-    if len(rows) == 0:
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
-    payment_id = rows[0]
-
-    statement3 = """
-            INSERT INTO payment_method (method, payment_payment_id)
-            VALUES (%s,%s)
+        statement3 = """
+                INSERT INTO credit_card (payment_payment_id)
+                VALUES (%s)
                 """
-    values3 = (payment_payload["method"], payment_id)
+        values3 = (payment_id,)
+    elif payment_payload['method'] == "Debit Card":
+        statement3 = """
+                        INSERT INTO debt_card (payment_payment_id)
+                        VALUES (%s)
+                        """
+        values3 = (payment_id,)
+    elif payment_payload['method'] == "MBWay":
+        statement3 = """
+                                INSERT INTO mbway (payment_payment_id)
+                                VALUES (%s)
+                                """
+        values3 = (payment_id,)
     try:
         cur.execute(statement3, values3)
         cur.execute("commit")
@@ -1219,10 +1214,10 @@ def add_payment():
             FROM booking
             WHERE booking_id = %s"""
 
-    values5 = payment_payload["booking_id"]
+    values5 = (payment_payload["booking_id"],)
 
     cur.execute(statement5, values5)
-    rows = cur.fetchall()
+    rows = cur.fetchone()
     if len(rows) == 0:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
 
@@ -1245,20 +1240,33 @@ def financial_data():
     cur = conn.cursor()
 
     statement = """
-        SELECT 
-            f.flight_code,
-            b.schedule__flight_date AS flight_date,
-            SUM(CASE WHEN pm.method = 'Credit Card' THEN p.amount_payed ELSE 0 END),
-            SUM(CASE WHEN pm.method = 'Multibanco reference' THEN p.amount_payed ELSE 0 END),
-            SUM(CASE WHEN pm.method = 'MBWay' THEN p.amount_payed ELSE 0 END),
-            SUM(p.amount_payed) AS total
-        FROM payment p
-        JOIN booking b ON p.booking_booking_id = b.booking_id
-        JOIN flight_ f ON b.flight__flight_code = f.flight_code
-        JOIN payment_method pm ON p.payment_payment_id = pm.payment_payment_id
-        WHERE p.payment_date >= CURRENT_DATE - INTERVAL '12 months'
-        GROUP BY f.flight_code, b.schedule__flight_date
-        ORDER BY b.schedule__flight_date DESC, f.flight_code; """
+    SELECT
+    b.flight__flight_code,
+    SUM(CASE WHEN m.payment_payment_id IS NOT NULL THEN p.amount_payed ELSE 0 END) AS soma_mbway,
+    SUM(CASE WHEN cc.payment_payment_id IS NOT NULL THEN p.amount_payed ELSE 0 END) AS soma_credit_card,
+    SUM(CASE WHEN dc.payment_payment_id IS NOT NULL THEN p.amount_payed ELSE 0 END) AS soma_debit_card,
+    SUM(p.amount_payed) AS total_pago
+FROM
+    payment p
+JOIN
+    booking b
+    ON p.booking_booking_id = b.booking_id
+LEFT JOIN
+    mbway m
+    ON m.payment_payment_id = p.payment_id
+LEFT JOIN
+    credit_card cc
+    ON cc.payment_payment_id = p.payment_id
+LEFT JOIN
+    debt_card dc
+    ON dc.payment_payment_id = p.payment_id
+WHERE
+    p.payment_date >= CURRENT_DATE - INTERVAL '12 months'
+GROUP BY
+    b.flight__flight_code
+ORDER BY
+    b.flight__flight_code;
+"""
 
     cur.execute(statement)
     rows = cur.fetchall()
@@ -1271,11 +1279,10 @@ def financial_data():
     for row in rows:
         logger.debug(row)
         content = {"flight_code": int(row[0]),
-                   "flight_date": row[1],
-                   "Credit Card": float(row[2]),
-                   "Multibanco reference": float(row[3]),
-                   "MBWay": float(row[4]),
-                   "total": float(row[5])}
+                   "Credit Card": float(row[1]),
+                   "Multibanco reference": float(row[2]),
+                   "MBWay": float(row[3]),
+                   "total": float(row[4])}
         results.append(content)  # appending month report
     conn.close()
     return jsonify({'status': 200, 'results': results})
@@ -1288,7 +1295,7 @@ def db_connection():
 # NOTE: change the host to "db" if you are running as a Docker container
     db = psycopg2.connect(user = "SGD_project",
                         password = "5432",
-                        host = "localhost", #"db",
+                        host = "localhost",
                         port = "5433",
                         database = "cloud_query")
     return db
