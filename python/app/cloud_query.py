@@ -241,7 +241,7 @@ def add_admin():
 
     cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
     rows = cur.fetchall()
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
 
     row = rows[0]
@@ -281,7 +281,7 @@ def add_crew_member():
 
     cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
     row = cur.fetchone()
-    if not row:
+    if len(row) == 0:
         return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
     cur.execute("SELECT crew_id FROM crew where crew_id = %s", (payload['crew_id'],))
     crew_row = cur.fetchone()
@@ -333,7 +333,7 @@ def login():
     cur.execute("SELECT * FROM user_ where username = %s", (username,))
     rows = cur.fetchall()
 
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status':401,'errors': 'Username or password incorrect!'})
 
     row = rows[0]
@@ -409,7 +409,7 @@ def add_airport():
     cur = conn.cursor()
     airport_json = request.get_json()
 
-    if len(airport_json) != 3:
+    if len(airport_json) == 3:
         if "city" and "name" and "country" not in airport_json:
             return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
     else:
@@ -444,12 +444,30 @@ def add_flight():
     cur = conn.cursor()
     flight_json = request.get_json()
 
-    if len(flight_json) != 5:
+    if len(flight_json) == 5:
         if "departure_time" and "arrival_time" and "existing_seats" and "airport_dep" and "airport_arr" not in flight_json:
             return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
     else:
         return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
+        # Verificar se o voo existe
 
+    statement = """
+                    SELECT 
+                        COUNT(*)
+                    FROM 
+                        airport_ a
+                    WHERE 
+                        a.airport_code = %s
+                        OR a.airport_code = %s
+                    ;"""
+
+    values = (flight_json['airport_dep'],flight_json['airport_arr'])
+
+    cur.execute(statement, values)
+    rows = cur.fetchone()
+
+    if rows[0] != 2:
+        return jsonify({'status': 400, 'errors': 'The airport does not exist!'}), 400
 
     logger.info("---- new flight  ----")
     logger.debug(f'payload: {payload}')
@@ -485,7 +503,7 @@ def add_schedule():
 
     # Verificação do input
 
-    if len(sch_json) != 4:
+    if len(sch_json) == 4:
         if "flight_code" and "date" and "crew_id" and "ticket_price" not in sch_json:
             return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
     else:
@@ -497,15 +515,13 @@ def add_schedule():
                 SELECT 
                     COUNT(*)
                 FROM 
-                    flight_ f
-                JOIN 
-                    schedule_ s ON fs.schedule__flight_date = s.flight_date
+                    flight__schedule_ fs
                 WHERE 
-                    f.flight_code = %s
+                    fs.flight__flight_code = %s
                     AND
-                    f.flight_date = %s;"""
+                    fs.schedule__flight_date = %s;"""
 
-    values = (sch_json["flight_code"], sch_json["flight_date"],)
+    values = (sch_json["flight_code"], sch_json["date"])
 
     cur.execute(statement, values)
     rows = cur.fetchone()
@@ -571,130 +587,149 @@ def check_routes():
     conn = db_connection()
     cur = conn.cursor()
 
-    routes_payload = request.get_json()
     logger.info("----  Check the available routes ----")
-    logger.debug(f'payload: {routes_payload}')
 
-
-    # Caso onde não temos parametros de entrada
-    if not routes_payload:
-        statement = """
-            SELECT 
-                f.airport_dep AS origin_airport,
-                f.airport_arr AS destination_airport,
-                f.flight_code,
-                s.flight_date AS schedule
-            FROM 
-                flight_ f
-            JOIN
-                flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
-            JOIN 
-                schedule_ s ON fs.schedule__flight_date = s.flight_date;"""
-
-        cur.execute(statement, )
-        rows = cur.fetchall()
-
-        if len(rows) == 0:
-            return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
-
-    # Caso onde temos 2 parametros de entrada
-    elif len(routes_payload) == 2 and ("origin_airport" in routes_payload and "destination_airport" in routes_payload):
-        statement = """
-            SELECT 
-                f.airport_dep AS origin_airport,
-                f.airport_arr AS destination_airport,
-                f.flight_code,
-                s.flight_date AS schedule
-            FROM 
-                flight_ f
-            JOIN 
-                flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
-            JOIN 
-                schedule_ s ON fs.schedule__flight_date = s.flight_date
-            WHERE 
-                f.airport_dep = %s
-                AND
-                f.airport_arr = %s
-            ORDER BY
-                f.flight_code;"""
-
-        values = (routes_payload["origin_airport"], routes_payload["destination_airport"],)
-
-        cur.execute(statement, values)
-        rows = cur.fetchall()
-
-        if len(rows) == 0:
-            return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
-
-    # Caso onde temos 1 parametro de
-    elif len(routes_payload) == 1:
-        # Caso de termos "origin_airport"
-        if 'origin_airport' in routes_payload:
+    try:
+        routes_payload = request.get_json()
+        logger.debug(f'payload: {routes_payload}')
+        # Caso onde temos 2 parametros de entrada
+        if len(routes_payload) == 2 and (
+                "origin_airport" in routes_payload and "destination_airport" in routes_payload):
             statement = """
-                SELECT 
-                    f.airport_dep AS origin_airport,
-                    f.airport_arr AS destination_airport,
-                    f.flight_code,
-                    s.flight_date AS schedule
-                FROM 
-                    flight_ f
-                JOIN 
-                    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
-                JOIN 
-                    schedule_ s ON fs.schedule__flight_date = s.flight_date
-                WHERE 
-                    f.airport_dep = %s
-                ORDER BY
-                    f.flight_code;"""
+                    SELECT 
+                        f.airport_dep AS origin_airport,
+                        f.airport_arr AS destination_airport,
+                        f.flight_code,
+                        s.flight_date AS schedule
+                    FROM 
+                        flight_ f
+                    JOIN 
+                        flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+                    JOIN 
+                        schedule_ s ON fs.schedule__flight_date = s.flight_date
+                    WHERE 
+                        f.airport_dep = %s
+                        AND
+                        f.airport_arr = %s
+                    ORDER BY
+                        f.flight_code;"""
 
-            values = (routes_payload["origin_airport"],)
-        elif "origin_airport" in routes_payload:
-            statement = """
-                SELECT 
-                    f.airport_dep AS origin_airport,
-                    f.airport_arr AS destination_airport,
-                    f.flight_code,
-                    s.flight_date AS schedule
-                FROM 
-                    flight_ f
-                JOIN 
-                    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
-                JOIN 
-                    schedule_ s ON fs.schedule__flight_date = s.flight_date
-                WHERE 
-                    f.airport_arr = %s
-                ORDER BY
-                    f.flight_code;"""
+            values = (routes_payload["origin_airport"], routes_payload["destination_airport"],)
 
-            values = (routes_payload["destination_airport"],)
+            cur.execute(statement, values)
+            rows = cur.fetchall()
 
-        cur.execute(statement, values)
+            if not rows:
+                return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
+
+        # Caso onde temos 1 parametro de
+        elif len(routes_payload) == 1:
+            # Caso de termos "origin_airport"
+            if 'origin_airport' in routes_payload:
+                statement = """
+                        SELECT 
+                            f.airport_dep AS origin_airport,
+                            f.airport_arr AS destination_airport,
+                            f.flight_code,
+                            s.flight_date AS schedule
+                        FROM 
+                            flight_ f
+                        JOIN 
+                            flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+                        JOIN 
+                            schedule_ s ON fs.schedule__flight_date = s.flight_date
+                        WHERE 
+                            f.airport_dep = %s
+                        ORDER BY
+                            f.flight_code;"""
+
+                values = (routes_payload["origin_airport"],)
+            elif "destination_airport" in routes_payload:
+                statement = """
+                        SELECT 
+                            f.airport_dep AS origin_airport,
+                            f.airport_arr AS destination_airport,
+                            f.flight_code,
+                            s.flight_date AS schedule
+                        FROM 
+                            flight_ f
+                        JOIN 
+                            flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+                        JOIN 
+                            schedule_ s ON fs.schedule__flight_date = s.flight_date
+                        WHERE 
+                            f.airport_arr = %s
+                        ORDER BY
+                            f.flight_code;"""
+
+                values = (routes_payload["destination_airport"],)
+
+            cur.execute(statement, values)
+            rows = cur.fetchall()
+
+            if not rows:
+                return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
+
+        else:
+            return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
+
+        results_aux = {}
+        for row in rows:
+            key = (row[0], row[1], row[2])
+            if key not in results_aux:
+                results_aux[key] = []
+            results_aux[key].append(row[3])
+
+        results = []
+        for key, value in results_aux.items():
+            results.append({
+                "origin_airport": key[0],
+                "destination_airport": key[1],
+                "flight_code": key[2],
+                "schedules": value,
+            })
+        conn.close()
+        return jsonify({'status': 200, 'results': results})
+
+
+    except (Exception) :
+        # Caso onde não temos parametros de entrada
+        statement = """
+                        SELECT 
+                        f.airport_dep AS origin_airport,
+                        f.airport_arr AS destination_airport,
+                        f.flight_code,
+                        s.flight_date AS schedule
+                    FROM 
+                        flight_ f
+                    JOIN
+                        flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+                    JOIN 
+                        schedule_ s ON fs.schedule__flight_date = s.flight_date;"""
+
+        cur.execute(statement )
         rows = cur.fetchall()
 
-        if len(rows) == 0:
+        if not rows:
             return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
 
-    else:
-        return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
+        results_aux = {}
+        for row in rows:
+            key = (row[0], row[1], row[2])
+            if key not in results_aux:
+                results_aux[key] = []
+            results_aux[key].append(row[3])
 
-    results_aux = {}
-    for row in results_aux:
-        key = (row["origin_airport"], row["destination_airport"], row["flight_code"])
-        if key not in results_aux:
-            results_aux[key] = {"schedules": []}
-        results_aux[key]["schedules"].append(row["schedule"])
-
-    results = []
-    for key, value in results_aux.items():
-        results.append({
-            "origin_airport": key[0],
-            "destination_airport": key[1],
-            "flight_code": key[2],
-            "schedules": value["schedules"],
-        })
-    conn.close()
-    return jsonify({'status': 200, 'results': results})
-
+        results = []
+        for key, value in results_aux.items():
+            results.append({
+                "origin_airport": key[0],
+                "destination_airport": key[1],
+                "flight_code": key[2],
+                "schedules": value,
+            })
+        conn.close()
+        return jsonify({'status': 200, 'results': results})
 
 
 @app.route('/cloud-query/seats', methods=['GET'])
@@ -707,33 +742,34 @@ def check_seats():
 
     # Verificação do input
 
-    if len(payload) != 2:
-        if "flight_code" and "flight_date" not in payload:
+    if len(payload) == 2:
+        if "flight_code" and "date" not in payload:
             return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
     else:
         return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
 
-    # Verificar se o voo existe
+        # Verificar se o voo existe
+
+        # Verificar se o voo existe
 
     statement = """
-                SELECT 
-                    COUNT(*)
-                FROM 
-                    flight_ f
-                JOIN 
-                    schedule_ s ON fs.schedule__flight_date = s.flight_date
-                WHERE 
-                    f.flight_code = %s
-                    AND
-                    f.flight_date = %s;"""
+                    SELECT 
+                        COUNT(*)
+                    FROM 
+                        flight__schedule_ fs
+                    WHERE 
+                        fs.flight__flight_code = %s
+                        AND
+                        fs.schedule__flight_date = %s;"""
 
-    values = (payload["flight_code"], payload["flight_date"],)
+    values = (payload["flight_code"], payload["date"])
 
     cur.execute(statement, values)
     rows = cur.fetchone()
 
-    if len(rows) != 1:
+    if rows[0] != 1:
         return jsonify({'status': 500, 'errors': 'The flight does not exist!'}), 500
+
     sta ="""
 SELECT 
     seat_number
@@ -771,10 +807,35 @@ def add_book_flight():
     logger.debug(f'payload: {payload}')
 
     # Verificação do input
+    if len(booking_payload) == 4:
+        if "flight_code" and "flight_date" and "ticket_quantity" and "seat_id" not in booking_payload:
+            return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
+    else:
+        return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
 
     ##############################################################################################################
     # VERIFICAR ROTAS! FAZER QUERY 6 - """ SE A ROTA ENTRE FLIGHT_CODE E SCHEDULE_DATE EXISTE, ENTÃO PROSEGUIR"""#
     ##############################################################################################################
+
+        # Verificar se o voo existe
+
+        statement = """
+                        SELECT 
+                            COUNT(*)
+                        FROM 
+                            flight__schedule_ fs
+                        WHERE 
+                            fs.flight__flight_code = %s
+                            AND
+                            fs.schedule__flight_date = %s;"""
+
+        values = (payload["flight_code"], payload["date"])
+
+        cur.execute(statement, values)
+        rows = cur.fetchone()
+
+        if rows[0] != 1:
+            return jsonify({'status': 400, 'errors': 'The flight does not exist!'}), 400
 
     if booking_payload["ticket_quantity"] != len(booking_payload["seat_id"]):
         aux = f"Something is wrong with your request. the number of ticket_quantity, {booking_payload['ticket_quantity']} don't match the number of seats {len(booking_payload['seat_id'])}."
@@ -969,7 +1030,7 @@ def add_tickets():
     return jsonify({'status': 200, 'results': "You created successfully your tickets."})
 
 
-# QUERY 9 - VERIFICADA
+# QUERY 9 - verificada
 @app.route('/cloud-query/top_destinations/<n>', methods=['GET'])
 def top_destinations(n):
     logger.info("###              DEMO: GET /top_destinations             ###");
@@ -979,70 +1040,77 @@ def top_destinations(n):
     logger.info("----  Report with the top N destinations ----")
     logger.debug(f'N top destinatons: {n}')
 
-
     # Verification of valid input
     try:
         n = int(n)
         if n <= 0:
-            return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" should be greater than 1.'}), 400
+            return jsonify({'status': 400, 'errors': 'The value of "n" should be greater than 1.'}), 400
     except ValueError:
-        return jsonify(
-            {'status': 400, 'errors': 'The value for "top_n_flights" should be an integer value greater than 1.'}), 400
-    except Exception as e:
-        return jsonify({'status': 400, 'errors': 'The value for "top_n_flights" is not valid!'}), 400
+        return jsonify({'status': 400, 'errors': 'The value of "n" should be an integer value greater than 1.'}), 400
+    except Exception:
+        return jsonify({'status': 400, 'errors': 'The value of "n" is not valid!'}), 400
 
     current_date = datetime.today()
 
     statement = """
         SELECT
-            f.airport_arr AS destination_airport,
-            COUNT(f.flight_code) AS number_flights
-        FROM
-            flight_ f
-        JOIN
-            airport_ a ON f.airport_arr = a.airport_code
-        WHERE
-            DATE(f.arrival_time) >= %s - INTERVAL '12 months'
-        GROUP BY
-            f.airport_arr
-        ORDER BY
-        number_flights DESC; """
+    TO_CHAR(fs.schedule__flight_date, 'YYYY-MM') AS month,
+    f.airport_arr AS destination_airport,
+    COUNT(f.flight_code) AS number_flights
+FROM
+    flight_ f
+JOIN
+    flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
+JOIN
+    airport_ a ON f.airport_arr = a.airport_code
+WHERE
+    fs.schedule__flight_date >= CURRENT_DATE - INTERVAL '12 months'
+GROUP BY
+    TO_CHAR(fs.schedule__flight_date, 'YYYY-MM'),
+    f.airport_arr
+ORDER BY
+    month DESC,
+    number_flights DESC;"""
 
     values = (current_date,)
 
     cur.execute(statement, values)
     rows = cur.fetchall()
-    # top N destinations. If n>len(rows), rows don't suffer any changes
 
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
-    rows = rows[:n]
+    results_aux = {}
 
-    results = []
-
-    logger.info("---- Check financial data for the last year  ----")
+    # Get data for each month (month is repeated here)
     for row in rows:
-        logger.debug(row)
-        content = {"destination_airport": row[0], "number_flights": row[1]}
-        results.append(content)
-    conn.close()
+        month = row[0]
+        destination_airport = row[1]
+        number_flights = row[2]
+
+        if month not in results_aux:
+            results_aux[month] = []
+
+        results_aux[month].append({"destination_airport": destination_airport, "number_flights": number_flights})
+
+    # Results to response the top N destinations per month
+    results = []
+    for month, flights in results_aux.items():
+        top_n_destinations = flights[:n]
+        results.append({"month": month, "topN": top_n_destinations})
+
     return jsonify({'status': 200, 'results': results})
 
 
 # QUERY 10 - VERIFICADA
-@app.route('/cloud-query/top_routes', methods=['GET'])
-def top_routes():
+@app.route('/cloud-query/top_routes/<n>', methods=['GET'])
+def top_routes(n):
     logger.info("###              DEMO: GET /top_routes             ###");
 
     conn = db_connection()
     cur = conn.cursor()
 
-    payload = request.get_json()
     logger.info("----  Monthly report with the top N routes with more passengers  ----")
-    logger.debug(f'payload: {payload}')
-
-    n = payload["top_n_flights"]
 
     # Verification of valid input
     try:
@@ -1067,8 +1135,8 @@ def top_routes():
         JOIN 
             flight_ AS f ON b.flight__flight_code = f.flight_code
         WHERE 
-            b.schedule__flight_date >= %s - INTERVAL '12 months'
-            AND b.ticket_amout_payed = 0
+            b.schedule__flight_date >= CURRENT_DATE - INTERVAL '12 months'
+            AND b.ticket_amout_to_pay - b.ticket_amout_payed = 0
         GROUP BY 
             TO_CHAR(b.schedule__flight_date, 'YYYY-MM'),
             f.flight_code
@@ -1076,12 +1144,11 @@ def top_routes():
             month_year DESC,
             total_passengers DESC; """
 
-    values = (current_date)
 
-    cur.execute(statement, values)
+    cur.execute(statement)
     rows = cur.fetchall()
 
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     results_aux = {}
@@ -1241,7 +1308,7 @@ def add_payment():
 
     cur.execute(statement5, values5)
     rows = cur.fetchone()
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
 
     results = f"You paid {rows[0]}€ for your booking {payment_payload['booking_id']}. "
@@ -1293,7 +1360,7 @@ ORDER BY
 
     cur.execute(statement)
     rows = cur.fetchall()
-    if len(rows) == 0:
+    if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
 
     results = []
