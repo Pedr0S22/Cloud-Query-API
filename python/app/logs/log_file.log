@@ -6138,3 +6138,259 @@ INFO:logger:###              DEMO: POST /flight             ###
 INFO:logger:---- new flight  ----
 DEBUG:logger:payload: {'id': 1, 'exp': 1733341920.995462}
 INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:47] "POST /cloud-query/flight HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 105-872-535
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:logger:###              DEMO: GET /top_routes             ###
+INFO:logger:----  Monthly report with the top N routes with more passengers  ----
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:28:20] "GET /cloud-query/top_routes/2 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:29:30] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:31:34] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 401 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733405370.4607942}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:31:41] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:36:36] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733405370.4607942}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:37:27] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733405370.4607942}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:38:14] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733405370.4607942}
+ERROR:logger:duplicate key value violates unique constraint "flight__schedule__pkey"
+DETAIL:  Key (flight__flight_code, schedule__flight_date)=(1, 2024-11-20) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 12:38:36] "POST /cloud-query/schedule HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:34:08] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 401 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:34:12] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:35:05] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:35:49] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+ERROR:logger:duplicate key value violates unique constraint "flight__schedule__pkey"
+DETAIL:  Key (flight__flight_code, schedule__flight_date)=(1, 2024-11-20) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:36:57] "POST /cloud-query/schedule HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+ERROR:logger:duplicate key value violates unique constraint "flight__schedule__pkey"
+DETAIL:  Key (flight__flight_code, schedule__flight_date)=(1, 2024-11-20) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:37:10] "POST /cloud-query/schedule HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+ERROR:logger:duplicate key value violates unique constraint "flight__schedule__pkey"
+DETAIL:  Key (flight__flight_code, schedule__flight_date)=(1, 2024-11-20) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:37:11] "POST /cloud-query/schedule HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://10.16.0.201:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 1, 'exp': 1733409252.976959}
+INFO:werkzeug:127.0.0.1 - - [05/Dec/2024 13:38:21] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062

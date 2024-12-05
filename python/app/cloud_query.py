@@ -285,6 +285,7 @@ def add_crew_member():
         return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
     cur.execute("SELECT crew_id FROM crew where crew_id = %s", (payload['crew_id'],))
     crew_row = cur.fetchone()
+
     if crew_row:
         statement_1 = """
                           INSERT INTO crew_members (user__id_user,admin__user__id_user) 
@@ -451,7 +452,7 @@ def add_flight():
         return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
         # Verificar se o voo existe
 
-    statement = """
+    statement = """ 
                     SELECT 
                         COUNT(*)
                     FROM 
@@ -528,6 +529,29 @@ def add_schedule():
 
     if len(rows) != 1:
         return jsonify({'status': 500, 'errors': 'The flight does not exist!'}), 500
+#Verificar se a crew existe
+    cur.execute("SELECT crew_id FROM crew where crew_id = %s", (sch_json['crew_id'],))
+    crew_row = cur.fetchone()
+    if not crew_row :
+        return jsonify({'status': 500, 'errors': 'The crew does not exist!'}), 500
+#VERIFICAR: SE EXISTE o voo ja existe
+    statement = """
+                    SELECT 
+                        COUNT(*)
+                    FROM 
+                         flight__schedule_ fs
+                    WHERE 
+                        fs.flight__flight_code = %s
+                        AND
+                        fs.schedule__flight_date = %s;"""
+
+    values = (sch_json["flight_code"], sch_json["date"])
+
+    cur.execute(statement, values)
+    rows = cur.fetchall()
+
+    if rows:
+        return jsonify({'status': 400, 'errors': 'The schedule already exists!'}), 400
 
     sta= '''
     SELECT flight_date 
@@ -898,7 +922,8 @@ def add_book_flight():
                 %s, 
                 %s,
                 %s
-            );"""
+            )
+            RETURNING booking_id;"""
     values3 = (booking_payload["ticket_quantity"],
                booking_payload["ticket_quantity"],
                booking_payload["flight_code"],
@@ -909,22 +934,16 @@ def add_book_flight():
 
     try:
         cur.execute(statement3, values3)
+        booking_id=cur.fetchone()[0]
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into booking)!'}), 500
 
 
-    # Verificar e devolver o booking_id gerado.
+    #Criar ticket
     statement5 = """
-                SELECT booking_id 
-                FROM booking 
-                WHERE flight__flight_code = %s 
-                AND schedule__flight_date = %s
-                AND ticket_quantity = %s
-                AND passanger_user__id_user= %s
-                ORDER BY booking_id DESC
-                LIMIT 1
+                INSERT INTO  ticket_(seat_flight__flight_code,seat_schedule__flight_date,seat_number,booking_booking_id)
 """
     values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload["ticket_quantity"],payload['id'])
 
@@ -934,6 +953,8 @@ def add_book_flight():
     if len(rows) != 1:
         aux = f"Something is wrong with your request."
         return jsonify({'status': 500, 'errors': aux}), 500
+
+    #Criar ticket
 
     conn.close()
     return jsonify(
@@ -959,22 +980,22 @@ def add_tickets():
 
     # Verificação se os bilhetes foram criados
     statement0 = """
-            SELECT 1
+            SELECT COUNT(*)
             FROM tickets_
             WHERE booking_booking_id = %s;
             """
     values0 = (tickets_payload['booking_id'],)
 
     cur.execute(statement0, values0)
-    rows = cur.fetchall()
+    rows = cur.fetchone()
 
-    if rows[0] == 1:
+    if rows[0] != 0:
         aux = f"Something is wrong with your request. You already created the tickets."
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Verificação dos dados do request
     statement1 = """
-            SELECT 1
+            SELECT COUNT(*)
             FROM booking
             WHERE booking_id = %s
             AND ticket_amout_to_pay = ticket_amout_payed;"""
@@ -982,7 +1003,7 @@ def add_tickets():
     values1 = (tickets_payload['booking_id'],)
 
     cur.execute(statement1, values1)
-    rows = cur.fetchall()
+    rows = cur.fetchone()
 
     # verificar se a verificação anterior é válida:
     if rows[0] != 1:
