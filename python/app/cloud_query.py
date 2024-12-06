@@ -33,7 +33,7 @@ from flask import Flask, jsonify, request
 import logging
 import psycopg2
 import time
-from _datetime import datetime
+from datetime import datetime
 
 app = Flask(__name__) 
 password_token="cloud_query123"
@@ -155,7 +155,7 @@ def hello():
     Trabalho realizado por:<br/>
     Francisca<br/>
     Pedro <br/>
-    Ramyad<br/>
+    Ramyad <br/>
     """
 
 def add_users(n):
@@ -944,30 +944,45 @@ def add_book_flight():
     #Criar ticket
     statement5 = """
                 INSERT INTO  ticket_(seat_flight__flight_code,seat_schedule__flight_date,seat_number,booking_booking_id)
+                VALUES (%s,%s,%s,%s)
 """
-    values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload["ticket_quantity"],payload['id'])
-
-    cur.execute(statement5, values5)
-    rows = cur.fetchall()
+    for i in range(booking_payload["ticket_quantity"]):
+        values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload['seat_id'][i],booking_id)
+        cur.execute(statement5, values5)
+    cur.execute("commit")
 
     if len(rows) != 1:
         aux = f"Something is wrong with your request."
         return jsonify({'status': 500, 'errors': aux}), 500
 
-    #Criar ticket
 
     conn.close()
     return jsonify(
         {'status': 200, 'results': f"You created successfully your booking. Proceed to payment for booking {rows[0]}."})
 
 
-# QUERY EXTRA - VERIFICADA
+# QUERY TICKETS
 @app.route('/cloud-query/tickets', methods=['POST'])
 def add_tickets():
     logger.info("###              DEMO: POST /tickets             ###");
 
     conn = db_connection()
     cur = conn.cursor()
+
+    """
+    EXEMPLO DE REQUEST:
+    {
+        booking_id: 3
+        name = ["João Manuel","Zé da Esquina", "Lurdes das Couves"]
+        vat = ["123456789","987654321","789123456"]
+    }
+
+    EXEMPLO DE RESPONSE:
+    {
+        status: 200
+        results: "The tickets were created succefully."
+    }
+    """
 
     # Só os passageiros podem fazer pedir tickets!
     payload = verify_passenger()
@@ -978,11 +993,21 @@ def add_tickets():
     logger.info("---- make your tickets  ----")
     logger.debug(f'payload: {payload}')
 
-    # Verificação se os bilhetes foram criados
+    # Verificação do input
+
+    if len(tickets_payload) == 3:
+        if "booking_id" and "name" and "vat" not in tickets_payload:
+            return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
+    else:
+        return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
+
+    # Verificar se os bilhetes já estão associados
     statement0 = """
             SELECT COUNT(*)
-            FROM tickets_
-            WHERE booking_booking_id = %s;
+            FROM ticket_
+            WHERE booking_booking_id = %s
+            AND name IS NOT NULL
+            AND vat IS NOT NULL;
             """
     values0 = (tickets_payload['booking_id'],)
 
@@ -990,10 +1015,10 @@ def add_tickets():
     rows = cur.fetchone()
 
     if rows[0] != 0:
-        aux = f"Something is wrong with your request. You already created the tickets."
+        aux = f"Something is wrong with your request. You already associated all your tickets."
         return jsonify({'status': 400, 'errors': aux}), 400
 
-    # Verificação dos dados do request
+    # Verificar se o booking foi pago na totalidade
     statement1 = """
             SELECT COUNT(*)
             FROM booking
@@ -1005,50 +1030,54 @@ def add_tickets():
     cur.execute(statement1, values1)
     rows = cur.fetchone()
 
-    # verificar se a verificação anterior é válida:
     if rows[0] != 1:
         aux = f"Something is wrong with your request. You didn't complete the booking {tickets_payload['booking_id']} payment"
         return jsonify({'status': 400, 'errors': aux}), 400
 
-    # Criação dos bilhetes
-    # NOTA: A SUBQUERY PARA IR BUSCAR O FLIGHT_CODE E FLIGHT_DATE PODE SER TRAZIDO DA TABELA BOOKING PQ É O MESMO VOO E HORARIO!
-    statement2 = """
-            INSERT INTO ticket_(
-                name,
-                vat,
-                booking_booking_id,
-                seat_schedule__flight_date,
-                seat_flight__flight_code
-            ) VALUES(
-                %s,
-                %s,
-                %s,
-                (
-                    SELECT seat_schedule__flight_date
-                    FROM booking 
-                    WHERE booking_id = %s;
-                ),
-                (
-                    SELECT seat_flight__flight_code
-                    FROM booking
-                    WHERE booking_id = %s;
-                )
-            );"""
-    values2 = (tickets_payload["name"],
-               tickets_payload["vat"],
-               tickets_payload["booking_id"],
-               tickets_payload["booking_id"],
-               tickets_payload["booking_id"],)
+    # Verificar se o número de bilhetes é o mesmo número de nomes e vats
 
-    try:
-        cur.execute(statement2, values2)
-        cur.execute("commit")
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment)!'}), 500
+    statement2 = """
+            SELECT ticket_quantity
+            FROM booking
+            WHERE booking_id = %s """
+
+    values2 = (tickets_payload["booking_id"],)
+
+    cur.execute(statement2, values2)
+    ticket_quantity = cur.fetchone()[0]
+
+    if ((ticket_quantity != len(tickets_payload["name"])) and (ticket_quantity != len(tickets_payload["vat"]))):
+        aux = "Something is wrong with your request. Check if the amount of names and vat's are the same as the number of tickets that tou created!"
+        return jsonify({'status': 400, 'errors': aux}), 400
+
+    # Criação dos bilhetes
+    cur.execute('''SELECT seat_number FROM ticket_ WHERE booking_booking_id = %s''',(tickets_payload['booking_id'],))
+    seats=cur.fetchall()
+    for i in range(len(tickets_payload["name"])):
+        statement3 = """
+                UPDATE ticket_
+                SET
+                name = %s,
+                vat = %s
+                WHERE booking_booking_id = %s AND
+                seat_number = %s
+                """
+        values3 = (tickets_payload["name"][i],
+                   tickets_payload["vat"][i],
+                   tickets_payload['booking_id'],
+                   seats[i])
+
+        try:
+            cur.execute(statement3, values3)
+            cur.execute("commit")
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            return jsonify(
+                {'status': 500, 'errors': 'Something went wrong in the sistem (insertion into tickett table)!'}), 500
 
     conn.close()
-    return jsonify({'status': 200, 'results': "You created successfully your tickets."})
+    return jsonify({'status': 200, 'results': "The tickets were created succefully."})
+
 
 
 # QUERY 9 - verificada
@@ -1397,6 +1426,88 @@ ORDER BY
         results.append(content)  # appending month report
     conn.close()
     return jsonify({'status': 200, 'results': results})
+
+
+@app.route('/cloud-query/crew_supervisor', methods=['POST'])
+def add_supervisor():
+    logger.info("###              DEMO: POST /supervisor              ###")
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+    supervisor_json = request.get_json()
+
+    """
+    EXEMPLO REQUEST:
+    {
+        crew_id: 3
+        crew_member: 9
+    }
+
+    EXEMPLO RESPONSE:
+    {
+        status: 200
+        results: Supervisor was added with success. Crew member 9 supervises crew 3.
+    }
+    """
+    # Check input
+
+    if len(supervisor_json) == 2:
+        if "crew_member" and "crew_id" not in supervisor_json:
+            return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
+    else:
+        return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
+
+    # Verificar se crew_id existe:
+
+    statement = """
+                SELECT COUNT(*)
+                FROM crew
+                WHERE crew_id = %s;"""
+
+    value = (supervisor_json['crew_id'],)
+
+    cur.execute(statement, value)
+    rows = cur.fetchone()
+
+    if rows[0] != 1:
+        return jsonify({'status': 400, 'errors': 'Invalid Input. The inputed crew_id does not exist.'}), 400
+
+    # Admitimos que o admin que cria a crew é o único que pode adicionar supervisor
+    statement1 = """
+                SELECT COUNT(*)
+                FROM crew
+                WHERE admin__user__id_user = %s
+                AND crew_id = %s;"""
+    values1 = (payload['id'], supervisor_json['crew_id'])
+
+    cur.execute(statement1, values1)
+    rows = cur.fetchone()
+
+    if rows[0] != 1:
+        return jsonify({'status': 400,
+                        'errors': 'Invalid Input. To insert supervisor into the inputed crew_id should be the creator of this crew.'}), 400
+
+    logger.info("---- add supervisor  ----")
+    logger.debug(f'payload: {payload}')
+
+    statement2 = """
+                INSERT INTO crew (crew_members_user__id_user) 
+                VALUES (%s);"""
+    values2 = (supervisor_json['crew_member'],)
+    try:
+        cur.execute(statement2, values2)
+        row = cur.fetchone()
+        cur.execute("commit")
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return jsonify({'status': 200,
+                    'result': f"Supervisor was added with success. Crew member {supervisor_json['crew_member']} supervises crew {supervisor_json['crew_id']}."})
 
 ##########################################################
 ## DATABASE ACCESS

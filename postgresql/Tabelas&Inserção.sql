@@ -77,7 +77,8 @@ CREATE TABLE ticket_ (
 	booking_booking_id	 BIGINT,
 	seat_schedule__flight_date DATE NOT NULL,
 	seat_flight__flight_code	 BIGINT NOT NULL,
-	PRIMARY KEY(booking_booking_id)
+    seat_number VARCHAR(512) NOT NULL;
+	PRIMARY KEY(booking_booking_id,seat_schedule__flight_date,seat_flight__flight_code,seat_number)
 );
 
 CREATE TABLE booking (
@@ -166,10 +167,10 @@ ALTER TABLE flight_ ADD CONSTRAINT flight__fk3 FOREIGN KEY (airport__airport_cod
 ALTER TABLE flight_ ADD CONSTRAINT flight__fk4 FOREIGN KEY (airport__airport_code1) REFERENCES airport_(airport_code);
 ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk1 FOREIGN KEY (admin__user__id_user) REFERENCES admin_(user__id_user);
 ALTER TABLE schedule_ ADD CONSTRAINT schedule__fk2 FOREIGN KEY (crew_crew_id) REFERENCES crew(crew_id);
-ALTER TABLE ticket_ ADD UNIQUE (seat_schedule__flight_date, seat_flight__flight_code);
+ALTER TABLE ticket_ ADD UNIQUE (seat_schedule__flight_date, seat_flight__flight_code,seat_number);
 ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk1 FOREIGN KEY (booking_booking_id) REFERENCES booking(booking_id);
-ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk2 FOREIGN KEY (seat_schedule__flight_date, seat_flight__flight_code) REFERENCES seat(schedule__flight_date, flight__flight_code);
-ALTER TABLE ticket_ ADD CONSTRAINT constraint_0 CHECK (CHECK (LENGTH(vat) = 9));
+ALTER TABLE ticket_ ADD CONSTRAINT ticket__fk2 FOREIGN KEY (seat_schedule__flight_date, seat_flight__flight_code,seat_number) REFERENCES seat(schedule__flight_date, flight__flight_code,seat_number);
+ALTER TABLE ticket_ ADD CONSTRAINT constraint_0 CHECK (CHECK (LENGT(vat) = 9));
 ALTER TABLE booking ADD CONSTRAINT booking_fk1 FOREIGN KEY (flight__flight_code) REFERENCES flight_(flight_code);
 ALTER TABLE booking ADD CONSTRAINT booking_fk2 FOREIGN KEY (schedule__flight_date) REFERENCES schedule_(flight_date);
 ALTER TABLE booking ADD CONSTRAINT booking_fk3 FOREIGN KEY (passanger_user__id_user) REFERENCES passanger(user__id_user);
