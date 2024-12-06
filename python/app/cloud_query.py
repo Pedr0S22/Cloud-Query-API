@@ -271,7 +271,7 @@ def add_crew_member():
 
     conn = db_connection()
     cur = conn.cursor()
-    #add_users(5)
+    add_users(5)
     payload = request.get_json()
     logger.info("---- new crew_member  ----")
     logger.debug(f'payload: {payload}')
