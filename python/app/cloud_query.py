@@ -56,14 +56,14 @@ def verify_token():
         payload = jwt.decode(token, password_token, algorithms=["HS256"])
 
         if payload["exp"] < time.time():
-            return jsonify({"message": "Token expirado!"}), 401
+            return jsonify({"status": 400,"message": "Token expirado!"}), 400
 
         return payload
 
     except jwt.ExpiredSignatureError:
-        return jsonify({"message": "Token expirado!"}), 401
+        return jsonify({"status": 400,"error": "Token expirado!"}), 400
     except jwt.InvalidTokenError:
-        return jsonify({"message": "Token inválido!"}), 401
+        return jsonify({"status": 400,"error": "Token inválido!"}), 400
 
 def verify_admin():
     payload = verify_token()
@@ -78,7 +78,7 @@ def verify_admin():
     if row:
         return payload
     else:
-        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+        return jsonify({"status":400,"error": f"Restrict to admin user."}), 400
 
 def verify_crew():
     payload = verify_token()
@@ -93,7 +93,7 @@ def verify_crew():
     if row:
         return payload
     else:
-        return jsonify({"message": f"Acesso restrito a admistrador!"}), 403
+        return jsonify({"status":400,"error": f"Restrict to crew member user."}), 400
 
 def verify_passenger():
     payload = verify_token()
@@ -108,7 +108,7 @@ def verify_passenger():
     if row:
         return payload
     else:
-        return jsonify({"message": f"Acesso restrito a passageiro!"}), 403
+        return jsonify({"status":400,"error": f"Restrict to passenger user."}), 400
 
 def seat_generator(num_seats):
 
@@ -187,10 +187,11 @@ def add_users(n):
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         result = 'Failed!'
+        return jsonify({'status': 400, 'error': result}), 400
     finally:
         if conn is not None:
             conn.close()
-    return jsonify(result)
+    return jsonify({"status": 200, "result": result}), 200
 
 @app.route('/cloud-query/passenger', methods=['POST'])
 def add_passenger():
@@ -217,8 +218,9 @@ def add_passenger():
     values = (row[0],)
     try:
         cur.execute(statement, values)
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
@@ -251,20 +253,15 @@ def add_admin():
     values = (row[0],)
     try:
         cur.execute(statement, values)
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
             conn.close()
     return jsonify({'status': 200, 'result':row[0] })
-'''{
-    "username": "mario.geraldes.admin",
-    "email": "mario.geraldes.admin@admin.pt",
-    "password": "123adminmario",
-    "role": "pilot",
-    "crew_id": 1
-}'''
+
 @app.route('/cloud-query/crew_member', methods=['POST'])
 def add_crew_member():
     logger.info("###              DEMO: POST /crew_member              ###");
@@ -274,15 +271,16 @@ def add_crew_member():
 
     conn = db_connection()
     cur = conn.cursor()
-    add_users(5)
+    #add_users(5)
     payload = request.get_json()
     logger.info("---- new crew_member  ----")
     logger.debug(f'payload: {payload}')
 
     cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
     row = cur.fetchone()
-    if len(row) == 0:
-        return jsonify({'status': 401, 'errors': 'Username does not exist!'}), 401
+    if not row:
+        return jsonify({'status': 400, 'errors': 'Username does not exist!'}), 400
+    #Verificar se existe a crew
     cur.execute("SELECT crew_id FROM crew where crew_id = %s", (payload['crew_id'],))
     crew_row = cur.fetchone()
 
@@ -295,15 +293,17 @@ def add_crew_member():
             statement_2 = """
             INSERT INTO pilot (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
             values_2 = (crew_row[0], row[0])
-        elif payload['role'] == 'flight_attendante':
-            statement_2 = """INSERT INTO flight_attendante (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
-            values_2 = (payload['crew_id'], crew_row[0])
+        elif payload['role'] == 'flight_attendant':
+            statement_2 = """INSERT INTO flight_attendant
+             (crew_crew_id, crew_members_user__id_user) VALUES ( %s , %s)"""
+            values_2 = (payload['crew_id'], row[0])
 
         try:
             cur.execute(statement_1, values_1)
             cur.execute(statement_2, values_2)
-            cur.execute("commit")
+            conn.commit()
         except (Exception, psycopg2.DatabaseError) as error:
+            conn.rollback()
             logger.error(error)
         finally:
             if conn is not None:
@@ -335,7 +335,7 @@ def login():
     rows = cur.fetchall()
 
     if not rows:
-        return jsonify({'status':401,'errors': 'Username or password incorrect!'})
+        return jsonify({'status':400,'errors': 'Username or password incorrect!'})
 
     row = rows[0]
 
@@ -344,9 +344,9 @@ def login():
             token = generate_token(row[0])
             return jsonify({'status': 200, 'result': token.decode('utf-8')}), 200
         else:
-            return jsonify({'status': 401, 'errors': 'Username or password incorrect!'}), 401
+            return jsonify({'status': 400, 'errors': 'Username or password incorrect!'}), 400
     except ValueError:
-        return jsonify({'status': 500, 'errors': 'Hash de senha inválido no banco de dados!'}), 500
+        return jsonify({'status': 500, 'errors': ValueError}), 500
 
 @app.route('/cloud-query/crew', methods=['POST'])
 def add_crew():
@@ -367,8 +367,9 @@ def add_crew():
     try:
         cur.execute(statement, values)
         row=cur.fetchone()
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
@@ -390,13 +391,14 @@ def get_crews():
     rows = cur.fetchall()
 
     payload = []
-    logger.debug("---- departments  ----")
+    logger.debug("---- get crew  ----")
     for row in rows:
         logger.debug(row)
         content = {'crew_id': int(row[0]), 'administrador_creater': row[1], 'crew_chief': row[2]}
         payload.append(content) # appending to the payload to be returned
 
-    conn.close()
+    if conn is not None:
+        conn.close()
     return jsonify(payload)
 
 @app.route('/cloud-query/airport', methods=['POST'])
@@ -421,13 +423,14 @@ def add_airport():
     statement = """
                                   INSERT INTO airport_ (admin__user__id_user, city,name, country) 
                                           VALUES ( %s,%s,%s,%s)
-                                          RETURNING airport_code"""
+                                          RETURNING airport_code """
     values = (payload['id'],airport_json['city'],airport_json['name'],airport_json['country'])
     try:
         cur.execute(statement, values)
         row = cur.fetchone()
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
@@ -437,7 +440,6 @@ def add_airport():
 @app.route('/cloud-query/flight', methods=['POST'])
 def add_flight():
     logger.info("###              DEMO: POST /flight             ###")
-    rows=None
     payload = verify_admin()
     if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
         return payload
@@ -481,8 +483,9 @@ def add_flight():
     try:
         cur.execute(statement, values)
         row = cur.fetchone()
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
@@ -516,19 +519,18 @@ def add_schedule():
                 SELECT 
                     COUNT(*)
                 FROM 
-                    flight__schedule_ fs
+                    flight_ f
                 WHERE 
-                    fs.flight__flight_code = %s
-                    AND
-                    fs.schedule__flight_date = %s;"""
+                    f.flight_code = %s
+                    """
 
-    values = (sch_json["flight_code"], sch_json["date"])
+    values = (sch_json["flight_code"], )
 
     cur.execute(statement, values)
     rows = cur.fetchone()
 
-    if len(rows) != 1:
-        return jsonify({'status': 500, 'errors': 'The flight does not exist!'}), 500
+    if rows[0] != 1:
+        return jsonify({'status': 500, 'errors': 'The  flight does not exist!'}), 500
 #Verificar se a crew existe
     cur.execute("SELECT crew_id FROM crew where crew_id = %s", (sch_json['crew_id'],))
     crew_row = cur.fetchone()
@@ -548,9 +550,9 @@ def add_schedule():
     values = (sch_json["flight_code"], sch_json["date"])
 
     cur.execute(statement, values)
-    rows = cur.fetchall()
+    rows = cur.fetchone()
 
-    if rows:
+    if rows[0]!=0:
         return jsonify({'status': 400, 'errors': 'The schedule already exists!'}), 400
 
     sta= '''
@@ -594,13 +596,14 @@ def add_schedule():
         for i in seat_generator(seat_n):
             val2=(bool(True),i,data,sch_json['flight_code'])
             cur.execute(sta2, val2)
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
     finally:
         if conn is not None:
             conn.close()
-    return jsonify({'status': 200, 'result':'Inserido com sucesso!'})
+    return jsonify({'status': 200, 'result':'Inserted with success!'})
 
 
 # QUERY 6 - verificada
@@ -923,7 +926,7 @@ def add_book_flight():
                 %s,
                 %s
             )
-            RETURNING booking_id;"""
+            RETURNING booking_id,ticket_amout_to_pay;"""
     values3 = (booking_payload["ticket_quantity"],
                booking_payload["ticket_quantity"],
                booking_payload["flight_code"],
@@ -934,7 +937,9 @@ def add_book_flight():
 
     try:
         cur.execute(statement3, values3)
-        booking_id=cur.fetchone()[0]
+        row=cur.fetchone()
+        booking_id = row[0]
+        amount_to_pay=row[1]
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
@@ -958,7 +963,7 @@ def add_book_flight():
 
     conn.close()
     return jsonify(
-        {'status': 200, 'results': f"You created successfully your booking. Proceed to payment for booking {rows[0]}."})
+        {'status': 200, 'results': f"You created successfully your booking. Proceed to payment of {amount_to_pay}$ in order to generate the tickets from booking {booking_id} ."})
 
 
 # QUERY TICKETS
@@ -1375,6 +1380,9 @@ def add_payment():
 @app.route('/cloud-query/financial_data', methods=['GET'])
 def financial_data():
     logger.info("###              DEMO: GET /financial_data             ###");
+    payload = verify_admin()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
 
     conn = db_connection()
     cur = conn.cursor()
@@ -1419,9 +1427,9 @@ ORDER BY
     for row in rows:
         logger.debug(row)
         content = {"flight_code": int(row[0]),
-                   "Credit Card": float(row[1]),
-                   "Debit Card": float(row[2]),
-                   "MBWay": float(row[3]),
+                   "Credit Card": float(row[2]),
+                   "Debit Card": float(row[3]),
+                   "MBWay": float(row[1]),
                    "total": float(row[4])}
         results.append(content)  # appending month report
     conn.close()
@@ -1488,7 +1496,8 @@ FROM
     crew_members cm
 LEFT JOIN pilot p
     ON cm.user__id_user = p.crew_members_user__id_user
-LEFT JOIN flight_attendante fa
+LEFT JOIN flight_attendant
+ fa
     ON cm.user__id_user = fa.crew_members_user__id_user
 WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
     '''
@@ -1533,6 +1542,74 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
             conn.close()
     return jsonify({'status': 200,
                     'result': f"Supervisor was added with success. Crew member {supervisor_json['crew_member']} supervises crew {supervisor_json['crew_id']}."})
+
+
+@app.route('/cloud-query/crew_member/get_work', methods=['GET'])
+def get_work():
+    logger.info("###              DEMO: POST /supervisor              ###")
+    payload = verify_crew()
+    if isinstance(payload, tuple):  # Verifica se é um erro (tuple com JSON e status)
+        return payload
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    statment="""
+    SELECT
+    CASE
+        WHEN p.crew_crew_id IS NOT NULL THEN p.crew_crew_id
+        WHEN fa.crew_crew_id IS NOT NULL THEN fa.crew_crew_id
+        ELSE NULL
+    END AS crew_id,
+    fs.flight__flight_code AS flight_code,
+    fs.schedule__flight_date AS flight_date,
+    f.departure_time AS departure_time,
+    f.arrival_time AS arrival_time,
+    dep_airport.name AS departure_airport_name,
+    arr_airport.name AS arrival_airport_name
+
+FROM
+    crew_members cm
+LEFT JOIN pilot p
+    ON cm.user__id_user = p.crew_members_user__id_user
+LEFT JOIN flight_attendant
+ fa
+    ON cm.user__id_user = fa.crew_members_user__id_user
+LEFT JOIN flight__schedule_ fs
+    ON (p.crew_crew_id = fs.crew_crew_id OR fa.crew_crew_id = fs.crew_crew_id)
+LEFT JOIN flight_ f
+    ON fs.flight__flight_code=f.flight_code
+LEFT JOIN airport_ dep_airport
+    ON f.airport_dep = dep_airport.airport_code
+LEFT JOIN airport_ arr_airport
+    ON f.airport_arr = arr_airport.airport_code
+WHERE
+    cm.user__id_user = %s;
+    """
+    values=(payload['id'],)
+
+    try:
+        cur.execute(statment, values)
+        rows = cur.fetchall()
+        result=[]
+        for row in rows:
+            result.append({
+                "crew_id": row[0],
+                "flight_code": row[1],
+                "date": row[2],
+                "departure time": row[3].strftime("%H:%M"),
+                "arrival time": row[4].strftime("%H:%M"),
+                "departure airport": row[5],
+                "arrival airport": row[6]}
+            )
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        return jsonify(
+                {'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+
+    conn.close()
+    return jsonify({'status': 200, 'results':result})
+
 
 ##########################################################
 ## DATABASE ACCESS

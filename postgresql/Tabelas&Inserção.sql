@@ -1,22 +1,3 @@
-/* 
-	# 
-	# Sistema de Gestão de Dados 2024/2025
-	# Trabalho Prático
-	#
-*/
-
-
-/* 
-   Fazer copy-paste deste ficheiro
-   para o Editor SQL e executar.
-*/
-
-/* 
-Estes dois comandos drop (comentados) permitem remover as tabelas emp e dep da base de dados (se ja' tiverem sido criadas anteriormente)
-
-drop table emp;
-drop table dep;
-*/
 
 CREATE TABLE user_ (
 	id_user	 BIGSERIAL,
@@ -72,7 +53,7 @@ CREATE TABLE schedule_ (
 );
 
 CREATE TABLE ticket_ (
-	name			 VARCHAR(512) NOT NULL,
+	name			 VARCHAR(512) ,
 	vat			 VARCHAR(512),
 	booking_booking_id	 BIGINT,
 	seat_schedule__flight_date DATE NOT NULL,
@@ -120,7 +101,7 @@ CREATE TABLE crew_members (
 	PRIMARY KEY(user__id_user)
 );
 
-CREATE TABLE flight_attendante (
+CREATE TABLE flight_attendant (
 	crew_crew_id		 BIGINT NOT NULL,
 	crew_members_user__id_user BIGINT,
 	PRIMARY KEY(crew_members_user__id_user)
