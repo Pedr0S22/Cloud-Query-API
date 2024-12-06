@@ -1475,6 +1475,31 @@ def add_supervisor():
     if rows[0] != 1:
         return jsonify({'status': 400, 'errors': 'Invalid Input. The inputed crew_id does not exist.'}), 400
 
+    #Verificar se o crew_member faz parte da crew em questão
+    statement22='''SELECT
+    cm.user__id_user AS crew_member_id,
+
+    CASE
+        WHEN p.crew_crew_id IS NOT NULL THEN p.crew_crew_id
+        WHEN fa.crew_crew_id IS NOT NULL THEN fa.crew_crew_id
+        ELSE NULL
+    END AS crew_id
+FROM
+    crew_members cm
+LEFT JOIN pilot p
+    ON cm.user__id_user = p.crew_members_user__id_user
+LEFT JOIN flight_attendante fa
+    ON cm.user__id_user = fa.crew_members_user__id_user
+WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
+    '''
+    values22=(supervisor_json['crew_id'],supervisor_json['crew_id'],supervisor_json['crew_member'])
+
+    cur.execute(statement22, values22)
+    rows = cur.fetchall()
+    if not rows:
+        return jsonify({'status': 400,
+                        'errors': 'Invalid Input. To insert a supervisor into the mentioned crew_id,they should be associated to the same crew.'}), 400
+
     # Admitimos que o admin que cria a crew é o único que pode adicionar supervisor
     statement1 = """
                 SELECT COUNT(*)
@@ -1488,7 +1513,7 @@ def add_supervisor():
 
     if rows[0] != 1:
         return jsonify({'status': 400,
-                        'errors': 'Invalid Input. To insert supervisor into the inputed crew_id should be the creator of this crew.'}), 400
+                        'errors': 'Invalid Input. To insert supervisor into the mentioned crew_id,they should be the creator of this crew.'}), 400
 
     logger.info("---- add supervisor  ----")
     logger.debug(f'payload: {payload}')
