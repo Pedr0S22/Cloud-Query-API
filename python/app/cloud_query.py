@@ -580,6 +580,28 @@ def add_schedule():
 
     if not crew_row :
         return jsonify({'status': 500, 'errors': 'The crew does not exist!'}), 500
+
+
+#Verificar se a crew já trabalha naquele dia
+    sta= '''
+    SELECT COUNT(*) FROM flight__schedule_
+    WHERE schedule__flight_date=%s 
+    AND crew_crew_id=%s
+    '''
+    val=(sch_json['date'],sch_json['crew_id'])
+
+    try:
+        cur.execute(sta, val)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
+
+    if rows[0] != 0:
+        return jsonify({'status': 400, 'errors': 'The crew is alread working in this date!'}), 400
+
 #VERIFICAR: SE EXISTE o voo ja existe
     statement = """
                     SELECT 
@@ -1062,20 +1084,6 @@ def add_tickets():
     conn = db_connection()
     cur = conn.cursor()
 
-    """
-    EXEMPLO DE REQUEST:
-    {
-        booking_id: 3
-        name = ["João Manuel","Zé da Esquina", "Lurdes das Couves"]
-        vat = ["123456789","987654321","789123456"]
-    }
-
-    EXEMPLO DE RESPONSE:
-    {
-        status: 200
-        results: "The tickets were created succefully."
-    }
-    """
 
     # Só os passageiros podem fazer pedir tickets!
     payload = verify_passenger()
@@ -1104,8 +1112,14 @@ def add_tickets():
             """
     values0 = (tickets_payload['booking_id'],)
 
-    cur.execute(statement0, values0)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement0, values0)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 0:
         aux = f"Something is wrong with your request. You already associated all your tickets."
@@ -1120,14 +1134,20 @@ def add_tickets():
 
     values1 = (tickets_payload['booking_id'],)
 
-    cur.execute(statement1, values1)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement1, values1)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 1:
         aux = f"Something is wrong with your request. You didn't complete the booking {tickets_payload['booking_id']} payment"
         return jsonify({'status': 400, 'errors': aux}), 400
 
-    # Verificar se o número de bilhetes é o mesmo número de nomes e vats
+    # Verificar se o número de bilhetes é o mesmo número de nomes e tin
 
     statement2 = """
             SELECT ticket_quantity
@@ -1136,16 +1156,29 @@ def add_tickets():
 
     values2 = (tickets_payload["booking_id"],)
 
-    cur.execute(statement2, values2)
-    ticket_quantity = cur.fetchone()[0]
+    try:
+        cur.execute(statement2, values2)
+        ticket_quantity = cur.fetchone()[0]
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if ((ticket_quantity != len(tickets_payload["name"])) and (ticket_quantity != len(tickets_payload["vat"]))):
         aux = "Something is wrong with your request. Check if the amount of names and vat's are the same as the number of tickets that you created!"
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Criação dos bilhetes
-    cur.execute('''SELECT seat_number FROM ticket_ WHERE booking_booking_id = %s''',(tickets_payload['booking_id'],))
-    seats=cur.fetchall()
+    try:
+        cur.execute('''SELECT seat_number FROM ticket_ WHERE booking_booking_id = %s''',(tickets_payload['booking_id'],))
+        seats=cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
+
     for i in range(len(tickets_payload["name"])):
         statement3 = """
                 UPDATE ticket_
@@ -1162,18 +1195,16 @@ def add_tickets():
 
         try:
             cur.execute(statement3, values3)
-            cur.execute("commit")
         except (Exception, psycopg2.DatabaseError) as error:
+            conn.rollback()
             logger.error(error)
             return jsonify(
                 {'status': 500, 'errors': 'Something went wrong in the system (insertion into tickett table)!'}), 500
-
+    conn.commit()
     conn.close()
     return jsonify({'status': 200, 'results': "The tickets were created succefully."})
 
 
-
-# QUERY 9 - verificada
 @app.route('/cloud-query/top_destinations/<n>', methods=['GET'])
 def top_destinations(n):
     logger.info("###              DEMO: GET /top_destinations             ###");
@@ -1217,9 +1248,14 @@ ORDER BY
     number_flights DESC;"""
 
     values = (current_date,)
-
-    cur.execute(statement, values)
-    rows = cur.fetchall()
+    try:
+        cur.execute(statement, values)
+        rows = cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
@@ -1243,10 +1279,12 @@ ORDER BY
         top_n_destinations = flights[:n]
         results.append({"month": month, "topN": top_n_destinations})
 
+    if conn is not None:
+        conn.close()
+
     return jsonify({'status': 200, 'results': results})
 
 
-# QUERY 10 - VERIFICADA
 @app.route('/cloud-query/top_routes/<n>', methods=['GET'])
 def top_routes(n):
     logger.info("###              DEMO: GET /top_routes             ###");
@@ -1280,7 +1318,7 @@ def top_routes(n):
             flight_ AS f ON b.flight__flight_code = f.flight_code
         WHERE 
             b.schedule__flight_date >= CURRENT_DATE - INTERVAL '12 months'
-            AND fs.schedule__flight_date <= CURRENT_DATE
+            AND b.schedule__flight_date <= CURRENT_DATE
             AND b.ticket_amout_to_pay - b.ticket_amout_payed = 0
         GROUP BY 
             TO_CHAR(b.schedule__flight_date, 'YYYY-MM'),
@@ -1289,12 +1327,15 @@ def top_routes(n):
             month_year DESC,
             total_passengers DESC; """
 
+    try:
+        cur.execute(statement)
+        rows = cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
-    cur.execute(statement)
-    rows = cur.fetchall()
-
-    if not rows:
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     results_aux = {}
 
@@ -1315,9 +1356,12 @@ def top_routes(n):
         top_n_flights = flights[:n]
         results.append({"month": month, "topN": top_n_flights})
 
+    if conn is not None:
+        conn.close()
+
     return jsonify({'status': 200, 'results': results})
 
-#QUERY PARA SABER A QUANTIA NECESSARIA A PAGAR- INFORMAÇÃO SOBRE O BOOKING POR PASSAGEIRO
+
 @app.route('/cloud-query/info_booking', methods=['GET'])
 def info_booking():
     logger.info("###              DEMO: GET /info_booking             ###");
@@ -1336,17 +1380,25 @@ WHERE passanger_user__id_user=%s
     '''
     val=payload['id']
 
-    cur.execute(sta, (val,))
-    rows=cur.fetchall()
-    results=[]
-    for row in rows:
-        row = list(row)
-        content={'booking_id': row[0],'ticket_quantity':row[1],'ticket_amout_to_pay':row[2],'flight__flight_code': row[3],'schedule__flight_date':row[4] }
-        results.append(content)
-    conn.close()
+    try:
+        cur.execute(sta, (val,))
+        rows=cur.fetchall()
+        results=[]
+        for row in rows:
+            row = list(row)
+            content={'booking_id': row[0],'ticket_quantity':row[1],'ticket_amout_to_pay':row[2],'flight__flight_code': row[3],'schedule__flight_date':row[4] }
+            results.append(content)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
+
+    if conn is not None:
+        conn.close()
     return jsonify({'status': 200, 'results': results})
 
-# QUERY 11 - VERIFICADA
+
 @app.route('/cloud-query/make_payment', methods=['POST'])
 def add_payment():
     logger.info("###              DEMO: POST /make_payment             ###");
@@ -1372,8 +1424,14 @@ def add_payment():
 
     values1 = (payment_payload['booking_id'], payment_payload['payment_amount'])
 
-    cur.execute(statement1, values1)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement1, values1)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     # verificar se a verificação anterior é válida e se metodo de pagamentp existe:
     if rows[0] != 1 and (payment_payload['method'] in ('Credit Card', 'MBWay', 'Debit Card')):
@@ -1393,9 +1451,11 @@ def add_payment():
     try:
         cur.execute(statement2, values2)
         payment_id=cur.fetchone()[0]
-        cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system (insertion into payment)!'}), 500
 
 
@@ -1420,9 +1480,11 @@ def add_payment():
         values3 = (payment_id,)
     try:
         cur.execute(statement3, values3)
-        cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify(
             {'status': 500, 'errors': 'Something went wrong in the system (insertion into payment_method)!'}), 500
 
@@ -1435,9 +1497,11 @@ def add_payment():
     values4 = (payment_payload["payment_amount"], payment_payload["booking_id"])
     try:
         cur.execute(statement4, values4)
-        cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     # Recolha dos dados para a resposta final ao user
@@ -1451,8 +1515,18 @@ def add_payment():
 
     values5 = (payment_payload["booking_id"],)
 
-    cur.execute(statement5, values5)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement5, values5)
+        rows = cur.fetchone()
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
+
+
     if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
@@ -1462,11 +1536,10 @@ def add_payment():
     else:
         results += f"The remaining amount to complete booking payment is {rows[1]}€ ."
 
-    conn.close()
+    if conn is not None:
+        conn.close()
     return jsonify({'status': 200, 'results': results})
 
-
-# QUERY 12 - VERIFICADA
 @app.route('/cloud-query/financial_data', methods=['GET'])
 def financial_data():
     logger.info("###              DEMO: GET /financial_data             ###");
@@ -1506,9 +1579,15 @@ GROUP BY
 ORDER BY
     b.flight__flight_code;
 """
+    try:
+        cur.execute(statement)
+        rows = cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
-    cur.execute(statement)
-    rows = cur.fetchall()
     if not rows:
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
@@ -1523,7 +1602,10 @@ ORDER BY
                    "MBWay": float(row[1]),
                    "total": float(row[4])}
         results.append(content)  # appending month report
-    conn.close()
+
+    if conn is not None:
+        conn.close()
+
     return jsonify({'status': 200, 'results': results})
 
 
@@ -1538,19 +1620,7 @@ def add_supervisor():
     cur = conn.cursor()
     supervisor_json = request.get_json()
 
-    """
-    EXEMPLO REQUEST:
-    {
-        crew_id: 3
-        crew_member: 9
-    }
 
-    EXEMPLO RESPONSE:
-    {
-        status: 200
-        results: Supervisor was added with success. Crew member 9 supervises crew 3.
-    }
-    """
     # Check input
 
     if len(supervisor_json) == 2:
@@ -1568,8 +1638,14 @@ def add_supervisor():
 
     value = (supervisor_json['crew_id'],)
 
-    cur.execute(statement, value)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement, value)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 1:
         return jsonify({'status': 400, 'errors': 'Invalid Input. The inputed crew_id does not exist.'}), 400
@@ -1594,8 +1670,15 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
     '''
     values22=(supervisor_json['crew_id'],supervisor_json['crew_id'],supervisor_json['crew_member'])
 
-    cur.execute(statement22, values22)
-    rows = cur.fetchall()
+    try:
+        cur.execute(statement22, values22)
+        rows = cur.fetchall()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
+
     if not rows:
         return jsonify({'status': 400,
                         'errors': 'Invalid Input. To insert a supervisor into the mentioned crew_id,they should be associated to the same crew.'}), 400
@@ -1608,8 +1691,14 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
                 AND crew_id = %s;"""
     values1 = (payload['id'], supervisor_json['crew_id'])
 
-    cur.execute(statement1, values1)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement1, values1)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 1:
         return jsonify({'status': 400,
@@ -1625,9 +1714,13 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
     try:
         cur.execute(statement2, values2)
         row = cur.fetchone()
-        cur.execute("commit")
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
     finally:
         if conn is not None:
             conn.close()
@@ -1695,6 +1788,8 @@ WHERE
             )
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify(
                 {'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
@@ -1745,6 +1840,3 @@ if __name__ == "__main__":
 
 # NOTE: change to 5000 or remove the port parameter if you are running as a Docker container
     app.run(host="0.0.0.0", port=8080, debug=True, threaded=True)
-
-
-
