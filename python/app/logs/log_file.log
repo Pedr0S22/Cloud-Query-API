@@ -7777,3 +7777,52 @@ API v1.0 online: http://localhost:8080/cloud-query/
 
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/admin HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': '{{username}}', 'email': '{{email}}', 'password': '{{password}}'}
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': '{{username}}', 'email': '{{email}}', 'password': '{{password}}'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 401 -
+INFO:logger:###              DEMO: POST /crew              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/crew HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /crew             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mGET /cloud-query/crew HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /flight             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_routes             ###
+INFO:logger:----  Monthly report with the top N routes with the most passengers  ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "GET /cloud-query/top_routes/1 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "GET /cloud-query/seats HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /info_booking             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mGET /cloud-query/info_booking HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /make_payment             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/make_payment HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 1
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "GET /cloud-query/top_destinations/1 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /financial_data             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mGET /cloud-query/financial_data HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mGET /cloud-query/crew_member/get_work HTTP/1.1[0m" 400 -
