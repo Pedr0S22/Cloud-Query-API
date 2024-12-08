@@ -927,8 +927,14 @@ def add_book_flight():
 
         values = (payload["flight_code"], payload["date"])
 
-        cur.execute(statement, values)
-        rows = cur.fetchone()
+        try:
+            cur.execute(statement, values)
+            rows = cur.fetchone()
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            if conn is not None:
+                conn.close()
+            return jsonify({'status': 500, 'error': error}), 500
 
         if rows[0] != 1:
             return jsonify({'status': 400, 'errors': 'The flight does not exist!'}), 400
@@ -952,8 +958,14 @@ def add_book_flight():
                booking_payload['date'],
                booking_payload['seat_id'])
 
-    cur.execute(statement1, values1)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement1, values1)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0] != booking_payload['ticket_quantity']:
         aux = f"Something is wrong with your request. Not enough available seats for booking."
@@ -974,9 +986,11 @@ def add_book_flight():
 
     try:
         cur.execute(statement2, values2)
-        cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system (update into seat)!'}), 500
 
     # Inserção dos dados do booking na tabela
@@ -1010,9 +1024,11 @@ def add_book_flight():
         row=cur.fetchone()
         booking_id = row[0]
         amount_to_pay=row[1]
-        cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
         return jsonify({'status': 500, 'errors': 'Something went wrong in the system (insertion into booking)!'}), 500
 
 
@@ -1021,15 +1037,17 @@ def add_book_flight():
                 INSERT INTO  ticket_(seat_flight__flight_code,seat_schedule__flight_date,seat_number,booking_booking_id)
                 VALUES (%s,%s,%s,%s)
 """
-    for i in range(booking_payload["ticket_quantity"]):
-        values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload['seat_id'][i],booking_id)
-        cur.execute(statement5, values5)
-    cur.execute("commit")
-
-    if len(rows) != 1:
-        aux = f"Something is wrong with your request."
-        return jsonify({'status': 500, 'errors': aux}), 500
-
+    try:
+        for i in range(booking_payload["ticket_quantity"]):
+            values5 = (booking_payload['flight_code'],booking_payload["date"],booking_payload['seat_id'][i],booking_id)
+            cur.execute(statement5, values5)
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'errors': error}), 500
 
     conn.close()
     return jsonify(
