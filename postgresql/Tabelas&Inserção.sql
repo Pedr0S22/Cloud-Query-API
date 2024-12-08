@@ -54,7 +54,7 @@ CREATE TABLE schedule_ (
 
 CREATE TABLE ticket_ (
 	name			 VARCHAR(512) ,
-	vat			 VARCHAR(512),
+	tin			 VARCHAR(512),
 	booking_booking_id	 BIGINT,
 	seat_schedule__flight_date DATE NOT NULL,
 	seat_flight__flight_code	 BIGINT NOT NULL,

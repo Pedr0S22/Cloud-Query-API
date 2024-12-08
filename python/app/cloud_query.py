@@ -325,7 +325,6 @@ def add_crew_member():
             conn.close()
         return jsonify({'status': 400, 'errors': 'Crew id does not exist!'}), 400
 
-
 @app.route('/cloud-query/user', methods=['PUT'])
 def login():
     logger.info("###              DEMO: PUT /users              ###")
@@ -452,6 +451,9 @@ def add_airport():
     except (Exception, psycopg2.DatabaseError) as error:
         conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'result': error}),500
     finally:
         if conn is not None:
             conn.close()
@@ -485,9 +487,15 @@ def add_flight():
                     ;"""
 
     values = (flight_json['airport_dep'],flight_json['airport_arr'])
-
-    cur.execute(statement, values)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement, values)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        conn.rollback()
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0] != 2:
         return jsonify({'status': 400, 'errors': 'The airport does not exist!'}), 400
@@ -507,6 +515,9 @@ def add_flight():
     except (Exception, psycopg2.DatabaseError) as error:
         conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
     finally:
         if conn is not None:
             conn.close()
@@ -545,15 +556,28 @@ def add_schedule():
                     """
 
     values = (sch_json["flight_code"], )
-
-    cur.execute(statement, values)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement, values)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0] != 1:
-        return jsonify({'status': 500, 'errors': 'The  flight does not exist!'}), 500
+        return jsonify({'status': 400, 'errors': 'The  flight does not exist!'}), 400
+
 #Verificar se a crew existe
-    cur.execute("SELECT crew_id FROM crew where crew_id = %s", (sch_json['crew_id'],))
-    crew_row = cur.fetchone()
+    try:
+        cur.execute("SELECT crew_id FROM crew where crew_id = %s", (sch_json['crew_id'],))
+        crew_row = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
+
     if not crew_row :
         return jsonify({'status': 500, 'errors': 'The crew does not exist!'}), 500
 #VERIFICAR: SE EXISTE o voo ja existe
@@ -569,8 +593,14 @@ def add_schedule():
 
     values = (sch_json["flight_code"], sch_json["date"])
 
-    cur.execute(statement, values)
-    rows = cur.fetchone()
+    try:
+        cur.execute(statement, values)
+        rows = cur.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0]!=0:
         return jsonify({'status': 400, 'errors': 'The schedule already exists!'}), 400
@@ -582,7 +612,14 @@ def add_schedule():
     '''
 
     values = (datetime.strptime(sch_json['date'],"%Y-%m-%d"),)
-    cur.execute(sta, values)
+    try:
+        cur.execute(sta, values)
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
+
     if cur.rowcount == 0:
         sta='''
         INSERT INTO schedule_ (flight_date)
@@ -620,13 +657,15 @@ def add_schedule():
     except (Exception, psycopg2.DatabaseError) as error:
         conn.rollback()
         logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
     finally:
         if conn is not None:
             conn.close()
     return jsonify({'status': 200, 'result':'Inserted with success!'})
 
 
-# QUERY 6 - verificada
 @app.route('/cloud-query/check_routes', methods=['GET'])
 def check_routes():
     logger.info("###              DEMO: GET /check_routes             ###");
@@ -710,9 +749,14 @@ def check_routes():
                             f.flight_code;"""
 
                 values = (routes_payload["destination_airport"],)
-
-            cur.execute(statement, values)
-            rows = cur.fetchall()
+            try:
+                cur.execute(statement, values)
+                rows = cur.fetchall()
+            except (Exception, psycopg2.DatabaseError) as error:
+                logger.error(error)
+                if conn is not None:
+                    conn.close()
+                return jsonify({'status': 500, 'error': error}), 500
 
             if not rows:
                 return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
@@ -753,9 +797,14 @@ def check_routes():
                         flight__schedule_ fs ON f.flight_code = fs.flight__flight_code
                     JOIN 
                         schedule_ s ON fs.schedule__flight_date = s.flight_date;"""
-
-        cur.execute(statement )
-        rows = cur.fetchall()
+        try:
+            cur.execute(statement )
+            rows = cur.fetchall()
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(error)
+            if conn is not None:
+                conn.close()
+            return jsonify({'status': 500, 'error': error}), 500
 
         if not rows:
             return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
@@ -1084,12 +1133,12 @@ def add_tickets():
                 UPDATE ticket_
                 SET
                 name = %s,
-                vat = %s
+                tin = %s
                 WHERE booking_booking_id = %s AND
                 seat_number = %s
                 """
         values3 = (tickets_payload["name"][i],
-                   tickets_payload["vat"][i],
+                   tickets_payload["tin"][i],
                    tickets_payload['booking_id'],
                    seats[i])
 
@@ -1141,6 +1190,7 @@ JOIN
     airport_ a ON f.airport_arr = a.airport_code
 WHERE
     fs.schedule__flight_date >= CURRENT_DATE - INTERVAL '12 months'
+    AND fs.schedule__flight_date <= CURRENT_DATE
 GROUP BY
     TO_CHAR(fs.schedule__flight_date, 'YYYY-MM'),
     f.airport_arr
@@ -1212,6 +1262,7 @@ def top_routes(n):
             flight_ AS f ON b.flight__flight_code = f.flight_code
         WHERE 
             b.schedule__flight_date >= CURRENT_DATE - INTERVAL '12 months'
+            AND fs.schedule__flight_date <= CURRENT_DATE
             AND b.ticket_amout_to_pay - b.ticket_amout_payed = 0
         GROUP BY 
             TO_CHAR(b.schedule__flight_date, 'YYYY-MM'),
@@ -1431,6 +1482,7 @@ LEFT JOIN
     ON dc.payment_payment_id = p.payment_id
 WHERE
     p.payment_date >= CURRENT_DATE - INTERVAL '12 months'
+    AND p.payment_date <= CURRENT_DATE
 GROUP BY
     b.flight__flight_code
 ORDER BY

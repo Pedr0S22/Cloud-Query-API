@@ -7526,3 +7526,93 @@ API v1.0 online: http://localhost:8080/cloud-query/
 
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:28:41] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:29:05] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 2}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:29:11] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:30:20] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:30:26] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_routes             ###
+INFO:logger:----  Monthly report with the top N routes with more passengers  ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:30:36] "GET /cloud-query/top_routes/1 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 1
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:30:42] "GET /cloud-query/top_destinations/1 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 1
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 15:07:35] "GET /cloud-query/top_destinations/1 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
