@@ -928,7 +928,7 @@ def add_book_flight():
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (update into seat)!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system (update into seat)!'}), 500
 
     # Inserção dos dados do booking na tabela
     statement3 = """
@@ -964,7 +964,7 @@ def add_book_flight():
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into booking)!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system (insertion into booking)!'}), 500
 
 
     #Criar ticket
@@ -1073,7 +1073,7 @@ def add_tickets():
     ticket_quantity = cur.fetchone()[0]
 
     if ((ticket_quantity != len(tickets_payload["name"])) and (ticket_quantity != len(tickets_payload["vat"]))):
-        aux = "Something is wrong with your request. Check if the amount of names and vat's are the same as the number of tickets that tou created!"
+        aux = "Something is wrong with your request. Check if the amount of names and vat's are the same as the number of tickets that you created!"
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Criação dos bilhetes
@@ -1099,7 +1099,7 @@ def add_tickets():
         except (Exception, psycopg2.DatabaseError) as error:
             logger.error(error)
             return jsonify(
-                {'status': 500, 'errors': 'Something went wrong in the sistem (insertion into tickett table)!'}), 500
+                {'status': 500, 'errors': 'Something went wrong in the system (insertion into tickett table)!'}), 500
 
     conn.close()
     return jsonify({'status': 200, 'results': "The tickets were created succefully."})
@@ -1186,7 +1186,7 @@ def top_routes(n):
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.info("----  Monthly report with the top N routes with more passengers  ----")
+    logger.info("----  Monthly report with the top N routes with the most passengers  ----")
 
     # Verification of valid input
     try:
@@ -1327,7 +1327,7 @@ def add_payment():
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment)!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system (insertion into payment)!'}), 500
 
 
     if payment_payload['method'] == "Credit Card":
@@ -1355,7 +1355,7 @@ def add_payment():
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         return jsonify(
-            {'status': 500, 'errors': 'Something went wrong in the sistem (insertion into payment_method)!'}), 500
+            {'status': 500, 'errors': 'Something went wrong in the system (insertion into payment_method)!'}), 500
 
     # Atualização a tabela do booking com o valor que ficou pago
 
@@ -1369,7 +1369,7 @@ def add_payment():
         cur.execute("commit")
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     # Recolha dos dados para a resposta final ao user
 
@@ -1385,13 +1385,13 @@ def add_payment():
     cur.execute(statement5, values5)
     rows = cur.fetchone()
     if not rows:
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     results = f"You paid {rows[0]}€ for your booking {payment_payload['booking_id']}. "
     if rows[1] == 0:
         results += "The payment is completed."
     else:
-        results += f"It remains {rows[1]}€ to complete booking payment."
+        results += f"The remaining amount to complete booking payment is {rows[1]}€ ."
 
     conn.close()
     return jsonify({'status': 200, 'results': results})
@@ -1440,7 +1440,7 @@ ORDER BY
     cur.execute(statement)
     rows = cur.fetchall()
     if not rows:
-        return jsonify({'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+        return jsonify({'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     results = []
 
@@ -1626,7 +1626,7 @@ WHERE
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
         return jsonify(
-                {'status': 500, 'errors': 'Something went wrong in the sistem!'}), 500
+                {'status': 500, 'errors': 'Something went wrong in the system!'}), 500
 
     conn.close()
     return jsonify({'status': 200, 'results':result})
