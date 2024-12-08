@@ -1,21 +1,21 @@
-##
 ## =============================================
-## ======== Sistema de Gestão de Dados =========
-## ============== LECD  2024/2025 ==============
-## =============================================
-## =================== Demo ====================
+## ============ Cloud Query Database ===========
 ## =============================================
 ## =============================================
 ## === Department of Informatics Engineering ===
 ## =========== University of Coimbra ===========
 ## =============================================
 ##
-## Authors: 
+## Authors (Demo): 
 ##   José D'Abruzzo Pereira <josep@dei.uc.pt>
 ##   Gonçalo Carvalho <gcarvalho@dei.uc.pt>
 ##   University of Coimbra
-
-
+##   
+## Authors:
+##  Francisca Mateus <uc2023212096@student.uc.pt>
+##  Pedro Silva <uc2023235452@student.uc.pt>
+##  Ramyad Raadi <uc2023205631@student.uc.pt>
+##
 '''
 How to run?
 $ python3 -m venv cloud_query
@@ -387,7 +387,7 @@ def add_crew():
     finally:
         if conn is not None:
             conn.close()
-    return jsonify({'status': 200, 'result':f'Inserido com sucesso! Com id {row[0]}' })
+    return jsonify({'status': 200, 'result':f'Inserted with success! Com id {row[0]}' })
 
 @app.route('/cloud-query/crew', methods=['GET'])
 def get_crews():
@@ -600,7 +600,7 @@ def add_schedule():
         return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0] != 0:
-        return jsonify({'status': 400, 'errors': 'The crew is alread working in this date!'}), 400
+        return jsonify({'status': 400, 'errors': 'The crew is already working in this date!'}), 400
 
 #VERIFICAR: SE EXISTE o voo ja existe
     statement = """
@@ -728,7 +728,7 @@ def check_routes():
             rows = cur.fetchall()
 
             if not rows:
-                return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
+                return jsonify({'status': 400, 'errors': 'No routes were found for the given parameters.'}), 400
 
         # Caso onde temos 1 parametro de
         elif len(routes_payload) == 1:
@@ -781,7 +781,7 @@ def check_routes():
                 return jsonify({'status': 500, 'error': error}), 500
 
             if not rows:
-                return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
+                return jsonify({'status': 400, 'errors': 'No routes were found for the given parameters.'}), 400
 
         else:
             return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
@@ -829,7 +829,7 @@ def check_routes():
             return jsonify({'status': 500, 'error': error}), 500
 
         if not rows:
-            return jsonify({'status': 400, 'errors': 'No routes found for the given criteria.'}), 400
+            return jsonify({'status': 400, 'errors': 'No routes were found for the given parameters.'}), 400
 
         results_aux = {}
         for row in rows:
@@ -990,7 +990,7 @@ def add_book_flight():
         return jsonify({'status': 500, 'error': error}), 500
 
     if rows[0] != booking_payload['ticket_quantity']:
-        aux = f"Something is wrong with your request. Not enough available seats for booking."
+        aux = f"Something is wrong with your request. Not enough seats are available for your booking."
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Atualizar a disponibilidade dos assentos do booking
@@ -1073,7 +1073,7 @@ def add_book_flight():
 
     conn.close()
     return jsonify(
-        {'status': 200, 'results': f"You created successfully your booking. Proceed to payment of {amount_to_pay}$ in order to generate the tickets from booking {booking_id} ."})
+        {'status': 200, 'results': f"Your booking has been created successfully. Proceed to payment of {amount_to_pay}$ in order to generate the tickets for your booking {booking_id} ."})
 
 
 # QUERY TICKETS
@@ -1122,7 +1122,7 @@ def add_tickets():
         return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 0:
-        aux = f"Something is wrong with your request. You already associated all your tickets."
+        aux = f"Something is wrong with your request. All your tickets have been already associated."
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Verificar se o booking foi pago na totalidade
