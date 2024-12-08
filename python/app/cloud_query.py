@@ -1144,7 +1144,7 @@ def add_tickets():
         return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 1:
-        aux = f"Something is wrong with your request. You didn't complete the booking {tickets_payload['booking_id']} payment"
+        aux = f"Something is wrong with your request. You didn't complete the payment of the booking {tickets_payload['booking_id']} "
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Verificar se o número de bilhetes é o mesmo número de nomes e tin
@@ -1166,7 +1166,7 @@ def add_tickets():
         return jsonify({'status': 500, 'errors': error}), 500
 
     if ((ticket_quantity != len(tickets_payload["name"])) and (ticket_quantity != len(tickets_payload["vat"]))):
-        aux = "Something is wrong with your request. Check if the amount of names and vat's are the same as the number of tickets that you created!"
+        aux = "Something is wrong with your request. Check if the amount of names and TIN´s are the same as the number of tickets that you have created!"
         return jsonify({'status': 400, 'errors': aux}), 400
 
     # Criação dos bilhetes
@@ -1199,7 +1199,7 @@ def add_tickets():
             conn.rollback()
             logger.error(error)
             return jsonify(
-                {'status': 500, 'errors': 'Something went wrong in the system (insertion into tickett table)!'}), 500
+                {'status': 500, 'errors': 'Something went wrong in the system (insertion into ticket)!'}), 500
     conn.commit()
     conn.close()
     return jsonify({'status': 200, 'results': "The tickets were created succefully."})
@@ -1435,7 +1435,7 @@ def add_payment():
 
     # verificar se a verificação anterior é válida e se metodo de pagamentp existe:
     if rows[0] != 1 and (payment_payload['method'] in ('Credit Card', 'MBWay', 'Debit Card')):
-        aux = f"Something is wrong with your request. Check the values booking_id, method and if the amount you want to pay is valid (less or equal)"
+        aux = f"Something is wrong with your request. Check the values booking_id, the method and if the amount you want to pay is valid (less or equal)"
         return jsonify({'status': 500, 'errors': aux}), 500
 
     # Inserção do pagamento na tabela payment
@@ -1534,7 +1534,7 @@ def add_payment():
     if rows[1] == 0:
         results += "The payment is completed."
     else:
-        results += f"The remaining amount to complete booking payment is {rows[1]}€ ."
+        results += f"The remaining amount to complete the booking payment is {rows[1]}€ ."
 
     if conn is not None:
         conn.close()
@@ -1648,7 +1648,7 @@ def add_supervisor():
         return jsonify({'status': 500, 'errors': error}), 500
 
     if rows[0] != 1:
-        return jsonify({'status': 400, 'errors': 'Invalid Input. The inputed crew_id does not exist.'}), 400
+        return jsonify({'status': 400, 'errors': 'Invalid Input. The inserted crew_id does not exist.'}), 400
 
     #Verificar se o crew_member faz parte da crew em questão
     statement22='''SELECT
@@ -1681,7 +1681,7 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
 
     if not rows:
         return jsonify({'status': 400,
-                        'errors': 'Invalid Input. To insert a supervisor into the mentioned crew_id,they should be associated to the same crew.'}), 400
+                        'errors': 'Invalid Input. To insert a supervisor into the mentioned crew_id, they should be associated to the same crew.'}), 400
 
     # Admitimos que o admin que cria a crew é o único que pode adicionar supervisor
     statement1 = """
@@ -1702,7 +1702,7 @@ WHERE (p.crew_crew_id=%s OR fa.crew_crew_id=%s) and cm.user__id_user=%s
 
     if rows[0] != 1:
         return jsonify({'status': 400,
-                        'errors': 'Invalid Input. To insert supervisor into the mentioned crew_id,they should be the creator of this crew.'}), 400
+                        'errors': 'Invalid Input. To insert a supervisor into the mentioned crew_id, the admin should be the creator of this crew.'}), 400
 
     logger.info("---- add supervisor  ----")
     logger.debug(f'payload: {payload}')
