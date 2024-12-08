@@ -7481,3 +7481,48 @@ API v1.0 online: http://localhost:8080/cloud-query/
 
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [07/Dec/2024 18:26:02] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /info_booking             ###
+INFO:werkzeug:127.0.0.1 - - [07/Dec/2024 18:26:36] "GET /cloud-query/info_booking HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 14:14:10] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062

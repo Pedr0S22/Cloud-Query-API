@@ -182,10 +182,10 @@ def add_users(n):
 
     try:
         cur.execute(statement, values)
-        cur.execute("commit")
         result = 'Inserted!'
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(error)
+        conn.rollback()
         result = 'Failed!'
         return jsonify({'status': 400, 'error': result}), 400
     finally:
@@ -276,10 +276,20 @@ def add_crew_member():
     logger.info("---- new crew_member  ----")
     logger.debug(f'payload: {payload}')
 
+    #Verificar o resto do input
+
+    if "role" and "crew_id" not in payload:
+        conn.rollback()
+        return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
+
+    #Verificar se o user existe
+
     cur.execute("SELECT * FROM user_ where username = %s", (payload['username'],))
     row = cur.fetchone()
     if not row:
+        conn.rollback()
         return jsonify({'status': 400, 'errors': 'Username does not exist!'}), 400
+
     #Verificar se existe a crew
     cur.execute("SELECT crew_id FROM crew where crew_id = %s", (payload['crew_id'],))
     crew_row = cur.fetchone()
@@ -310,7 +320,11 @@ def add_crew_member():
                 conn.close()
         return jsonify({'status': 200, 'result': row[0]})
     else:
-        return jsonify({'status': 401, 'errors': 'Crew id does not exist!'}), 401
+        conn.rollback()
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 400, 'errors': 'Crew id does not exist!'}), 400
+
 
 @app.route('/cloud-query/user', methods=['PUT'])
 def login():
@@ -388,14 +402,20 @@ def get_crews():
     cur = conn.cursor()
 
     cur.execute("SELECT * FROM crew")
-    rows = cur.fetchall()
+    try:
+        rows = cur.fetchall()
 
-    payload = []
-    logger.debug("---- get crew  ----")
-    for row in rows:
-        logger.debug(row)
-        content = {'crew_id': int(row[0]), 'administrador_creater': row[1], 'crew_chief': row[2]}
-        payload.append(content) # appending to the payload to be returned
+        payload = []
+        logger.debug("---- get crew  ----")
+        for row in rows:
+            logger.debug(row)
+            content = {'crew_id': int(row[0]), 'administrador_creater': row[1], 'crew_chief': row[2]}
+            payload.append(content) # appending to the payload to be returned
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        if conn is not None:
+            conn.close()
+        return jsonify({'status': 500, 'error': error}), 500
 
     if conn is not None:
         conn.close()
@@ -876,7 +896,8 @@ def add_book_flight():
         flight__flight_code = %s
         AND schedule__flight_date = %s
         AND seat_number = ANY(%s)
-        AND available = TRUE;"""
+        AND available = TRUE
+        FOR UPDATE;"""
 
     values1 = (booking_payload['flight_code'],
                booking_payload['date'],
