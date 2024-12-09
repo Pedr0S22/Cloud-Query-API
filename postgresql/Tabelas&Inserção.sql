@@ -24,7 +24,7 @@ CREATE TABLE airport_ (
 CREATE TABLE crew (
 	crew_id			 BIGSERIAL,
 	admin__user__id_user	 BIGINT NOT NULL,
-	crew_members_user__id_user BIGINT NOT NULL,
+	crew_members_user__id_user BIGINT ,
 	PRIMARY KEY(crew_id)
 );
 
@@ -65,8 +65,8 @@ CREATE TABLE ticket_ (
 CREATE TABLE booking (
 	booking_id		 BIGSERIAL,
 	ticket_quantity	 INTEGER NOT NULL,
-	ticket_amout_to_pay	 FLOAT(8) NOT NULL,
-	ticket_amout_payed	 FLOAT(8) NOT NULL DEFAULT 0,
+	ticket_amout_to_pay	 NUMERIC(1000,2) NOT NULL,
+	ticket_amout_payed	 NUMERIC(1000,2) NOT NULL DEFAULT 0,
 	flight__flight_code	 BIGINT NOT NULL,
 	schedule__flight_date	 DATE NOT NULL,
 	passanger_user__id_user BIGINT NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE booking (
 
 CREATE TABLE payment (
 	payment_id	 BIGSERIAL,
-	amount_payed	 FLOAT(8) NOT NULL,
+	amount_payed	 NUMERIC(1000,2) NOT NULL,
 	payment_date	 TIMESTAMP NOT NULL,
 	booking_booking_id BIGINT NOT NULL,
 	PRIMARY KEY(payment_id)
@@ -105,7 +105,7 @@ CREATE TABLE flight_attendant (
 	crew_crew_id		 BIGINT NOT NULL,
 	crew_members_user__id_user BIGINT,
 	PRIMARY KEY(crew_members_user__id_user)
-);
+);git
 
 CREATE TABLE pilot (
 	crew_crew_id		 BIGINT NOT NULL,
