@@ -1,0 +1,817 @@
+{
+	"info": {
+		"_postman_id": "081ab867-8a5f-4523-b1c4-ee79425ec571",
+		"name": "Cloud Query EndPoint",
+		"description": "<img src=\"https://content.pstmn.io/9f9caceb-8fa4-475d-ac9a-e116c1fc9b49/Q2FwdHVyYSBkZSBlY3JhzIMgMjAyNC0xMS0wMiwgYcyAcyAxNi41NS4zOC5wbmc=\" alt=\"\" height=\"356\" width=\"355\">",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39843308"
+	},
+	"item": [
+		{
+			"name": "Funcionalidades do Passageiro",
+			"item": [
+				{
+					"name": "Adicionar Passageiro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"mario.santo\",\n    \"email\": \"mario.santo@passenger.pt\",\n    \"password\": \"123mario\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/passenger",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"passenger"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"maria.mendes\",\n    \"password\": \"123maria\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Available Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/check_routes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"check_routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Destinations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/top_destinations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"top_destinations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Routes Passengers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/top_routes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"top_routes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Seats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flight_code\": 2,\n    \"date\":\"2024-12-20\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/seats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"seats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZXhwIjoxNzMzNDg2NTA3Ljk1MjU1MX0.R2tYWmAI5X2DrJC9BpDUFmZpDwYvRsM0d_Y4rtj0jrw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flight_code\":2,\n    \"date\":\"2024-12-20\",\n    \"ticket_quantity\":2,\n    \"seat_id\":[\"3D\",\"3E\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/book_flight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"book_flight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZXhwIjoxNzMzNzA3NDYyLjYxMDM0N30.smSE_xRBgUNB3prDn2RtUconK4ySr6DJvVXzzsilOxQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\":13,\n    \"method\":\"MBWay\",\n    \"payment_amount\":66.52\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/make_payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"make_payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info Booking",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZXhwIjoxNzMzNzA3NDYyLjYxMDM0N30.smSE_xRBgUNB3prDn2RtUconK4ySr6DJvVXzzsilOxQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/info_booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"info_booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Tickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZXhwIjoxNzMzNzA3NDYyLjYxMDM0N30.smSE_xRBgUNB3prDn2RtUconK4ySr6DJvVXzzsilOxQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"booking_id\": 13,\n        \"name\" : [\"João Manuel\",\"Zé da Esquina\"],\n        \"tin\" :[\"123456789\",\"987654321\"]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/tickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funcionalidades de Admin",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"pedro.silva\",\n    \"password\": \"123pedro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA4MTc5Ljc3OTkyMn0.-2M_bBbUIoPwH3dexUm0vY2z64rq_UbPrzB7W7gV8o4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"frederico.varandas\",\n    \"email\": \"frederico.varandas@admin.pt\",\n    \"password\": \"123frederico\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Aeroporto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA4MTc5Ljc3OTkyMn0.-2M_bBbUIoPwH3dexUm0vY2z64rq_UbPrzB7W7gV8o4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"city\":\"Tehran\",\n    \"name\":\"Aeroporto IKA\",\n    \"country\":\"Iran\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/airport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"airport"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Voo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA4NjkyLjY3MDQyNjh9.P5yW41VaVa9dxxcSOH68_fDPLim5sbihE2S-gNzxG7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"departure_time\": \"4:00\",\n    \"arrival_time\": \"12:00\",\n    \"existing_seats\": 200 ,\n    \"airport_dep\":5,\n    \"airport_arr\":7\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/flight",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"flight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Crew",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA4NjkyLjY3MDQyNjh9.P5yW41VaVa9dxxcSOH68_fDPLim5sbihE2S-gNzxG7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/crew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"crew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver todos as Crews",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA4NjkyLjY3MDQyNjh9.P5yW41VaVa9dxxcSOH68_fDPLim5sbihE2S-gNzxG7U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/crew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"crew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Crew Member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA5MDUxLjA0NDA3Nn0.kaja2wXtM9yVOpY7S-n04KiedaLqPNXNOtPLoA--a14",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"carlos.silva\",\n    \"email\":\"carlos.silva@crew.pt\",\n    \"password\":\"123carlos\",\n    \"role\":\"pilot\",\n    \"crew_id\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/crew_member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"crew_member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Crew Supervisor ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA5MDUxLjA0NDA3Nn0.kaja2wXtM9yVOpY7S-n04KiedaLqPNXNOtPLoA--a14",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"crew_id\":6,\n    \"crew_member\":88\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/crew_supervisor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"crew_supervisor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Horário",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA5MDUxLjA0NDA3Nn0.kaja2wXtM9yVOpY7S-n04KiedaLqPNXNOtPLoA--a14",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flight_code\":5,\n    \"date\":\"2025-3-30\",\n    \"crew_id\": 6,\n    \"ticket_price\": 305\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/schedule",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Financial Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZXhwIjoxNzMzNzA5MDUxLjA0NDA3Nn0.kaja2wXtM9yVOpY7S-n04KiedaLqPNXNOtPLoA--a14",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/financial_data",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"financial_data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funcionalidades de Crew Member",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"carlos.silva\",\n    \"password\": \"123carlos\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crew Member Work",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ODgsImV4cCI6MTczMzcxMDM1Mi45MzUyOTA4fQ.9ihVy0zzz8bLOaLgbtFd0OHAMH4vpHGf-wQsMc7T17k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-query/crew_member/get_work",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-query",
+								"crew_member",
+								"get_work"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
