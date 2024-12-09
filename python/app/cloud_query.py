@@ -158,41 +158,6 @@ def hello():
     Ramyad <br/>
     """
 
-def add_users(n):
-    logger.info("###              DEMO: POST /users              ###");
-    payload = request.get_json()
-
-    conn = db_connection()
-    cur = conn.cursor()
-
-    if len(payload) == n:
-        if any(key not in payload for key in ["username", "email", "password"]):
-            return jsonify({'status': 400, 'errors': 'Invalid Input. Check the variable names in the request'}), 400
-    else:
-        return jsonify({'status': 400, 'errors': 'Invalid Input.'}), 400
-
-    logger.info("---- new user  ----")
-    logger.debug(f'payload: {payload}')
-    statement = """
-                  INSERT INTO user_ (username, email, password) 
-                         VALUES ( %s,   %s ,   %s )"""
-    has_password=bcrypt.hashpw(payload['password'].encode('utf-8'), bcrypt.gensalt())
-    values = (payload['username'], payload['email'], has_password.decode('utf-8'))
-
-
-    try:
-        cur.execute(statement, values)
-        conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        logger.error(error)
-        conn.rollback()
-        result = 'Failed!'
-        return jsonify({'status': 400, 'error': result}), 400
-    finally:
-        if conn is not None:
-            conn.close()
-    return jsonify({"status": 200, "result": "Inserido"}), 200
-
 @app.route('/cloud-query/passenger', methods=['POST'])
 def add_passenger():
     logger.info("###              DEMO: POST /passenger              ###")
