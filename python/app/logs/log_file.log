@@ -7826,3 +7826,2017 @@ INFO:logger:###              DEMO: POST /supervisor              ###
 INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 400 -
 INFO:logger:###              DEMO: POST /supervisor              ###
 INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 17:00:03] "[31m[1mGET /cloud-query/crew_member/get_work HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:21:45] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:24:56] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:26:38] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:28:32] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:32:20] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'usernam': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:35:27] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:37:04] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:39:22] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 401 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+ERROR:logger:duplicate key value violates unique constraint "user__username_email_key"
+DETAIL:  Key (username, email)=(mario.soares, mario.soares@passenger.pt) already exists.
+
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+ERROR:logger:duplicate key value violates unique constraint "user__username_email_key"
+DETAIL:  Key (username, email)=(mario.soares, mario.soares@passenger.pt) already exists.
+
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soares', 'email': 'mario.soares@passenger.pt', 'password': '123mario'}
+ERROR:logger:duplicate key value violates unique constraint "user__username_email_key"
+DETAIL:  Key (username, email)=(mario.soares, mario.soares@passenger.pt) already exists.
+
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:40:27] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soar', 'email': 'mario.soar@passenger.pt', 'password': '123mario'}
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soar', 'email': 'mario.soar@passenger.pt', 'password': '123mario'}
+INFO:logger:###              DEMO: POST /users              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.soar', 'email': 'mario.soar@passenger.pt', 'password': '123mario'}
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': 'mario.soar', 'email': 'mario.soar@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:41:27] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 401 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': 'mario.santos', 'email': 'mario.santos@passenger.pt', 'passwor': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:45:09] "[31m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': 'mario.santos', 'email': 'mario.santos@passenger.pt', 'password': '123mario'}
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.santos', 'email': 'mario.santos@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:45:15] "[35m[1mPOST /cloud-query/passenger HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /passenger              ###
+INFO:logger:---- new passenger  ----
+DEBUG:logger:payload: {'username': 'mario.santo', 'email': 'mario.santo@passenger.pt', 'password': '123mario'}
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'mario.santo', 'email': 'mario.santo@passenger.pt', 'password': '123mario'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:45:46] "POST /cloud-query/passenger HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:47:54] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:logger:---- new admin  ----
+DEBUG:logger:payload: {'username': 'joao.neves', 'email': 'joao.neves@admin.pt', 'password': '123joao'}
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'joao.neves', 'email': 'joao.neves@admin.pt', 'password': '123joao'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:48:46] "POST /cloud-query/admin HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:logger:---- new admin  ----
+DEBUG:logger:payload: {'username': 'joao.neves', 'emai': 'joao.neves@admin.pt', 'password': '123joao'}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:48:51] "[31m[1mPOST /cloud-query/admin HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:52:52] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'angel.dimaria', 'email': 'angel.dimaria@crew.pt', 'password': '123angel', 'role': 'flight_attendant', 'crew_id': 1000}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'angel.dimaria', 'email': 'angel.dimaria@crew.pt', 'password': '123angel', 'role': 'flight_attendant', 'crew_id': 1000}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:53:01] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'angel.dimaria', 'email': 'angel.dimaria@crew.pt', 'password': '123angel', 'role': 'bolacha', 'crew_id': 1}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'angel.dimaria', 'email': 'angel.dimaria@crew.pt', 'password': '123angel', 'role': 'bolacha', 'crew_id': 1}
+ERROR:logger:cannot access local variable 'statement_2' where it is not associated with a value
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:53:18] "POST /cloud-query/crew_member HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'petro.musa', 'email': 'petro.musa@crew.pt', 'password': '123petro', 'role': 'bolacha', 'crew_id': 1}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'petro.musa', 'email': 'petro.musa@crew.pt', 'password': '123petro', 'role': 'bolacha', 'crew_id': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 22:59:13] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'petro.musa', 'email': 'petro.musa@crew.pt', 'password': '123petro', 'role': 'pilot', 'crew_id': 1}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'petro.musa', 'email': 'petro.musa@crew.pt', 'password': '123petro', 'role': 'pilot', 'crew_id': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:00:35] "POST /cloud-query/crew_member HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:02:44] "[31m[1mPUT /cloud-query/user HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:02:53] "[31m[1mPUT /cloud-query/user HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:03:00] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:03:05] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:03:19] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:09:03] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:09:27] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:10:14] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origem': 1}
+ERROR:logger:cannot access local variable 'statement' where it is not associated with a value
+ERROR:logger:cursor already closed
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:10:31] "[35m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origem': 1}
+ERROR:logger:cannot access local variable 'statement' where it is not associated with a value
+ERROR:logger:cursor already closed
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:12:04] "[35m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origem': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:15:20] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:15:42] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 2}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:15:51] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 2}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:15:52] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:15:56] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:16:07] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:16:17] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 5}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:17:02] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 5}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:17:43] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:17:51] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:18:02] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:18:13] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:18:16] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:19:02] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:20:40] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:22:43] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:23:05] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:23:48] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+ERROR:logger:cursor already closed
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:25:22] "[35m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:26:16] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'origin_airport': 3, 'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:26:32] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'destination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:26:43] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+DEBUG:logger:payload: {'estination_airport': 1}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:26:46] "[31m[1mGET /cloud-query/check_routes HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 1
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:27:00] "GET /cloud-query/top_destinations/1 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 2
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:27:16] "GET /cloud-query/top_destinations/2 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_destinations             ###
+INFO:logger:----  Report with the top N destinations ----
+DEBUG:logger:N top destinatons: 1
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:27:28] "GET /cloud-query/top_destinations/1 HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /top_routes             ###
+INFO:logger:----  Monthly report with the top N routes with the most passengers  ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:27:46] "GET /cloud-query/top_routes/1 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:29:24] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:29:36] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:29:43] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:29:59] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:30:38] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:30:48] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:31:01] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:31:08] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:31:16] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:32:41] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:32:48] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:32:52] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_routes             ###
+INFO:logger:----  Check the available routes ----
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:36:34] "GET /cloud-query/check_routes HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:37:07] "[35m[1mGET /cloud-query/seats HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:37:45] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:41:23] "[31m[1mGET /cloud-query/seats HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /check_seats           ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:41:30] "GET /cloud-query/seats HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:42:02] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:42:14] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:42:50] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:44:01] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:44:56] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:46:29] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:46:39] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:FOR UPDATE is not allowed with aggregate functions
+
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:46:42] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:syntax error at or near "AS"
+LINE 2:         SELECT * AS available_seats
+                         ^
+
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:48:16] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:syntax error at or near "AS"
+LINE 2:         SELECT * AS available_seats
+                         ^
+
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:48:59] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:syntax error at or near "AS"
+LINE 2:         SELECT * AS available_seats
+                         ^
+
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:50:51] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:'int' object is not callable
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:52:23] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:'int' object is not callable
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:52:26] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:'int' object is not callable
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:54:17] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:55:03] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:56:31] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:57:34] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [08/Dec/2024 23:59:03] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:24] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:26] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:27] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:27] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:28] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:04:53] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:06:38] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:07:17] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:null value in column "ticket_amout_to_pay" of relation "booking" violates not-null constraint
+DETAIL:  Failing row contains (8, 2, null, 0.00, 2, 2024-12-30, 4).
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:09:39] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+ERROR:logger:null value in column "ticket_amout_to_pay" of relation "booking" violates not-null constraint
+DETAIL:  Failing row contains (9, 2, null, 0.00, 2, 2024-12-30, 4).
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:10:07] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:10:58] "POST /cloud-query/book_flight HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:12:37] "[35m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:13:15] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:13:24] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:13:45] "POST /cloud-query/book_flight HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:15:56] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:17:07] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:18:44] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:19:21] "POST /cloud-query/book_flight HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:19:36] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:19:43] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:19:52] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:21:30] "[31m[1mPOST /cloud-query/book_flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /book_flight             ###
+INFO:logger:---- make your booking  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733704934.05464}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:22:58] "POST /cloud-query/book_flight HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /make_payment             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:24:17] "[31m[1mPOST /cloud-query/make_payment HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:24:22] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /make_payment             ###
+INFO:logger:---- make new payment  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:24:38] "[35m[1mPOST /cloud-query/make_payment HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /make_payment             ###
+INFO:logger:---- make new payment  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:29:37] "[31m[1mPOST /cloud-query/make_payment HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /make_payment             ###
+INFO:logger:---- make new payment  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:29:45] "POST /cloud-query/make_payment HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /info_booking             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:30:14] "GET /cloud-query/info_booking HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:33:50] "[31m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:08] "[31m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+ERROR:logger:column "vat" does not exist
+LINE 6:             AND vat IS NOT NULL;
+                        ^
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:16] "[35m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+ERROR:logger:column "vat" does not exist
+LINE 6:             AND vat IS NOT NULL;
+                        ^
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:28] "[35m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+ERROR:logger:column "vat" does not exist
+LINE 6:             AND vat IS NOT NULL;
+                        ^
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:29] "[35m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+ERROR:logger:column "vat" does not exist
+LINE 6:             AND vat IS NOT NULL;
+                        ^
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:29] "[35m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+ERROR:logger:column "vat" does not exist
+LINE 6:             AND vat IS NOT NULL;
+                        ^
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:34:46] "[35m[1mPOST /cloud-query/tickets HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /tickets             ###
+INFO:logger:---- make your tickets  ----
+DEBUG:logger:payload: {'id': 4, 'exp': 1733707462.610347}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:35:36] "POST /cloud-query/tickets HTTP/1.1" 200 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:36:19] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:logger:---- new admin  ----
+DEBUG:logger:payload: {'usernam': 'joao.neves', 'email': 'joao.neves@admin.pt', 'password': '123joao'}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:36:51] "[31m[1mPOST /cloud-query/admin HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:logger:---- new admin  ----
+DEBUG:logger:payload: {'username': 'frederico.varandas', 'email': 'frederico.varandas@admin.pt', 'passwor': '123frederico'}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:37:22] "[31m[1mPOST /cloud-query/admin HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /admin              ###
+INFO:logger:---- new admin  ----
+DEBUG:logger:payload: {'username': 'frederico.varandas', 'email': 'frederico.varandas@admin.pt', 'password': '123frederico'}
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'frederico.varandas', 'email': 'frederico.varandas@admin.pt', 'password': '123frederico'}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:37:28] "POST /cloud-query/admin HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:40:42] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:40:49] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:40:50] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:40:57] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:41:29] "[31m[1mPOST /cloud-query/airport HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /airport              ###
+INFO:logger:---- new airport  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733708179.779922}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:41:33] "POST /cloud-query/airport HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Users/francisca_mateus/Desktop/Universidade/2º Ano/1º Semestre/SGD/Projeto/Cloud-Query/python/app/cloud_query.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /flight             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:44:46] "[31m[1mPOST /cloud-query/flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:44:52] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /flight             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:45:04] "[31m[1mPOST /cloud-query/flight HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /flight             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:45:39] "[35m[1mPOST /cloud-query/flight HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /flight             ###
+INFO:logger:---- new flight  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733708692.6704268}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:47:57] "POST /cloud-query/flight HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /crew              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:48:28] "[31m[1mPOST /cloud-query/crew HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew              ###
+INFO:logger:---- new crew  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733708692.6704268}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:48:48] "POST /cloud-query/crew HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /crew             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:49:00] "[31m[1mGET /cloud-query/crew HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /crew             ###
+DEBUG:logger:---- get crew  ----
+DEBUG:logger:(1, 1, None)
+DEBUG:logger:(2, 1, None)
+DEBUG:logger:(4, 2, None)
+DEBUG:logger:(6, 2, None)
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:49:14] "GET /cloud-query/crew HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:50:41] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:50:45] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:50:51] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:51:03] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'pilot', 'crew_id': 22}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'pilot', 'crew_id': 22}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:51:11] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'bola', 'crew_id': 6}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'bola', 'crew_id': 6}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:51:27] "[31m[1mPOST /cloud-query/crew_member HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /crew_member              ###
+INFO:logger:---- new user  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'pilot', 'crew_id': 6}
+INFO:logger:---- new crew_member  ----
+DEBUG:logger:payload: {'username': 'carlos.silva', 'email': 'carlos.silva@crew.pt', 'password': '123carlos', 'role': 'pilot', 'crew_id': 6}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:51:37] "POST /cloud-query/crew_member HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:53:21] "[31m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:53:37] "[31m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:53:46] "[31m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:logger:---- add supervisor  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+ERROR:logger:null value in column "admin__user__id_user" of relation "crew" violates not-null constraint
+DETAIL:  Failing row contains (7, null, 88).
+
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 00:53:52] "[35m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:logger:---- add supervisor  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+ERROR:logger:no results to fetch
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:00:55] "[35m[1mPOST /cloud-query/crew_supervisor HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:logger:---- add supervisor  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:02:10] "POST /cloud-query/crew_supervisor HTTP/1.1" 200 -
+INFO:logger:###              DEMO: GET /crew             ###
+DEBUG:logger:---- get crew  ----
+DEBUG:logger:(1, 1, None)
+DEBUG:logger:(2, 1, None)
+DEBUG:logger:(4, 2, None)
+DEBUG:logger:(6, 2, 88)
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:02:24] "GET /cloud-query/crew HTTP/1.1" 200 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:07:28] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:08:09] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:08:21] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.137:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:logger:
+---------------------------------------------------------------
+API v1.0 online: http://localhost:8080/cloud-query/
+
+
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 929-903-062
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:08:52] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:09:13] "POST /cloud-query/schedule HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:09:21] "[35m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 500 -
+INFO:logger:###              DEMO: POST /schedule             ###
+INFO:logger:---- new schedule  ----
+DEBUG:logger:payload: {'id': 2, 'exp': 1733709051.044076}
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:09:29] "[31m[1mPOST /cloud-query/schedule HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: GET /financial_data             ###
+INFO:logger:---- Check financial data for the last year  ----
+DEBUG:logger:(2, Decimal('112.82'), Decimal('9.78'), Decimal('243.26'), Decimal('365.86'))
+DEBUG:logger:(4, Decimal('0'), Decimal('0'), Decimal('1000.00'), Decimal('1000.00'))
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:09:52] "GET /cloud-query/financial_data HTTP/1.1" 200 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:10:42] "[31m[1mPUT /cloud-query/user HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:11:13] "[31m[1mPUT /cloud-query/user HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:11:20] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:11:36] "[31m[1mGET /cloud-query/crew_member/get_work HTTP/1.1[0m" 400 -
+INFO:logger:###              DEMO: PUT /users              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:12:32] "PUT /cloud-query/user HTTP/1.1" 200 -
+INFO:logger:###              DEMO: POST /supervisor              ###
+INFO:werkzeug:127.0.0.1 - - [09/Dec/2024 01:13:01] "GET /cloud-query/crew_member/get_work HTTP/1.1" 200 -
