@@ -1,15 +1,20 @@
-# How To Run And Install The Database And Its Instructions 
+# Cloud Query API
 
+This project involved building a backend system for a passenger airline that sells tickets. A relational database was designed using PostgreSQL to efficiently store and manage data, aligned with the airline’s business needs.
+
+A full set of RESTful API endpoints was developed to handle key operations like flight and seat management, bookings, payments, and online check-ins. The system also included analytical features such as retrieving top destinations, routes with the most passengers, and revenue breakdowns by payment type per route.
+
+The API served as the core of the ticket-selling platform, providing essential functionalities for users and admins while ensuring reliable data processing and smooth system performance.
 
 ## Table of Contents
 - [Project Overview](#project-overview)  
-- [ User Roles Functionalities and API Endpoints](#User-Roles-Functionalities-and-API-Endpoints)  
-  - [Administrator Functionalities](#Administrator-Functionalities)  
-  - [Passenger Functionalities](#Passenger-Functionalities)
-  - [Crew Member Functionalities](#Crew-Member-Functionalities)
-  - [General Functionalities](#General-Functionalities)
+- [ User Roles Functionalities and API Endpoints](#user-roles-functionalities-and-api-endpoints)  
+  - [Administrator Functionalities](#administrator-functionalities)  
+  - [Passenger Functionalities](#passenger-functionalities)
+  - [Crew Member Functionalities](#crew-member-functionalities)
+  - [General Functionalities](#general-functionalities)
 - [Setup Instructions](#setup-instructions)    
-- [Authors](#Authors)
+- [Authors](#authors)
 
     
 ---
@@ -179,18 +184,15 @@ All users should know that to access and interact with some of the functionaliti
     ```
 9. Now for a final step you can use Postman to interact with the API and the database using the endpoints provided previously.
 
-10. (Good Luck!!!!)
-
    
 ---
 ---
 
 
 ## Authors
- -Ramyad Raadi: uc2023205631@student.uc.pt
- 
- -Francisca Mateus: uc2023212096@student.uc.pt
- 
- -Pedro Silva: uc2023235452@student.uc.pt	
+- Ramyad Raadi: uc2023205631@student.uc.pt
+- Francisca Mateus: uc2023212096@student.uc.pt
+- Pedro Silva: uc2023235452@student.uc.pt	
+- [DEMO] SGD 2024 team
 
 
