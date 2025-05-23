@@ -1239,7 +1239,7 @@ def add_tickets():
         if conn is not None:
             conn.close()
         return jsonify({'status': 500, 'error':'Failed!'}), 500
-
+    
     if ((ticket_quantity != len(tickets_payload["name"])) and (ticket_quantity != len(tickets_payload["vat"]))):
         aux = "Something is wrong with your request. Check if the amount of names and TIN´s are the same as the number of tickets that you have created!"
         return jsonify({'status': 400, 'errors': aux}), 400
