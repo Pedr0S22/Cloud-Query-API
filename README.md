@@ -6,6 +6,8 @@ A full set of RESTful API endpoints was developed to handle key operations like 
 
 The API served as the core of the ticket-selling platform, providing essential functionalities for users and admins while ensuring reliable data processing and smooth system performance.
 
+Note: This repository contains work originally done in collaboration with [Francisca Mateus](https://github.com/franciscamateusPt05) and [Ramyad Raadi](https://github.com/Ramyad20) in a private repository belonging to Francisca. Also, the original start up of our project was made by our professor [José Alexandre D'Abruzzo Pereira](https://github.com/joseadp).
+
 ## Table of Contents
 - [Project Overview](#project-overview)  
 - [ User Roles Functionalities and API Endpoints](#user-roles-functionalities-and-api-endpoints)  
